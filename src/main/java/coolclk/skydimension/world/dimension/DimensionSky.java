@@ -1,10 +1,9 @@
 package coolclk.skydimension.world.dimension;
 
 import coolclk.skydimension.world.WorldSky;
-import coolclk.skydimension.world.provider.WorldProviderSky;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 
 public class DimensionSky {
     private static DimensionType dimensionType;
@@ -12,6 +11,7 @@ public class DimensionSky {
     private final static String dimensionName = "sky";
     private final static String dimensionSuffix = "_" + dimensionName;
     private static World dimensionWorld;
+    private static WorldProvider dimensionWorldProvider;
 
     public static int getId() {
         return dimensionId;
@@ -29,9 +29,18 @@ public class DimensionSky {
         return dimensionSuffix;
     }
 
+    public static WorldProvider getWorldProvider() {
+        if (dimensionWorldProvider == null) {
+            dimensionWorldProvider = DimensionSky.getType().createDimension();
+        }
+        return dimensionWorldProvider;
+    }
+
     public static World getWorld() {
-        dimensionWorld = new WorldSky(Minecraft.getMinecraft().world.getSaveHandler(), Minecraft.getMinecraft().world.getWorldInfo(), new WorldProviderSky(), Minecraft.getMinecraft().mcProfiler, Minecraft.getMinecraft().world.isRemote);
-        DimensionType.getById(DimensionSky.getId()).createDimension().setWorld(dimensionWorld);
+        if (dimensionWorld == null) {
+            dimensionWorld = new WorldSky();
+            DimensionSky.getWorldProvider().setWorld(dimensionWorld);
+        }
         return dimensionWorld;
     }
 

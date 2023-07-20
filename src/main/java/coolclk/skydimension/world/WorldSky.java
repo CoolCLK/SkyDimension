@@ -1,16 +1,18 @@
 package coolclk.skydimension.world;
 
 import coolclk.skydimension.world.chunk.ChunkProviderSky;
-import net.minecraft.profiler.Profiler;
+import coolclk.skydimension.world.dimension.DimensionSky;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.storage.ISaveHandler;
-import net.minecraft.world.storage.WorldInfo;
 
 public class WorldSky extends World {
-    public WorldSky(ISaveHandler saveHandlerIn, WorldInfo info, WorldProvider providerIn, Profiler profilerIn, boolean client) {
-        super(saveHandlerIn, info, providerIn, profilerIn, client);
+    public WorldSky() {
+        super(  Minecraft.getMinecraft().world.getSaveHandler(),
+                Minecraft.getMinecraft().world.getWorldInfo(),
+                DimensionSky.getWorldProvider(),
+                Minecraft.getMinecraft().mcProfiler,
+                Minecraft.getMinecraft().world.isRemote);
     }
 
     @Override
