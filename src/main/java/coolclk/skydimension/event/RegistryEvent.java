@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
     @Mod.EventHandler
-    public void onFMLPreInitializationEvent(FMLPreInitializationEvent event) {
+    public static void onFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         registryDimension();
     }
 
