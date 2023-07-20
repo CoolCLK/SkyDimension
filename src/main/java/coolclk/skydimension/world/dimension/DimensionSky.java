@@ -1,5 +1,6 @@
 package coolclk.skydimension.world.dimension;
 
+import coolclk.skydimension.event.RegistryEvent;
 import coolclk.skydimension.world.WorldSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
@@ -21,6 +22,9 @@ public class DimensionSky {
     }
 
     public static DimensionType getType() {
+        while (dimensionType == null) {
+            RegistryEvent.registryDimension();
+        }
         return dimensionType;
     }
 

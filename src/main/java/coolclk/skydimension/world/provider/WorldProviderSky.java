@@ -1,6 +1,9 @@
 package coolclk.skydimension.world.provider;
 
 import coolclk.skydimension.world.dimension.DimensionSky;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -42,14 +45,8 @@ public class WorldProviderSky extends WorldProvider {
         return DimensionSky.getType();
     }
 
-    /*
     public boolean canCoordinateBeSpawn(int x, int z) {
-        int k = world.getFirstUncoveredBlock(x, z);
-        if (k == 0) {
-            return false;
-        } else {
-            return Blocks.[k].blockMaterial.getIsSolid();
-        }
+        IBlockState blockState = world.getGroundAboveSeaLevel(new BlockPos(x, 0, z));
+        return blockState.getBlock() != Blocks.AIR && blockState.getMaterial().isSolid();
     }
-     */
 }

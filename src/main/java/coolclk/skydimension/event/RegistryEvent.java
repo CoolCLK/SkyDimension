@@ -3,15 +3,8 @@ package coolclk.skydimension.event;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import coolclk.skydimension.world.provider.WorldProviderSky;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.DimensionType;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -22,8 +15,10 @@ public class RegistryEvent {
         registryDimension();
     }
 
-    public static void registryDimension() {
-        DimensionSky.setType(DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false));
+    public static DimensionType registryDimension() {
+        DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
+        DimensionSky.setType(dimensionType);
         DimensionManager.registerDimension(DimensionSky.getId(), DimensionSky.getType());
+        return dimensionType;
     }
 }
