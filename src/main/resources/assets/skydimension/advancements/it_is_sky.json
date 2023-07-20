@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": { "item": "minecraft:glowstone" },
+    "title": { "translate": "advancement.skydimension.it_is_sky.title" },
+    "frame": "task",
+    "description": { "translate": "advancement.skydimension.it_is_sky.description" },
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "skydimension:exploration",
+  "criteria": {
+    "join": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "skydimension:sky"
+      }
+    }
+  }
+}
