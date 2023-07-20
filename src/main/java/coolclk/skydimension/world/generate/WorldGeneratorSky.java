@@ -10,6 +10,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.*;
 
 import java.util.Random;
@@ -111,7 +112,19 @@ public class WorldGeneratorSky extends WorldGenerator {
                 (new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), 6)).generate(worldIn, rand, new BlockPos(k7, l10, j15));
             }
             d = 0.5D;
-            int k4 = (int) ((((ChunkProviderSky) DimensionSky.getWorld().getChunkProvider()).noiseGeneratorOctaves_h.func_806_a((double) k * d, (double) l * d) / 8D + rand.nextDouble() * 4D + 4D) / 3D);
+
+            NoiseGeneratorPerlin[] generatorCollection = new NoiseGeneratorPerlin[8];
+            for (int j = 0; j < 8; j++) {
+                generatorCollection[j] = new NoiseGeneratorPerlin(((ChunkProviderSky) DimensionSky.getWorld().getChunkProvider()).seedRandomizer, 0);
+            }
+            double k4_d2 = 0.0D;
+            double k4_d3 = 1.0D;
+            for (int i = 0; i < 8; i++) {
+                k4_d2 += generatorCollection[i].getValue(((double) k * d) * k4_d3, ((double) l * d) * k4_d3) / k4_d3;
+                k4_d3 /= 2D;
+            }
+            int k4 = (int) ((k4_d2 / 8D + rand.nextDouble() * 4D + 4D) / 3D);
+
             int l7 = 0;
             if (rand.nextInt(10) == 0) {
                 l7++;

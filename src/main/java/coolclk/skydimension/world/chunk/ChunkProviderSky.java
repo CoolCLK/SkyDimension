@@ -2,7 +2,6 @@ package coolclk.skydimension.world.chunk;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.src.NoiseGeneratorOctaves;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -11,16 +10,26 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
+import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 import javax.annotation.Nullable;
 import java.util.Random;
+
+import static coolclk.skydimension.SkyDimension.LOGGER;
+
+/*
+在此文件中，可能与游戏源代码有差异，删除与优化了部分代码。
+若你发现什么奇怪名称的变量，a1、d3、c114514之类的，不要去动它，那是生成地形特有的无意义变量名。
+
+notch 特有的无意义代码（恼
+ */
 
 public class ChunkProviderSky implements IChunkProvider {
     public ChunkProviderSky(World world, long seed) {
         field_28079_r = new double[256];
         field_28078_s = new double[256];
         field_28077_t = new double[256];
-        field_28076_u = new MapGenCaves();
+        mapGeneratorBase = new MapGenCaves();
         field_28088_i = new int[32][32];
         this.world = world;
         seedRandomizer = new Random(seed);
@@ -44,6 +53,7 @@ public class ChunkProviderSky implements IChunkProvider {
             for (int j1 = 0; j1 < byte0; j1++) {
                 for(int k1 = 0; k1 < 32; k1++) {
                     double d = 0.25D;
+                    // 别用IDE推荐的优化方案，你要是真想优化，欢迎你优化。
                     double d1 = field_28080_q[((i1) * l + (j1)) * byte1 + (k1)];
                     double d2 = field_28080_q[((i1) * l + (j1 + 1)) * byte1 + (k1)];
                     double d3 = field_28080_q[((i1 + 1) * l + (j1)) * byte1 + (k1)];
@@ -86,7 +96,7 @@ public class ChunkProviderSky implements IChunkProvider {
         }
     }
 
-    public void generateAndFixBiome(int x, int z, ChunkPrimer chunk, Biome biome) {
+    public void generateBiome(int x, int z, ChunkPrimer chunk, Biome biome) {
         double d = 0.03125D;
         field_28079_r = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
         field_28078_s = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
@@ -135,15 +145,16 @@ public class ChunkProviderSky implements IChunkProvider {
         return provideChunk(x, z);
     }
 
-    public Chunk provideChunk(int i, int j) {
-        seedRandomizer.setSeed((long) i * 0x4f9939f508L + (long) j * 0x1ef1565bd5L);
-        ChunkPrimer primers = new ChunkPrimer();
-        Chunk chunk = new Chunk(world, primers, i, j);
-        Biome field_28075_v = world.getBiome(new BlockPos(i, 0, j));
-        generateTerrain(i, j, primers);
-        generateAndFixBiome(i, j, primers, field_28075_v);
-        field_28076_u.generate(world, i, j, primers);
+    public Chunk provideChunk(int x, int z) {
+        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) z * 0x1ef1565bd5L);
+        ChunkPrimer chunkPrimer = new ChunkPrimer();
+        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
+        Biome biome = world.getBiome(new BlockPos(x, 0, z));
+        generateTerrain(x, z, chunkPrimer);
+        generateBiome(x, z, chunkPrimer, biome);
+        mapGeneratorBase.generate(world, x, z, chunkPrimer);
         chunk.generateSkylightMap();
+        LOGGER.debug(chunk.getWorld().getProviderName());
         return chunk;
     }
 
@@ -153,62 +164,22 @@ public class ChunkProviderSky implements IChunkProvider {
     }
 
     private double[] generateRandomChunk(double[] ad, int i, int k, int l, int i1, int j1) {
-        if(ad == null)
-        {
+        if (ad == null) {
             ad = new double[l * i1 * j1];
         }
         double d = 684.41200000000003D;
         double d1 = 684.41200000000003D;
-        field_28090_g = noiseGeneratorOctaves_f.func_4109_a(field_28090_g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
-        field_28089_h = noiseGeneratorOctaves_g.func_4109_a(field_28089_h, i, k, l, j1, 200D, 200D, 0.5D);
+        field_28090_g = noiseGeneratorOctaves_f.generateNoiseOctaves(field_28090_g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
+        field_28089_h = noiseGeneratorOctaves_g.generateNoiseOctaves(field_28089_h, i, k, l, j1, 200D, 200D, 0.5D);
         d *= 2D;
         field_28093_d = noiseGeneratorOctaves_c.generateNoiseOctaves(field_28093_d, i, 0, k, l, i1, j1, d / 80D, d1 / 160D, d / 80D);
         field_28092_e = noiseGeneratorOctaves_a.generateNoiseOctaves(field_28092_e, i, 0, k, l, i1, j1, d, d1, d);
         field_28091_f = noiseGeneratorOctaves_b.generateNoiseOctaves(field_28091_f, i, 0, k, l, i1, j1, d, d1, d);
         int k1 = 0;
-        int l1 = 0;
-        int i2 = 16 / l;
-        for(int j2 = 0; j2 < l; j2++)
-        {
-            int k2 = j2 * i2 + i2 / 2;
-            for(int l2 = 0; l2 < j1; l2++)
-            {
-                int i3 = l2 * i2 + i2 / 2;
-                double d2 = world.getBiome(new BlockPos(l2, i2, i2 / 2)).getDefaultTemperature();
-                double d3 = world.getBiome(new BlockPos(k2 * 16, d2, i3)).isHighHumidity() ? 1 : 0;
-                double d4 = 1 - d3;
-                d4 *= d4;
-                d4 *= d4;
-                d4 = 1 - d4;
-                double d5 = (field_28090_g[l1] + 256D) / 512D;
-                d5 *= d4;
-                if (d5 > 1) {
-                    d5 = 1;
-                }
-                double d6 = field_28089_h[l1] / 8000D;
-                if(d6 < 0)
-                {
-                    d6 = -d6 * 0.3D;
-                }
-                d6 = d6 * 3D - 2D;
-                if(d6 > 1.0D) {
-                    d6 = 1.0D;
-                }
-                d6 /= 8D;
-                d6 = 0.0D;
-                if(d5 < 0.0D) {
-                    d5 = 0.0D;
-                }
-                d5 += 0.5D;
-                d6 = (d6 * (double)i1) / 16D;
-                l1++;
-                double d7 = (double)i1 / 2D;
+        for (int j2 = 0; j2 < l; j2++) {
+            for (int l2 = 0; l2 < j1; l2++) {
                 for (int j3 = 0; j3 < i1; j3++) {
-                    double d8 = 0.0D;
-                    double d9 = (((double)j3 - d7) * 8D) / d5;
-                    if (d9 < 0.0D) {
-                        d9 *= -1D;
-                    }
+                    double d8;
                     double d10 = field_28092_e[k1] / 512D;
                     double d11 = field_28091_f[k1] / 512D;
                     double d12 = (field_28093_d[k1] / 10D + 1.0D) / 2D;
@@ -247,7 +218,7 @@ public class ChunkProviderSky implements IChunkProvider {
         return false;
     }
 
-    private final Random seedRandomizer;
+    public final Random seedRandomizer;
     private final NoiseGeneratorOctaves noiseGeneratorOctaves_a;
     private final NoiseGeneratorOctaves noiseGeneratorOctaves_b;
     private final NoiseGeneratorOctaves noiseGeneratorOctaves_c;
@@ -261,7 +232,7 @@ public class ChunkProviderSky implements IChunkProvider {
     private double[] field_28079_r;
     private double[] field_28078_s;
     private double[] field_28077_t;
-    private final MapGenBase field_28076_u;
+    private final MapGenBase mapGeneratorBase;
     double[] field_28093_d;
     double[] field_28092_e;
     double[] field_28091_f;

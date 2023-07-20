@@ -56,7 +56,9 @@ public class DimensionSky {
     }
 
     public static void go(EntityPlayer player) {
-        player.setWorld(DimensionSky.getWorld());
-        LOGGER.debug("Sending player to dimension.");
+        if (player.getEntityWorld() != DimensionSky.getWorld()) {
+            player.setWorld(DimensionSky.getWorld());
+            LOGGER.debug("Sending player to dimension.");
+        }
     }
 }
