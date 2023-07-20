@@ -20,10 +20,10 @@ public class SkyDimension {
         MinecraftForge.EVENT_BUS.register(new RegistryEvent());
         MinecraftForge.EVENT_BUS.register(new PlayerEvent());
 
-        LOGGER.info("========== [Sky Dimension] ==========" +
-                    "The mod successfully launched!       " +
-                    "Author: CoolCLK                      " +
-                    "Thanks for your using!               " +
-                    "=====================================");
+        LOGGER.info("========== [Sky Dimension] ==========");
+        LOGGER.info("The mod successfully launched!       ");
+        LOGGER.info("Author: CoolCLK                      ");
+        LOGGER.info("Thanks for your using!               ");
+        LOGGER.info("=====================================");
     }
 }
