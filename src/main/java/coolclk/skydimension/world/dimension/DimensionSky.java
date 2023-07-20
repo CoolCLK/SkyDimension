@@ -1,9 +1,12 @@
 package coolclk.skydimension.world.dimension;
 
 import coolclk.skydimension.world.WorldSky;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+
+import static coolclk.skydimension.SkyDimension.LOGGER;
 
 public class DimensionSky {
     private static DimensionType dimensionType;
@@ -46,5 +49,10 @@ public class DimensionSky {
 
     public static void setType(DimensionType type) {
         dimensionType = type;
+    }
+
+    public static void go(EntityPlayer player) {
+        player.setWorld(DimensionSky.getWorld());
+        LOGGER.debug("Sending player to dimension.");
     }
 }
