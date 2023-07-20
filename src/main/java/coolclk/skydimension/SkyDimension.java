@@ -16,7 +16,14 @@ public class SkyDimension {
     @Mod.EventHandler
     public static void onFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
+
         MinecraftForge.EVENT_BUS.register(new RegistryEvent());
         MinecraftForge.EVENT_BUS.register(new PlayerEvent());
+
+        LOGGER.info("========== [Sky Dimension] ==========" +
+                    "The mod successfully launched!       " +
+                    "Author: CoolCLK                      " +
+                    "Thanks for your using!               " +
+                    "=====================================");
     }
 }
