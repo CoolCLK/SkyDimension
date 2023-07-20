@@ -15,7 +15,7 @@ public class RegistryEvent {
         registryDimension();
     }
 
-    public void registryDimension() {
+    public static void registryDimension() {
         DimensionSky.setType(DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false));
         DimensionManager.registerDimension(DimensionSky.getId(), DimensionSky.getType());
     }

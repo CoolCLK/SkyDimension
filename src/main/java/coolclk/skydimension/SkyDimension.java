@@ -1,7 +1,7 @@
 package coolclk.skydimension;
 
 import coolclk.skydimension.event.PlayerEvent;
-import coolclk.skydimension.world.dimension.DimensionSky;
+import coolclk.skydimension.event.RegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -16,7 +16,7 @@ public class SkyDimension {
     @Mod.EventHandler
     public static void onFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
-        MinecraftForge.EVENT_BUS.register(new DimensionSky());
+        MinecraftForge.EVENT_BUS.register(new RegistryEvent());
         MinecraftForge.EVENT_BUS.register(new PlayerEvent());
     }
 }
