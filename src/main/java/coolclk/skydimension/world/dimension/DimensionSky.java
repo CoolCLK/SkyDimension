@@ -33,13 +33,6 @@ public class DimensionSky {
         return dimensionSuffix;
     }
 
-    public static WorldProvider getWorldProvider() {
-        if (dimensionWorldProvider == null) {
-            dimensionWorldProvider = DimensionSky.getType().createDimension();
-        }
-        return dimensionWorldProvider;
-    }
-
     public static World getWorld() {
         if (dimensionWorld == null) {
             // 我无能为力（悲

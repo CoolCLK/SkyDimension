@@ -60,4 +60,8 @@ public class WorldProviderSky extends WorldProvider {
     public boolean canRespawnHere() {
         return false;
     }
+
+    public boolean isSurfaceWorld() {
+        return false;
+    }
 }

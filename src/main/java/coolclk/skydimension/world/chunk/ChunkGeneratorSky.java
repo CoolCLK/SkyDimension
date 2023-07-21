@@ -441,7 +441,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
 
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType enumCreatureType, BlockPos blockPos) {
-        return null;
+        Biome biome = world.getBiome(blockPos);
+        return biome.getSpawnableList(enumCreatureType);
     }
 
     @Nullable
