@@ -2,6 +2,7 @@ package coolclk.skydimension.world.dimension;
 
 import coolclk.skydimension.event.RegistryEvent;
 import coolclk.skydimension.world.WorldSky;
+import coolclk.skydimension.world.provider.WorldProviderSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -10,21 +11,18 @@ import net.minecraft.world.WorldProvider;
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
 public class DimensionSky {
-    private static DimensionType dimensionType;
     private final static int dimensionId = 2;
     private final static String dimensionName = "sky";
     private final static String dimensionSuffix = "_" + dimensionName;
     private static World dimensionWorld;
     private static WorldProvider dimensionWorldProvider;
+    private final static DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
 
     public static int getId() {
         return dimensionId;
     }
 
     public static DimensionType getType() {
-        while (dimensionType == null) {
-            RegistryEvent.registryDimension();
-        }
         return dimensionType;
     }
 
@@ -49,10 +47,6 @@ public class DimensionSky {
             DimensionSky.getWorldProvider().setWorld(dimensionWorld);
         }
         return dimensionWorld;
-    }
-
-    public static void setType(DimensionType type) {
-        dimensionType = type;
     }
 
     public static void go(EntityPlayer player) {

@@ -2,8 +2,6 @@ package coolclk.skydimension.event;
 
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.world.dimension.DimensionSky;
-import coolclk.skydimension.world.provider.WorldProviderSky;
-import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -11,14 +9,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
     @Mod.EventHandler
-    public static void onFMLPreInitializationEvent(FMLPreInitializationEvent event) {
+    public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         registryDimension();
     }
 
-    public static DimensionType registryDimension() {
-        DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
-        DimensionSky.setType(dimensionType);
+    public static void registryDimension() {
         DimensionManager.registerDimension(DimensionSky.getId(), DimensionSky.getType());
-        return dimensionType;
     }
 }
