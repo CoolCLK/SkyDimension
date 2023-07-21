@@ -1,7 +1,6 @@
 package coolclk.skydimension.world.dimension;
 
 import coolclk.skydimension.event.RegistryEvent;
-import coolclk.skydimension.world.WorldSky;
 import coolclk.skydimension.world.provider.WorldProviderSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
@@ -43,10 +42,13 @@ public class DimensionSky {
 
     public static World getWorld() {
         if (dimensionWorld == null) {
-            dimensionWorld = new WorldSky();
-            DimensionSky.getWorldProvider().setWorld(dimensionWorld);
+            // 我无能为力（悲
         }
         return dimensionWorld;
+    }
+
+    public static void setWorld(World world) {
+        dimensionWorld = world;
     }
 
     public static void go(EntityPlayer player) {

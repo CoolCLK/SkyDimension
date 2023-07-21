@@ -44,6 +44,7 @@ public class WorldProviderSky extends WorldProvider {
 
     @Override
     public DimensionType getDimensionType() {
+        DimensionSky.setWorld(world);
         return DimensionSky.getType();
     }
 
