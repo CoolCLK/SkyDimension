@@ -31,9 +31,6 @@ public class DimensionSky {
     }
 
     public static World getWorld() {
-        if (dimensionWorld == null) {
-            // 我无能为力（悲
-        }
         return dimensionWorld;
     }
 
