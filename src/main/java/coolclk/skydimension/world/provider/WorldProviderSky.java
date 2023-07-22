@@ -1,5 +1,6 @@
 package coolclk.skydimension.world.provider;
 
+import coolclk.skydimension.world.biome.BiomeProviderSky;
 import coolclk.skydimension.world.chunk.ChunkGeneratorSky;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.state.IBlockState;
@@ -12,6 +13,10 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
 public class WorldProviderSky extends WorldProvider {
+    public WorldProviderSky() {
+        this.biomeProvider = new BiomeProviderSky();
+    }
+
     public float calculateCelestialAngle(long l, float f) {
         return 0.0F;
     }
@@ -30,7 +35,7 @@ public class WorldProviderSky extends WorldProvider {
         if (f2 < 0.0F) {
             f2 = 0.0F;
         }
-        if(f2 > 1.0F) {
+        if (f2 > 1.0F) {
             f2 = 1.0F;
         }
         float f3 = (float)(i >> 16 & 0xff) / 255F;

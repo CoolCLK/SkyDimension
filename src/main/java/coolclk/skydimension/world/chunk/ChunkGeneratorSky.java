@@ -1,11 +1,14 @@
 package coolclk.skydimension.world.chunk;
 
-import coolclk.skydimension.world.dimension.DimensionSky;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -17,6 +20,7 @@ import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -56,7 +60,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         field_28079_r = new double[256];
         field_28078_s = new double[256];
         field_28077_t = new double[256];
-        mapGeneratorBase = new MapGenCaves();
+        mapGeneratorBase = new MapGenBase();
         field_28088_i = new int[32][32];
         this.world = world;
         seedRandomizer = new Random(seed);
@@ -80,7 +84,6 @@ public class ChunkGeneratorSky implements IChunkGenerator {
             for (int j1 = 0; j1 < byte0; j1++) {
                 for(int k1 = 0; k1 < 32; k1++) {
                     double d = 0.25D;
-                    // 别用IDE推荐的优化方案，你要是真想优化，欢迎你优化。
                     double d1 = field_28080_q[((i1) * l + (j1)) * byte1 + (k1)];
                     double d2 = field_28080_q[((i1) * l + (j1 + 1)) * byte1 + (k1)];
                     double d3 = field_28080_q[((i1 + 1) * l + (j1)) * byte1 + (k1)];
@@ -123,7 +126,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         }
     }
 
-    public void generateBiome(int x, int z, ChunkPrimer chunk, Biome biome) {
+    public void generateBiomes(int x, int z, ChunkPrimer chunk, Biome biome) {
         double d = 0.03125D;
         field_28079_r = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
         field_28078_s = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
@@ -164,19 +167,6 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                 }
             }
         }
-    }
-
-    public Chunk provideChunk(int x, int z) {
-        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) z * 0x1ef1565bd5L);
-        ChunkPrimer chunkPrimer = new ChunkPrimer();
-        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
-        Biome biome = world.getBiome(new BlockPos(x, 0, z));
-        generateTerrain(x, z, chunkPrimer);
-        generateBiome(x, z, chunkPrimer, biome);
-        mapGeneratorBase.generate(world, x, z, chunkPrimer);
-        chunk.generateSkylightMap();
-        LOGGER.debug("Loading chunk: (x: " + x + ", z: " + z + ")");
-        return chunk;
     }
 
     private double[] generateRandomChunk(double[] ad, int i, int k, int l, int i1, int j1) {
@@ -227,7 +217,16 @@ public class ChunkGeneratorSky implements IChunkGenerator {
 
     @Override
     public Chunk generateChunk(int x, int z) {
-        return provideChunk(x, z);
+        LOGGER.debug("Loading chunk: (x: " + x + ", z: " + z + ")");
+        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) z * 0x1ef1565bd5L);
+        ChunkPrimer chunkPrimer = new ChunkPrimer();
+        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
+        Biome biome = world.getBiome(new BlockPos(x, 0, z));
+        generateTerrain(x, z, chunkPrimer);
+        generateBiomes(x, z, chunkPrimer, biome);
+        mapGeneratorBase.generate(world, x, z, chunkPrimer);
+        chunk.generateSkylightMap();
+        return chunk;
     }
 
     @Override
@@ -441,8 +440,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
 
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType enumCreatureType, BlockPos blockPos) {
-        Biome biome = world.getBiome(blockPos);
-        return biome.getSpawnableList(enumCreatureType);
+        Biome Biome = world.getBiome(blockPos);
+        return Biome == null ? null : Biome.getSpawnableList(enumCreatureType);
     }
 
     @Nullable
