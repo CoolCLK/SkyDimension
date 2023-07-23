@@ -4,6 +4,7 @@ import coolclk.skydimension.world.biome.BiomeProviderSky;
 import coolclk.skydimension.world.chunk.ChunkGeneratorSky;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -11,13 +12,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
 
 public class WorldProviderSky extends WorldProvider {
     public WorldProviderSky() {
-        this.biomeProvider = new BiomeProviderSky();
+        this.biomeProvider = new BiomeProviderSingle(Biomes.DEFAULT);
     }
 
     public float calculateCelestialAngle(long l, float f) {
@@ -64,7 +66,7 @@ public class WorldProviderSky extends WorldProvider {
 
     @Nonnull
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkGeneratorSky(world, getSeed());
+        return new ChunkGeneratorSky(this.world, this.world.getSeed());
     }
 
     public boolean canRespawnHere() {

@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Random;
 
-import static coolclk.skydimension.SkyDimension.LOGGER;
-
 @Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class PlayerEvent {
     @SubscribeEvent
@@ -18,7 +16,6 @@ public class PlayerEvent {
         EntityPlayer player = event.getEntityPlayer();
         int r = new Random().nextInt(100);
         int n = 75;
-        LOGGER.debug("Player woke up. sky per: " + r + "/" + n);
         if (r >= n) {
             DimensionSky.go(player);
         }
