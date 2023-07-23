@@ -13,6 +13,7 @@ public class RegistryEvent {
     @Mod.EventHandler
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         registryDimension();
+        LOGGER.debug("Start pre-initialization.");
     }
 
     public static void registryDimension() {
