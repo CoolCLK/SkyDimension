@@ -29,8 +29,9 @@ public class DimensionSky {
 
     public static void letPlayerGoDimension(EntityPlayer player) {
         if (player.dimension != DimensionSky.getDimensionId()) {
+            LOGGER.debug("Sending player to dimension.");
             if (player.changeDimension(DimensionSky.getDimensionId()) != null) {
-                LOGGER.debug("Sending player to dimension.");
+                LOGGER.debug("Sent player successfully.");
             }
         }
     }

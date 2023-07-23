@@ -12,12 +12,12 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 public class RegistryEvent {
     @Mod.EventHandler
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
-        registryDimension();
         LOGGER.debug("Start pre-initialization.");
+        registryDimension();
     }
 
     public static void registryDimension() {
+        LOGGER.debug("Registering dimension(s)...");
         DimensionManager.registerDimension(DimensionSky.getDimensionId(), DimensionSky.getDimensionType());
-        LOGGER.debug("Registering dimension " + DimensionSky.getDimensionName() + " (id: " + DimensionSky.getDimensionId() + ").");
     }
 }
