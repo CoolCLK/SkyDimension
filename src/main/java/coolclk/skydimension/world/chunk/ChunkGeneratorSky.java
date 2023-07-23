@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -424,7 +425,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                 int j23 = l20 - (l + 8);
                 int k23 = world.getTopSolidOrLiquidBlock(new BlockPos(i18, 0, l20)).getY();
                 double d1 = world.getBiome(new BlockPos(j22, k23, j23)).getDefaultTemperature() - ((double) (k23 - 64) / 64D) * 0.29999999999999999D;
-                if (d1 < 0.5D && k23 > 0 && k23 < 128 && world.isAirBlock(new BlockPos(i18, k23, l20)) && world.getBlockState(new BlockPos(i18, k23 - 1, l20)).isTopSolid() && world.getBlockState(new BlockPos(i18, k23 - 1, l20)).getMaterial() != Material.ICE) {
+                BlockPos b1 = new BlockPos(i18, k23 - 1, l20);
+                if (d1 < 0.5D && k23 > 0 && k23 < 128 && world.isAirBlock(new BlockPos(i18, k23, l20)) && world.getBlockState(b1).isSideSolid(world, b1, EnumFacing.UP) && world.getBlockState(new BlockPos(i18, k23 - 1, l20)).getMaterial() != Material.ICE) {
                     world.setBlockState(new BlockPos(i18, k23, l20), Blocks.SNOW.getDefaultState());
                 }
             }
@@ -441,8 +443,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType enumCreatureType, @Nonnull BlockPos blockPos) {
-        Biome Biome = world.getBiome(blockPos);
-        return Biome == null ? null : Biome.getSpawnableList(enumCreatureType);
+        Biome biome = world.getBiome(blockPos);
+        return biome.getSpawnableList(enumCreatureType);
     }
 
     @Nullable
