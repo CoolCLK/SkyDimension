@@ -14,6 +14,7 @@ public class RegistryEvent {
     }
 
     public static void registryDimension() {
+        while (DimensionSky.getType() == null) {}
         DimensionManager.registerDimension(DimensionSky.getId(), DimensionSky.getType());
     }
 }

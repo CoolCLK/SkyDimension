@@ -12,14 +12,9 @@ public class DimensionSky {
     private final static int dimensionId = 2;
     private final static String dimensionName = "sky";
     private final static String dimensionSuffix = "_" + dimensionName;
-    private static World dimensionWorld;
-    private static WorldProvider dimensionWorldProvider;
     private final static DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
-    public DimensionSky() {
-        dimensionWorldProvider = dimensionType.createDimension();
-        dimensionWorld = ((WorldProviderSky) getWorldProvider()).getWorld();
-    }
-
+    private final static WorldProvider dimensionWorldProvider = dimensionType.createDimension();
+    private final static World dimensionWorld = ((WorldProviderSky) dimensionWorldProvider).getWorld();
     public static int getId() {
         return dimensionId;
     }
@@ -34,10 +29,6 @@ public class DimensionSky {
 
     public static String getSuffix() {
         return dimensionSuffix;
-    }
-
-    public static WorldProvider getWorldProvider() {
-        return dimensionWorldProvider;
     }
 
     public static World getWorld() {
