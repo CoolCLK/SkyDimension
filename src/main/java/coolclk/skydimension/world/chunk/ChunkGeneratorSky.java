@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -12,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import coolclk.skydimension.world.chunk.ChunkPrimer;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
@@ -21,6 +22,7 @@ import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -103,7 +105,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                                 if (d15 > 0.0D) {
                                     l2 = Blocks.STONE;
                                 }
-                                chunk.setBlockState(j2, l2.getDefaultState());
+                                chunkPrimerSetBlockStateByIndex(chunk, j2, l2.getDefaultState());
                                 j2 += c;
                                 d15 += d16;
                             }
@@ -457,5 +459,18 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Override
     public boolean isInsideStructure(@Nonnull World world, @Nonnull String s, @Nonnull BlockPos blockPos) {
         return false;
+    }
+
+    private void chunkPrimerSetBlockStateByIndex(ChunkPrimer primer, int index, IBlockState state) {
+        try {
+            Class<ChunkPrimer> chunkPrimerClass = (Class<ChunkPrimer>) primer.getClass();
+            Field chunkPrimerClassDeclaredField = chunkPrimerClass.getDeclaredField("data");
+            chunkPrimerClassDeclaredField.setAccessible(true);
+            char[] b = (char[]) chunkPrimerClassDeclaredField.get(primer);
+            b[index] = (char) Block.BLOCK_STATE_IDS.get(state);
+            chunkPrimerClassDeclaredField.set(primer, b);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
