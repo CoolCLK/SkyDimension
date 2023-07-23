@@ -8,8 +8,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
