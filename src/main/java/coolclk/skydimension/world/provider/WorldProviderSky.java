@@ -12,6 +12,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
+import javax.annotation.Nonnull;
+
 public class WorldProviderSky extends WorldProvider {
     public WorldProviderSky() {
         this.biomeProvider = new BiomeProviderSky();
@@ -29,6 +31,7 @@ public class WorldProviderSky extends WorldProvider {
         return 8F;
     }
 
+    @Nonnull
     public Vec3d getFogColor(float x, float z) {
         int i = 0x8080a0;
         float f2 = MathHelper.cos(x * 3.141593F * 2.0F) * 2.0F + 0.5F;
@@ -52,12 +55,14 @@ public class WorldProviderSky extends WorldProvider {
         return blockState.getBlock() != Blocks.AIR && blockState.getMaterial().isSolid();
     }
 
+    @Nonnull
     @Override
     public DimensionType getDimensionType() {
         DimensionSky.setWorld(world);
         return DimensionSky.getType();
     }
 
+    @Nonnull
     public IChunkGenerator createChunkGenerator() {
         return new ChunkGeneratorSky(world, getSeed());
     }
