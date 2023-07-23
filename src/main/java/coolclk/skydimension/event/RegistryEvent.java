@@ -6,6 +6,8 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import static coolclk.skydimension.SkyDimension.LOGGER;
+
 @Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
     @Mod.EventHandler
@@ -14,6 +16,7 @@ public class RegistryEvent {
     }
 
     public static void registryDimension() {
-        DimensionManager.registerDimension(DimensionSky.getId(), DimensionSky.getType());
+        DimensionManager.registerDimension(DimensionSky.getDimensionId(), DimensionSky.getDimensionType());
+        LOGGER.debug("Registering dimension " + DimensionSky.getDimensionName() + " (id: " + DimensionSky.getDimensionId() + ").");
     }
 }

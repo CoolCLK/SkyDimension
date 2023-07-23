@@ -59,7 +59,7 @@ public class WorldProviderSky extends WorldProvider {
     @Nonnull
     @Override
     public DimensionType getDimensionType() {
-        return DimensionSky.getType();
+        return DimensionSky.getDimensionType();
     }
 
     @Nonnull

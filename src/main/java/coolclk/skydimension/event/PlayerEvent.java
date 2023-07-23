@@ -17,7 +17,7 @@ public class PlayerEvent {
         int r = new Random().nextInt(100);
         int n = 75;
         if (r >= n) {
-            DimensionSky.go(player);
+            DimensionSky.letPlayerGoDimension(player);
         }
     }
 }

@@ -10,26 +10,26 @@ public class DimensionSky {
     private final static int dimensionId = 2;
     private final static String dimensionName = "sky";
     private final static String dimensionSuffix = "_" + dimensionName;
-    private final static DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
-    public static int getId() {
+    private final static DimensionType dimensionType = DimensionType.register(DimensionSky.getDimensionName(), DimensionSky.getDimensionSuffix(), DimensionSky.getDimensionId(), WorldProviderSky.class, false);
+    public static int getDimensionId() {
         return dimensionId;
     }
 
-    public static DimensionType getType() {
+    public static DimensionType getDimensionType() {
         return dimensionType;
     }
 
-    public static String getName() {
+    public static String getDimensionName() {
         return dimensionName;
     }
 
-    public static String getSuffix() {
+    public static String getDimensionSuffix() {
         return dimensionSuffix;
     }
 
-    public static void go(EntityPlayer player) {
-        if (player.dimension != DimensionSky.getId()) {
-            if (player.changeDimension(DimensionSky.getId()) != null) {
+    public static void letPlayerGoDimension(EntityPlayer player) {
+        if (player.dimension != DimensionSky.getDimensionId()) {
+            if (player.changeDimension(DimensionSky.getDimensionId()) != null) {
                 LOGGER.debug("Sending player to dimension.");
             }
         }
