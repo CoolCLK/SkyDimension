@@ -463,7 +463,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
 
     private void chunkPrimerSetBlockStateByIndex(ChunkPrimer primer, int index, IBlockState state) {
         try {
-            Class<ChunkPrimer> chunkPrimerClass = (Class<ChunkPrimer>) primer.getClass();
+            Class<? extends ChunkPrimer> chunkPrimerClass = primer.getClass();
             Field chunkPrimerClassDeclaredField = chunkPrimerClass.getDeclaredField("data");
             chunkPrimerClassDeclaredField.setAccessible(true);
             char[] b = (char[]) chunkPrimerClassDeclaredField.get(primer);
