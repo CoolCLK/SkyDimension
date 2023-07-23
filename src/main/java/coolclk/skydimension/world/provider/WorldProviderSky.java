@@ -1,7 +1,5 @@
 package coolclk.skydimension.world.provider;
 
-import coolclk.skydimension.world.biome.BiomeProviderSky;
-import coolclk.skydimension.world.chunk.ChunkGeneratorSky;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -15,20 +13,17 @@ import net.minecraft.world.gen.IChunkGenerator;
 import javax.annotation.Nonnull;
 
 public class WorldProviderSky extends WorldProvider {
-    public WorldProviderSky() {
-        this.biomeProvider = new BiomeProviderSky();
+    public IChunkGenerator createChunkGenerator() {
+        return new ChunkProviderSky(world, world.getSeed());
     }
 
-    public float calculateCelestialAngle(long l, float f) {
+    public float calculateCelestialAngle(long worldTime, float partialTicks)
+    {
         return 0.0F;
     }
 
     public float[] calcSunriseSunsetColors(float f, float f1) {
         return null;
-    }
-
-    public float getCloudHeight() {
-        return 8F;
     }
 
     @Nonnull
@@ -41,18 +36,21 @@ public class WorldProviderSky extends WorldProvider {
         if (f2 > 1.0F) {
             f2 = 1.0F;
         }
-        float f3 = (float)(i >> 16 & 0xff) / 255F;
-        float f4 = (float)(i >> 8 & 0xff) / 255F;
-        float f5 = (float)(i & 0xff) / 255F;
+        float f3 = (float) (i >> 16 & 0xff) / 255F;
+        float f4 = (float) (i >> 8 & 0xff) / 255F;
+        float f5 = (float) (i & 0xff) / 255F;
         f3 *= f2 * 0.94F + 0.06F;
         f4 *= f2 * 0.94F + 0.06F;
         f5 *= f2 * 0.91F + 0.09F;
         return new Vec3d(f3, f4, f5);
     }
 
-    public boolean canCoordinateBeSpawn(int x, int z) {
-        IBlockState blockState = world.getGroundAboveSeaLevel(new BlockPos(x, 0, z));
-        return blockState.getBlock() != Blocks.AIR && blockState.getMaterial().isSolid();
+    public boolean canRespawnHere() {
+        return false;
+    }
+
+    public float getCloudHeight() {
+        return 8F;
     }
 
     @Nonnull
@@ -61,12 +59,12 @@ public class WorldProviderSky extends WorldProvider {
         return DimensionSky.getDimensionType();
     }
 
-    @Nonnull
-    public IChunkGenerator createChunkGenerator() {
-        return new ChunkGeneratorSky(this.world, this.world.getSeed());
-    }
-
-    public boolean canRespawnHere() {
-        return false;
+    public boolean canCoordinateBeSpawn(int x, int z) {
+        IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, world.getHeight(x, z), z)));
+        if (k.getBlock() == Blocks.AIR) {
+            return false;
+        } else {
+            return k.getMaterial().isSolid();
+        }
     }
 }

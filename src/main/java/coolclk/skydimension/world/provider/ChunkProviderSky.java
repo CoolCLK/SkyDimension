@@ -1,10 +1,8 @@
-package coolclk.skydimension.world.chunk;
+package coolclk.skydimension.world.provider;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -14,79 +12,51 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.NoiseGeneratorPerlin;
+import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static coolclk.skydimension.SkyDimension.LOGGER;
-
-public class ChunkGeneratorSky implements IChunkGenerator {
-    public final Random seedRandomizer;
-    private final NoiseGeneratorOctaves noiseGeneratorOctaves_a;
-    private final NoiseGeneratorOctaves noiseGeneratorOctaves_b;
-    private final NoiseGeneratorOctaves noiseGeneratorOctaves_c;
-    private final NoiseGeneratorOctaves noiseGeneratorOctaves_d;
-    private final NoiseGeneratorOctaves noiseGeneratorOctaves_e;
-    public NoiseGeneratorOctaves noiseGeneratorOctaves_f;
-    public NoiseGeneratorOctaves noiseGeneratorOctaves_g;
-    public NoiseGeneratorOctaves noiseGeneratorOctaves_h;
-    private final World world;
-    private double[] field_28080_q;
-    private double[] field_28079_r;
-    private double[] field_28078_s;
-    private double[] field_28077_t;
-    private final MapGenBase mapGeneratorBase;
-    double[] field_28093_d;
-    double[] field_28092_e;
-    double[] field_28091_f;
-    double[] field_28090_g;
-    double[] field_28089_h;
-    int[][] field_28088_i;
-
-    public ChunkGeneratorSky(World world, long seed) {
+public class ChunkProviderSky implements IChunkGenerator {
+    public ChunkProviderSky(World world, long l) {
         field_28079_r = new double[256];
         field_28078_s = new double[256];
         field_28077_t = new double[256];
-        mapGeneratorBase = new MapGenBase();
+        field_28076_u = new MapGenCaves();
         field_28088_i = new int[32][32];
         this.world = world;
-        seedRandomizer = new Random(seed);
-        noiseGeneratorOctaves_a = new NoiseGeneratorOctaves(seedRandomizer, 16);
-        noiseGeneratorOctaves_b = new NoiseGeneratorOctaves(seedRandomizer, 16);
-        noiseGeneratorOctaves_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
-        noiseGeneratorOctaves_d = new NoiseGeneratorOctaves(seedRandomizer, 4);
-        noiseGeneratorOctaves_e = new NoiseGeneratorOctaves(seedRandomizer, 4);
-        noiseGeneratorOctaves_f = new NoiseGeneratorOctaves(seedRandomizer, 10);
-        noiseGeneratorOctaves_g = new NoiseGeneratorOctaves(seedRandomizer, 16);
-        noiseGeneratorOctaves_h = new NoiseGeneratorOctaves(seedRandomizer, 8);
+        seedRandomizer = new Random(l);
+        field_28086_k = new NoiseGeneratorOctaves(seedRandomizer, 16);
+        field_28085_l = new NoiseGeneratorOctaves(seedRandomizer, 16);
+        field_28084_m = new NoiseGeneratorOctaves(seedRandomizer, 8);
+        field_28083_n = new NoiseGeneratorOctaves(seedRandomizer, 4);
+        field_28082_o = new NoiseGeneratorOctaves(seedRandomizer, 4);
+        field_28096_a = new NoiseGeneratorOctaves(seedRandomizer, 10);
+        field_28095_b = new NoiseGeneratorOctaves(seedRandomizer, 16);
+        field_28094_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
     }
 
-    public void generateTerrain(int x, int z, ChunkPrimer chunk) {
+    public void func_28071_a(int i, int j, byte abyte0[], Biome abiome[], double ad[]) {
         byte byte0 = 2;
         int k = byte0 + 1;
         byte byte1 = 33;
         int l = byte0 + 1;
-        field_28080_q = getNoiseGeneration(field_28080_q, x * byte0, z * byte0, k, byte1, l);
+        field_28080_q = func_28073_a(field_28080_q, i * byte0, 0, j * byte0, k, byte1, l);
         for (int i1 = 0; i1 < byte0; i1++) {
             for (int j1 = 0; j1 < byte0; j1++) {
-                for(int k1 = 0; k1 < 32; k1++) {
+                for (int k1 = 0; k1 < 32; k1++) {
                     double d = 0.25D;
-                    double d1 = field_28080_q[((i1) * l + (j1)) * byte1 + (k1)];
-                    double d2 = field_28080_q[((i1) * l + (j1 + 1)) * byte1 + (k1)];
-                    double d3 = field_28080_q[((i1 + 1) * l + (j1)) * byte1 + (k1)];
-                    double d4 = field_28080_q[((i1 + 1) * l + (j1 + 1)) * byte1 + (k1)];
-                    double d5 = (field_28080_q[((i1) * l + (j1)) * byte1 + (k1 + 1)] - d1) * d;
-                    double d6 = (field_28080_q[((i1) * l + (j1 + 1)) * byte1 + (k1 + 1)] - d2) * d;
-                    double d7 = (field_28080_q[((i1 + 1) * l + (j1)) * byte1 + (k1 + 1)] - d3) * d;
+                    double d1 = field_28080_q[((i1 + 0) * l + (j1 + 0)) * byte1 + (k1 + 0)];
+                    double d2 = field_28080_q[((i1 + 0) * l + (j1 + 1)) * byte1 + (k1 + 0)];
+                    double d3 = field_28080_q[((i1 + 1) * l + (j1 + 0)) * byte1 + (k1 + 0)];
+                    double d4 = field_28080_q[((i1 + 1) * l + (j1 + 1)) * byte1 + (k1 + 0)];
+                    double d5 = (field_28080_q[((i1 + 0) * l + (j1 + 0)) * byte1 + (k1 + 1)] - d1) * d;
+                    double d6 = (field_28080_q[((i1 + 0) * l + (j1 + 1)) * byte1 + (k1 + 1)] - d2) * d;
+                    double d7 = (field_28080_q[((i1 + 1) * l + (j1 + 0)) * byte1 + (k1 + 1)] - d3) * d;
                     double d8 = (field_28080_q[((i1 + 1) * l + (j1 + 1)) * byte1 + (k1 + 1)] - d4) * d;
                     for (int l1 = 0; l1 < 4; l1++) {
                         double d9 = 0.125D;
@@ -95,17 +65,17 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                         double d12 = (d3 - d1) * d9;
                         double d13 = (d4 - d2) * d9;
                         for (int i2 = 0; i2 < 8; i2++) {
-                            int j2 = i2 + i1 * 8 << 11 | k1 * 4 << 7 | j1 * 8;
+                            int j2 = i2 + i1 * 8 << 11 | 0 + j1 * 8 << 7 | k1 * 4 + l1;
                             char c = '\200';
                             double d14 = 0.125D;
                             double d15 = d10;
                             double d16 = (d11 - d10) * d14;
                             for (int k2 = 0; k2 < 8; k2++) {
-                                Block l2 = Blocks.AIR;
+                                int l2 = 0;
                                 if (d15 > 0.0D) {
-                                    l2 = Blocks.STONE;
+                                    l2 = BlockSand.getIdFromBlock(Blocks.STONE);
                                 }
-                                chunkPrimerSetBlockStateByIndex(chunk, j2, l2.getDefaultState());
+                                abyte0[j2] = (byte)l2;
                                 j2 += c;
                                 d15 += d16;
                             }
@@ -122,66 +92,130 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         }
     }
 
-    public void generateBiomes(int x, int z, ChunkPrimer chunk, Biome biome) {
+    public void func_28072_a(int i, int j, byte abyte0[], Biome abiome[]) {
         double d = 0.03125D;
-        field_28079_r = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
-        field_28078_s = noiseGeneratorOctaves_d.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
-        field_28077_t = noiseGeneratorOctaves_e.generateNoiseOctaves(field_28077_t, x * 16, z * 16, 0, 16, 16, 1, d * 2D, d * 2D, d * 2D);
+        field_28079_r = field_28083_n.generateNoiseOctaves(field_28079_r, i * 16, j * 16, (int) 0.0D, 16, 16, 1, d, d, 1.0D);
+        field_28078_s = field_28083_n.generateNoiseOctaves(field_28078_s, i * 16, (int) 109.0134D, j * 16, 16, 1, 16, d, 1.0D, d);
+        field_28077_t = field_28082_o.generateNoiseOctaves(field_28077_t, i * 16, j * 16, (int) 0.0D, 16, 16, 1, d * 2D, d * 2D, d * 2D);
         for (int k = 0; k < 16; k++) {
             for (int l = 0; l < 16; l++) {
-                int i1 = (int) (field_28077_t[k + l * 16] / 3D + 3D + seedRandomizer.nextDouble() * 0.25D);
+                Biome biome = abiome[k + l * 16];
+                int i1 = (int)(field_28077_t[k + l * 16] / 3D + 3D + seedRandomizer.nextDouble() * 0.25D);
                 int j1 = -1;
-                Block topBlock = biome.topBlock.getBlock();
-                Block fillerBlock = biome.fillerBlock.getBlock();
+                byte byte0 = (byte) BlockSand.getStateId(biome.topBlock);
+                byte byte1 = (byte) BlockSand.getStateId(biome.fillerBlock);
                 for (int k1 = 127; k1 >= 0; k1--) {
-                    Block block = chunk.getBlockState(k, k1, l).getBlock();
-                    if (block == Blocks.AIR) {
+                    int l1 = (l * 16 + k) * 128 + k1;
+                    byte byte2 = abyte0[l1];
+                    if (byte2 == 0) {
                         j1 = -1;
                         continue;
                     }
-                    if (block != Blocks.STONE) {
+                    if (byte2 != BlockSand.getIdFromBlock(Blocks.STONE)) {
                         continue;
                     }
                     if (j1 == -1) {
                         if (i1 <= 0) {
-                            biome.topBlock = Blocks.AIR.getDefaultState();
-                            biome.fillerBlock = Blocks.STONE.getDefaultState();
+                            byte0 = 0;
+                            byte1 = (byte) BlockSand.getIdFromBlock(Blocks.STONE);
                         }
                         j1 = i1;
-                        chunk.setBlockState(k, k1, l, topBlock.getDefaultState());
+                        if (k1 >= 0) {
+                            abyte0[l1] = byte0;
+                        } else {
+                            abyte0[l1] = byte1;
+                        }
                         continue;
                     }
                     if (j1 <= 0) {
                         continue;
                     }
                     j1--;
-                    chunk.setBlockState(k, k1, l, fillerBlock.getDefaultState());
-                    if (j1 == 0 && fillerBlock == Blocks.SAND) {
+                    abyte0[l1] = byte1;
+                    if (j1 == 0 && byte1 == BlockSand.getIdFromBlock(Blocks.SAND)) {
                         j1 = seedRandomizer.nextInt(4);
-                        biome.fillerBlock = Blocks.SANDSTONE.getDefaultState();
+                        byte1 = (byte) BlockSand.getIdFromBlock(Blocks.SANDSTONE);
                     }
                 }
             }
         }
     }
 
-    private double[] getNoiseGeneration(double[] ad, int i, int k, int l, int i1, int j1) {
+    @Nonnull
+    @Override
+    public Chunk generateChunk(int i, int j)
+    {
+        return provideChunk(i, j);
+    }
+
+    public Chunk provideChunk(int x, int z) {
+        seedRandomizer.setSeed((long)x * 0x4f9939f508L + (long)z * 0x1ef1565bd5L);
+        byte[] abyte0 = new byte[32768];
+        Chunk chunk = new Chunk(world, bytesToChunkPrimer(abyte0), x, z);
+        field_28075_v = world.getBiomeProvider().getBiomes(field_28075_v, x * 16, z * 16, 16, 16);
+        double[] ad = new double[0];
+        func_28071_a(x, z, abyte0, field_28075_v, ad);
+        func_28072_a(x, z, abyte0, field_28075_v);
+        field_28076_u.generate(world, x, z, bytesToChunkPrimer(abyte0));
+        chunk.generateSkylightMap();
+        return chunk;
+    }
+
+    private double[] func_28073_a(double ad[], int i, int j, int k, int l, int i1, int j1) {
         if (ad == null) {
             ad = new double[l * i1 * j1];
         }
         double d = 684.41200000000003D;
         double d1 = 684.41200000000003D;
-        field_28090_g = noiseGeneratorOctaves_f.generateNoiseOctaves(field_28090_g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
-        field_28089_h = noiseGeneratorOctaves_g.generateNoiseOctaves(field_28089_h, i, k, l, j1, 200D, 200D, 0.5D);
+//        double ad1[] = world.getWorldChunkManager().temperature;
+//        double ad2[] = world.getWorldChunkManager().humidity;
+        field_28090_g = field_28096_a.generateNoiseOctaves(field_28090_g, i, k, l, j1, 1.121D, 1.121D, 0.5D);
+        field_28089_h = field_28095_b.generateNoiseOctaves(field_28089_h, i, k, l, j1, 200D, 200D, 0.5D);
         d *= 2D;
-        field_28093_d = noiseGeneratorOctaves_c.generateNoiseOctaves(field_28093_d, i, 0, k, l, i1, j1, d / 80D, d1 / 160D, d / 80D);
-        field_28092_e = noiseGeneratorOctaves_a.generateNoiseOctaves(field_28092_e, i, 0, k, l, i1, j1, d, d1, d);
-        field_28091_f = noiseGeneratorOctaves_b.generateNoiseOctaves(field_28091_f, i, 0, k, l, i1, j1, d, d1, d);
+        field_28093_d = field_28084_m.generateNoiseOctaves(field_28093_d, i, j, k, l, i1, j1, d / 80D, d1 / 160D, d / 80D);
+        field_28092_e = field_28086_k.generateNoiseOctaves(field_28092_e, i, j, k, l, i1, j1, d, d1, d);
+        field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, i, j, k, l, i1, j1, d, d1, d);
         int k1 = 0;
+//        int l1 = 0;
+        int i2 = 16 / l;
         for (int j2 = 0; j2 < l; j2++) {
+//            int k2 = j2 * i2 + i2 / 2;
             for (int l2 = 0; l2 < j1; l2++) {
+                int i3 = l2 * i2 + i2 / 2;
+//                double d2 = ad1[k2 * 16 + i3];
+//                double d3 = ad2[k2 * 16 + i3] * d2;
+//                double d4 = 1.0D - d3;
+//                d4 *= d4;
+//                d4 *= d4;
+//                d4 = 1.0D - d4;
+//                double d5 = (field_28090_g[l1] + 256D) / 512D;
+//                d5 *= d4;
+//                if (d5 > 1.0D) {
+//                    d5 = 1.0D;
+//                }
+//                double d6 = field_28089_h[l1] / 8000D;
+//                if (d6 < 0.0D) {
+//                    d6 = -d6 * 0.29999999999999999D;
+//                }
+//                d6 = d6 * 3D - 2D;
+//                if (d6 > 1.0D) {
+//                    d6 = 1.0D;
+//                }
+//                d6 /= 8D;
+//                d6 = 0.0D;
+//                if (d5 < 0.0D) {
+//                    d5 = 0.0D;
+//                }
+//                d5 += 0.5D;
+//                d6 = (d6 * (double)i1) / 16D;
+//                l1++;
+                double d7 = (double) i1 / 2D;
                 for (int j3 = 0; j3 < i1; j3++) {
-                    double d8;
+                    double d8 = 0.0D;
+//                    double d9 = (((double) j3 - d7) * 8D) / d5;
+//                    if (d9 < 0.0D) {
+//                        d9 *= -1D;
+//                    }
                     double d10 = field_28092_e[k1] / 512D;
                     double d11 = field_28091_f[k1] / 512D;
                     double d12 = (field_28093_d[k1] / 10D + 1.0D) / 2D;
@@ -194,8 +228,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                     }
                     d8 -= 8D;
                     int k3 = 32;
-                    if(j3 > i1 - k3) {
-                        double d13 = (float) (j3 - (i1 - k3)) / ((float)k3 - 1.0F);
+                    if (j3 > i1 - k3) {
+                        double d13 = (float) (j3 - (i1 - k3)) / ((float) k3 - 1.0F);
                         d8 = d8 * (1.0D - d13) + -30D * d13;
                     }
                     k3 = 8;
@@ -209,20 +243,6 @@ public class ChunkGeneratorSky implements IChunkGenerator {
             }
         }
         return ad;
-    }
-
-    @Nonnull
-    @Override
-    public Chunk generateChunk(int x, int z) {
-        LOGGER.debug("Loading chunk: (x: " + x + ", z: " + z + ")");
-        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) z * 0x1ef1565bd5L);
-        ChunkPrimer chunkPrimer = new ChunkPrimer();
-        generateTerrain(x, z, chunkPrimer);
-        generateBiomes(x, z, chunkPrimer, world.getBiome(new BlockPos(x, 0, z)));
-        mapGeneratorBase.generate(world, x, z, chunkPrimer);
-        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
-        chunk.generateSkylightMap();
-        return chunk;
     }
 
     @Override
@@ -461,16 +481,39 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         return false;
     }
 
-    private void chunkPrimerSetBlockStateByIndex(ChunkPrimer primer, int index, IBlockState state) {
-        try {
-            Class<? extends ChunkPrimer> chunkPrimerClass = primer.getClass();
-            Field chunkPrimerClassDeclaredField = chunkPrimerClass.getDeclaredField("data");
-            chunkPrimerClassDeclaredField.setAccessible(true);
-            char[] b = (char[]) chunkPrimerClassDeclaredField.get(primer);
-            b[index] = (char) Block.BLOCK_STATE_IDS.get(state);
-            chunkPrimerClassDeclaredField.set(primer, b);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+    private ChunkPrimer bytesToChunkPrimer(byte[] bytes) {
+        ChunkPrimer chunkPrimer = new ChunkPrimer();
+        for (int j = 0; j < 16; ++j) {
+            for (int k = 0; k < 16; ++k) {
+                for (int l = 0; l < 256; ++l) {
+                    chunkPrimer.setBlockState(j, l, k, BlockSand.getStateById(bytes[j << 12 | k << 8 | l]));
+                }
+            }
         }
+        return chunkPrimer;
     }
+
+    private Random seedRandomizer;
+    private NoiseGeneratorOctaves field_28086_k;
+    private NoiseGeneratorOctaves field_28085_l;
+    private NoiseGeneratorOctaves field_28084_m;
+    private NoiseGeneratorOctaves field_28083_n;
+    private NoiseGeneratorOctaves field_28082_o;
+    public NoiseGeneratorOctaves field_28096_a;
+    public NoiseGeneratorOctaves field_28095_b;
+    public NoiseGeneratorOctaves field_28094_c;
+    private World world;
+    private double[] field_28080_q;
+    private double[] field_28079_r;
+    private double[] field_28078_s;
+    private double[] field_28077_t;
+    private MapGenBase field_28076_u;
+    private Biome[] field_28075_v;
+    double[] field_28093_d;
+    double[] field_28092_e;
+    double[] field_28091_f;
+    double[] field_28090_g;
+    double[] field_28089_h;
+    int[][] field_28088_i;
+    private double[] field_28074_w;
 }
