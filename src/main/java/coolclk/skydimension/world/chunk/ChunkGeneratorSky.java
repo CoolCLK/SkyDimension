@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.ChunkPrimer;
+import coolclk.skydimension.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
@@ -21,17 +21,11 @@ import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
-
-/*
-在此文件中，可能与游戏源代码有差异，删除与优化了部分代码。
-若你发现什么奇怪名称的变量，a1、d3、c114514之类的，不要去动它，那是生成地形特有的无意义变量名。
-
-notch 特有的无意义代码（恼
- */
 
 public class ChunkGeneratorSky implements IChunkGenerator {
     public final Random seedRandomizer;
@@ -79,7 +73,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         int k = byte0 + 1;
         byte byte1 = 33;
         int l = byte0 + 1;
-        field_28080_q = generateRandomChunk(field_28080_q, x * byte0, z * byte0, k, byte1, l);
+        field_28080_q = getNoiseGeneration(field_28080_q, x * byte0, z * byte0, k, byte1, l);
         for (int i1 = 0; i1 < byte0; i1++) {
             for (int j1 = 0; j1 < byte0; j1++) {
                 for(int k1 = 0; k1 < 32; k1++) {
@@ -99,7 +93,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                         double d12 = (d3 - d1) * d9;
                         double d13 = (d4 - d2) * d9;
                         for (int i2 = 0; i2 < 8; i2++) {
-                            int j2 = i2 + i1 * 8 << 11 | j1 * 8 << 7 | k1 * 4 + l1;
+                            int j2 = i2 + i1 * 8 << 11 | k1 * 4 << 7 | j1 * 8;
                             char c = '\200';
                             double d14 = 0.125D;
                             double d15 = d10;
@@ -109,7 +103,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                                 if (d15 > 0.0D) {
                                     l2 = Blocks.STONE;
                                 }
-                                chunk.setBlockState(j2 % 8, j2 / 8, 8 - j2 % 8, l2.getDefaultState());
+                                chunk.setBlockState(j2, l2.getDefaultState());
                                 j2 += c;
                                 d15 += d16;
                             }
@@ -148,8 +142,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                     }
                     if (j1 == -1) {
                         if (i1 <= 0) {
-                            topBlock = Blocks.AIR;
-                            fillerBlock = Blocks.STONE;
+                            biome.topBlock = Blocks.AIR.getDefaultState();
+                            biome.fillerBlock = Blocks.STONE.getDefaultState();
                         }
                         j1 = i1;
                         chunk.setBlockState(k, k1, l, topBlock.getDefaultState());
@@ -162,14 +156,14 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                     chunk.setBlockState(k, k1, l, fillerBlock.getDefaultState());
                     if (j1 == 0 && fillerBlock == Blocks.SAND) {
                         j1 = seedRandomizer.nextInt(4);
-                        fillerBlock = Blocks.SANDSTONE;
+                        biome.fillerBlock = Blocks.SANDSTONE.getDefaultState();
                     }
                 }
             }
         }
     }
 
-    private double[] generateRandomChunk(double[] ad, int i, int k, int l, int i1, int j1) {
+    private double[] getNoiseGeneration(double[] ad, int i, int k, int l, int i1, int j1) {
         if (ad == null) {
             ad = new double[l * i1 * j1];
         }
@@ -199,12 +193,12 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                     d8 -= 8D;
                     int k3 = 32;
                     if(j3 > i1 - k3) {
-                        double d13 = (float)(j3 - (i1 - k3)) / ((float)k3 - 1.0F);
+                        double d13 = (float) (j3 - (i1 - k3)) / ((float)k3 - 1.0F);
                         d8 = d8 * (1.0D - d13) + -30D * d13;
                     }
                     k3 = 8;
                     if (j3 < k3) {
-                        double d14 = (float)(k3 - j3) / ((float)k3 - 1.0F);
+                        double d14 = (float) (k3 - j3) / ((float) k3 - 1.0F);
                         d8 = d8 * (1.0D - d14) + -30D * d14;
                     }
                     ad[k1] = d8;
@@ -221,11 +215,10 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         LOGGER.debug("Loading chunk: (x: " + x + ", z: " + z + ")");
         seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) z * 0x1ef1565bd5L);
         ChunkPrimer chunkPrimer = new ChunkPrimer();
-        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
-        Biome biome = world.getBiome(new BlockPos(x, 0, z));
         generateTerrain(x, z, chunkPrimer);
-        generateBiomes(x, z, chunkPrimer, biome);
+        generateBiomes(x, z, chunkPrimer, world.getBiome(new BlockPos(x, 0, z)));
         mapGeneratorBase.generate(world, x, z, chunkPrimer);
+        Chunk chunk = new Chunk(world, chunkPrimer, x, z);
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -360,7 +353,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
             int l15 = k + seedRandomizer.nextInt(16) + 8;
             int k18 = seedRandomizer.nextInt(128);
             int i21 = l + seedRandomizer.nextInt(16) + 8;
-            (new WorldGenFlowers(Blocks.YELLOW_FLOWER, BlockFlower.EnumFlowerType.POPPY)).generate(world, seedRandomizer, new BlockPos(l15, k18, i21));
+            (new WorldGenFlowers(Blocks.YELLOW_FLOWER, BlockFlower.EnumFlowerType.DANDELION)).generate(world, seedRandomizer, new BlockPos(l15, k18, i21));
         }
 
         if (seedRandomizer.nextInt(2) == 0) {
@@ -430,7 +423,6 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                     world.setBlockState(new BlockPos(i18, k23, l20), Blocks.SNOW.getDefaultState());
                 }
             }
-
         }
         BlockSand.fallInstantly = false;
     }
@@ -444,7 +436,11 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType enumCreatureType, @Nonnull BlockPos blockPos) {
         Biome biome = world.getBiome(blockPos);
-        return biome.getSpawnableList(enumCreatureType);
+        try {
+            return biome.getSpawnableList(enumCreatureType);
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Nullable
