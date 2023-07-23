@@ -47,6 +47,11 @@ public class WorldProviderSky extends WorldProvider {
         return new Vec3d(f3, f4, f5);
     }
 
+    public boolean canCoordinateBeSpawn(int x, int z) {
+        IBlockState blockState = world.getGroundAboveSeaLevel(new BlockPos(x, 0, z));
+        return blockState.getBlock() != Blocks.AIR && blockState.getMaterial().isSolid();
+    }
+
     @Override
     public DimensionType getDimensionType() {
         DimensionSky.setWorld(world);
@@ -57,16 +62,7 @@ public class WorldProviderSky extends WorldProvider {
         return new ChunkGeneratorSky(world, getSeed());
     }
 
-    public boolean canCoordinateBeSpawn(int x, int z) {
-        IBlockState blockState = world.getGroundAboveSeaLevel(new BlockPos(x, 0, z));
-        return blockState.getBlock() != Blocks.AIR && blockState.getMaterial().isSolid();
-    }
-
     public boolean canRespawnHere() {
-        return false;
-    }
-
-    public boolean isSurfaceWorld() {
         return false;
     }
 }
