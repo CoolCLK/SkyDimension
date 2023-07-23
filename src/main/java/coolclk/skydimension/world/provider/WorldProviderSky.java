@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
@@ -58,7 +59,6 @@ public class WorldProviderSky extends WorldProvider {
     @Nonnull
     @Override
     public DimensionType getDimensionType() {
-        DimensionSky.setWorld(world);
         return DimensionSky.getType();
     }
 
@@ -69,5 +69,9 @@ public class WorldProviderSky extends WorldProvider {
 
     public boolean canRespawnHere() {
         return false;
+    }
+
+    public World getWorld() {
+        return this.world;
     }
 }

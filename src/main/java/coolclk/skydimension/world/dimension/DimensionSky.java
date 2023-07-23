@@ -4,6 +4,7 @@ import coolclk.skydimension.world.provider.WorldProviderSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
@@ -12,7 +13,12 @@ public class DimensionSky {
     private final static String dimensionName = "sky";
     private final static String dimensionSuffix = "_" + dimensionName;
     private static World dimensionWorld;
+    private static WorldProvider dimensionWorldProvider;
     private final static DimensionType dimensionType = DimensionType.register(DimensionSky.getName(), DimensionSky.getSuffix(), DimensionSky.getId(), WorldProviderSky.class, false);
+    public DimensionSky() {
+        dimensionWorldProvider = dimensionType.createDimension();
+        dimensionWorld = ((WorldProviderSky) getWorldProvider()).getWorld();
+    }
 
     public static int getId() {
         return dimensionId;
@@ -30,12 +36,12 @@ public class DimensionSky {
         return dimensionSuffix;
     }
 
-    public static World getWorld() {
-        return dimensionWorld;
+    public static WorldProvider getWorldProvider() {
+        return dimensionWorldProvider;
     }
 
-    public static void setWorld(World world) {
-        dimensionWorld = world;
+    public static World getWorld() {
+        return dimensionWorld;
     }
 
     public static void go(EntityPlayer player) {

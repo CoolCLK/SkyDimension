@@ -15,9 +15,9 @@ public class SkyDimension {
         LOGGER = event.getModLog();
 
         LOGGER.info("========== [Sky Dimension] ==========");
-        LOGGER.info("The mod successfully launched!       ");
-        LOGGER.info("Author: CoolCLK                      ");
-        LOGGER.info("Thanks for your using!               ");
+        LOGGER.info("The mod successfully launched!");
+        LOGGER.info("Author: CoolCLK");
+        LOGGER.info("Thanks for your using!");
         LOGGER.info("=====================================");
     }
 }

@@ -18,6 +18,7 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.feature.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -213,6 +214,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         return ad;
     }
 
+    @Nonnull
     @Override
     public Chunk generateChunk(int x, int z) {
         LOGGER.debug("Loading chunk: (x: " + x + ", z: " + z + ")");
@@ -432,29 +434,30 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     }
 
     @Override
-    public boolean generateStructures(Chunk chunk, int x, int z) {
+    public boolean generateStructures(@Nonnull Chunk chunk, int x, int z) {
         return false;
     }
 
+    @Nonnull
     @Override
-    public List<Biome.SpawnListEntry> getPossibleCreatures(EnumCreatureType enumCreatureType, BlockPos blockPos) {
+    public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType enumCreatureType, @Nonnull BlockPos blockPos) {
         Biome Biome = world.getBiome(blockPos);
         return Biome == null ? null : Biome.getSpawnableList(enumCreatureType);
     }
 
     @Nullable
     @Override
-    public BlockPos getNearestStructurePos(World world, String s, BlockPos blockPos, boolean b) {
+    public BlockPos getNearestStructurePos(@Nonnull World world, @Nonnull String s, @Nonnull BlockPos blockPos, boolean b) {
         return null;
     }
 
     @Override
-    public void recreateStructures(Chunk chunk, int x, int z) {
+    public void recreateStructures(@Nonnull Chunk chunk, int x, int z) {
 
     }
 
     @Override
-    public boolean isInsideStructure(World world, String s, BlockPos blockPos) {
+    public boolean isInsideStructure(@Nonnull World world, @Nonnull String s, @Nonnull BlockPos blockPos) {
         return false;
     }
 }
