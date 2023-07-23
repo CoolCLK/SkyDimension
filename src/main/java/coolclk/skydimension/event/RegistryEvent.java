@@ -10,7 +10,7 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 
 @Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
-    @Mod.EventHandler
+    // @Mod.EventHandler
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         LOGGER.debug("Start pre-initialization.");
         registryDimension();
