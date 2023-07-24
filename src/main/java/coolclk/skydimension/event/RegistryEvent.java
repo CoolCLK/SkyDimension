@@ -1,6 +1,5 @@
 package coolclk.skydimension.event;
 
-import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
@@ -10,8 +9,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -21,15 +18,12 @@ import java.util.List;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
-@EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
-    @EventHandler
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         LOGGER.debug("Start pre-initialization.");
         registryDimension();
     }
 
-    @EventHandler
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(true, event);
     }
