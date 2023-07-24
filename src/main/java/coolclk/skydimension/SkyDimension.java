@@ -1,6 +1,5 @@
 package coolclk.skydimension;
 
-import coolclk.skydimension.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +19,5 @@ public class SkyDimension {
         LOGGER.info("Author: CoolCLK");
         LOGGER.info("Thanks for your using!");
         LOGGER.info("=====================================");
-
-        RegistryEvent.beforeFMLPreInitializationEvent(event);
     }
 }
