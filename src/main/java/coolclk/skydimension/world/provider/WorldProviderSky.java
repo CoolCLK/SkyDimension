@@ -15,8 +15,10 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
-    private final static int getSpawnCoordinateMaxRange = 512;
-    private final static int getSpawnCoordinateMaxTimes = 1000;
+    public static BlockPos spawnCoordinate = null;
+
+    private final static int getSpawnCoordinateMaxRange = 256;
+    private final static int getSpawnCoordinateMaxTimes = 2000;
     public WorldProviderSky() {
         this.nether = false;
     }
@@ -79,18 +81,29 @@ public class WorldProviderSky extends WorldProvider {
 
     @Nullable
     public BlockPos getSpawnCoordinate() {
+        if (spawnCoordinate == null) {
+            refreshSpawnCoordinate();
+        }
+        return spawnCoordinate;
+    }
+
+    public void refreshSpawnCoordinate() {
         Vec3d spawnCoordinate = new Vec3d(0, 0, 0);
         Random tryRandom = new Random();
         int tryTimes = 0;
+        boolean success = false;
         while (tryTimes < getSpawnCoordinateMaxTimes) {
             BlockPos tryPos = new BlockPos(spawnCoordinate);
             IBlockState tryState = world.getBlockState(world.getTopSolidOrLiquidBlock(tryPos));
             if (tryState.getBlock() != Blocks.AIR && tryState.getMaterial().isSolid()) {
+                success = true;
                 break;
             }
             spawnCoordinate.add(new Vec3d(tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange, 0, tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange));
             tryTimes++;
         }
-        return new BlockPos(spawnCoordinate);
+        if (success) {
+            WorldProviderSky.spawnCoordinate = new BlockPos(spawnCoordinate);
+        }
     }
 }
