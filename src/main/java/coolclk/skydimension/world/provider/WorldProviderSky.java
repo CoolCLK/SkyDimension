@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
-    private final static int getSpawnCoordinateMaxRange = 1024;
+    private final static int getSpawnCoordinateMaxRange = 128;
     public WorldProviderSky() {
         this.nether = false;
     }
