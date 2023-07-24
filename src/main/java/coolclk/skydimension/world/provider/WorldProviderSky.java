@@ -13,6 +13,11 @@ import net.minecraft.world.gen.IChunkGenerator;
 import javax.annotation.Nonnull;
 
 public class WorldProviderSky extends WorldProvider {
+    public WorldProviderSky() {
+        this.nether = false;
+    }
+
+    @Nonnull
     public IChunkGenerator createChunkGenerator() {
         return new ChunkProviderSky(world, world.getSeed());
     }
@@ -60,7 +65,7 @@ public class WorldProviderSky extends WorldProvider {
     }
 
     public boolean canCoordinateBeSpawn(int x, int z) {
-        IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, world.getHeight(x, z), z)));
+        IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z)));
         if (k.getBlock() == Blocks.AIR) {
             return false;
         } else {

@@ -4,6 +4,7 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -17,11 +18,7 @@ import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import static coolclk.skydimension.SkyDimension.LOGGER;
+import java.util.*;
 
 public class ChunkProviderSky implements IChunkGenerator {
     public ChunkProviderSky(World world, long l) {
@@ -42,12 +39,12 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28094_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
     }
 
-    public void func_28071_a(int xOffset, int zOffset, byte[] abyte0) {
+    public void generateUnderground(int xOffset, int zOffset, byte[] abyte0) {
         byte scale = 2;
         int xSize = scale + 1;
         byte ySize = 33;
         int zSize = scale + 1;
-        field_28080_q = func_28073_a(field_28080_q, xOffset * scale, 0, zOffset * scale, xSize, ySize, zSize);
+        field_28080_q = generateANoiseOctave(field_28080_q, xOffset * scale, 0, zOffset * scale, xSize, ySize, zSize);
         for (int i1 = 0; i1 < scale; i1++) {
             for (int j1 = 0; j1 < scale; j1++) {
                 for (int k1 = 0; k1 < 32; k1++) {
@@ -94,7 +91,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
     }
 
-    public void func_28072_a(int x, int z, byte[] abyte0, Biome[] abiome) {
+    public void generateBiomes(int x, int z, byte[] abyte0, Biome[] abiome) {
         double d = 0.03125D;
         field_28079_r = field_28083_n.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
         field_28078_s = field_28083_n.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
@@ -149,23 +146,20 @@ public class ChunkProviderSky implements IChunkGenerator {
         seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) x * 0x1ef1565bd5L);
         byte[] abyte0 = new byte[32768];
         biomes = world.getBiomeProvider().getBiomes(biomes, x * 16, z * 16, 16, 16);
-        func_28071_a(x, z, abyte0);
-        func_28072_a(x, z, abyte0, biomes);
+        generateUnderground(x, z, abyte0);
+        generateBiomes(x, z, abyte0, biomes);
         Chunk chunk = bytesToChunk(world, abyte0, x, z);
         caveGenerator.generate(world, x, z, bytesToChunkPrimer(abyte0));
         chunk.generateSkylightMap();
-        LOGGER.debug("Generating Chunk: (x: " + x + ", z: " + z + ")");
         return chunk;
     }
 
-    private double[] func_28073_a(double[] ad, int xOffset, int yOffset, int zOffset, int xSize, int ySize, int zSize) {
+    private double[] generateANoiseOctave(double[] ad, int xOffset, int yOffset, int zOffset, int xSize, int ySize, int zSize) {
         if (ad == null) {
             ad = new double[xSize * ySize * zSize];
         }
         double d = 684.41200000000003D;
         double d1 = 684.41200000000003D;
-//        double ad1[] = world.getWorldChunkManager().temperature;
-//        double ad2[] = world.getWorldChunkManager().humidity;
         field_28090_g = field_28096_a.generateNoiseOctaves(field_28090_g, xOffset, zOffset, xSize, zSize, 1.121D, 1.121D, 0.5D);
         field_28089_h = field_28095_b.generateNoiseOctaves(field_28089_h, xOffset, zOffset, xSize, zSize, 200D, 200D, 0.5D);
         d *= 2D;
@@ -173,46 +167,10 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28092_e = field_28086_k.generateNoiseOctaves(field_28092_e, xOffset, yOffset, zOffset, xSize, ySize, zSize, d, d1, d);
         field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, xOffset, yOffset, zOffset, xSize, ySize, zSize, d, d1, d);
         int k1 = 0;
-//        int l1 = 0;
-//        int i2 = 16 / xSize;
         for (int j2 = 0; j2 < xSize; j2++) {
-//            int k2 = j2 * i2 + i2 / 2;
             for (int l2 = 0; l2 < zSize; l2++) {
-//                int i3 = l2 * i2 + i2 / 2;
-//                double d2 = ad1[k2 * 16 + i3];
-//                double d3 = ad2[k2 * 16 + i3] * d2;
-//                double d4 = 1.0D - d3;
-//                d4 *= d4;
-//                d4 *= d4;
-//                d4 = 1.0D - d4;
-//                double d5 = (field_28090_g[l1] + 256D) / 512D;
-//                d5 *= d4;
-//                if (d5 > 1.0D) {
-//                    d5 = 1.0D;
-//                }
-//                double d6 = field_28089_h[l1] / 8000D;
-//                if (d6 < 0.0D) {
-//                    d6 = -d6 * 0.29999999999999999D;
-//                }
-//                d6 = d6 * 3D - 2D;
-//                if (d6 > 1.0D) {
-//                    d6 = 1.0D;
-//                }
-//                d6 /= 8D;
-//                d6 = 0.0D;
-//                if (d5 < 0.0D) {
-//                    d5 = 0.0D;
-//                }
-//                d5 += 0.5D;
-//                d6 = (d6 * (double)i1) / 16D;
-//                l1++;
-//                double d7 = (double) i1 / 2D;
                 for (int j3 = 0; j3 < ySize; j3++) {
                     double d8;
-//                    double d9 = (((double) j3 - d7) * 8D) / d5;
-//                    if (d9 < 0.0D) {
-//                        d9 *= -1D;
-//                    }
                     double d10 = field_28092_e[k1] / 512D;
                     double d11 = field_28091_f[k1] / 512D;
                     double d12 = (field_28093_d[k1] / 10D + 1.0D) / 2D;
@@ -454,12 +412,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType enumCreatureType, @Nonnull BlockPos blockPos) {
-        Biome biome = world.getBiome(blockPos);
-        try {
-            return biome.getSpawnableList(enumCreatureType);
-        } catch (Exception e) {
-            return new ArrayList<>();
-        }
+        return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 4, 4));
     }
 
     @Nullable
