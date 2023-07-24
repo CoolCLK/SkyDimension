@@ -12,10 +12,13 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
-    private final static int getSpawnCoordinateMaxRange = 128;
+    private final static List<Integer> getSpawnCoordinateMaxRanges = Collections.singletonList(128);
     public WorldProviderSky() {
         this.nether = false;
     }
@@ -79,13 +82,15 @@ public class WorldProviderSky extends WorldProvider {
     @Nullable
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = null;
-        for (int r = 0; r <= 360; r++) {
-            BlockPos tryPos = new BlockPos(Math.cos(r) * getSpawnCoordinateMaxRange, 0, Math.sin(r) * getSpawnCoordinateMaxRange);
-            IBlockState tryState = world.getBlockState(world.getTopSolidOrLiquidBlock(tryPos));
-            if (tryState.getBlock() != Blocks.AIR && tryState.getMaterial().isSolid()) {
-                break;
+        getSpawnCoordinateMaxRanges.forEach(r -> {
+            for (int a = 0; a <= 360; a += 2.5) {
+                BlockPos tryPos = new BlockPos(Math.cos(a) * r, 0, Math.sin(a) * r);
+                IBlockState tryState = world.getBlockState(world.getTopSolidOrLiquidBlock(tryPos));
+                if (tryState.getBlock() != Blocks.AIR && tryState.getMaterial().isSolid()) {
+                    break;
+                }
             }
-        }
+        });
         return spawnCoordinate;
     }
 }
