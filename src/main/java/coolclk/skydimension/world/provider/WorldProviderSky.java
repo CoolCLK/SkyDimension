@@ -1,21 +1,22 @@
 package coolclk.skydimension.world.provider;
 
-import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
-import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
+    private final static int getSpawnCoordinateMaxRange = 512;
+    private final static int getSpawnCoordinateMaxTimes = 1000;
     public WorldProviderSky() {
         this.nether = false;
     }
@@ -74,5 +75,22 @@ public class WorldProviderSky extends WorldProvider {
         } else {
             return k.getMaterial().isSolid();
         }
+    }
+
+    @Nullable
+    public BlockPos getSpawnCoordinate() {
+        Vec3d spawnCoordinate = new Vec3d(0, 0, 0);
+        Random tryRandom = new Random();
+        int tryTimes = 0;
+        while (tryTimes < getSpawnCoordinateMaxTimes) {
+            BlockPos tryPos = new BlockPos(spawnCoordinate);
+            IBlockState tryState = world.getBlockState(world.getTopSolidOrLiquidBlock(tryPos));
+            if (tryState.getBlock() != Blocks.AIR && tryState.getMaterial().isSolid()) {
+                break;
+            }
+            spawnCoordinate.add(new Vec3d(tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange, 0, tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange));
+            tryTimes++;
+        }
+        return new BlockPos(spawnCoordinate);
     }
 }
