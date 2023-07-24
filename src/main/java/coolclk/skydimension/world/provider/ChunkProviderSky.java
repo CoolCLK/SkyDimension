@@ -21,12 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static coolclk.skydimension.SkyDimension.LOGGER;
+
 public class ChunkProviderSky implements IChunkGenerator {
     public ChunkProviderSky(World world, long l) {
         field_28079_r = new double[256];
         field_28078_s = new double[256];
         field_28077_t = new double[256];
-        mapGenBase = new MapGenCaves();
+        caveGenerator = new MapGenCaves();
+
         this.world = world;
         seedRandomizer = new Random(l);
         field_28086_k = new NoiseGeneratorOctaves(seedRandomizer, 16);
@@ -49,13 +52,13 @@ public class ChunkProviderSky implements IChunkGenerator {
             for (int j1 = 0; j1 < scale; j1++) {
                 for (int k1 = 0; k1 < 32; k1++) {
                     double d = 0.25D;
-                    double d1 = field_28080_q[((i1 + 0) * zSize + (j1 + 0)) * ySize + (k1 + 0)];
-                    double d2 = field_28080_q[((i1 + 0) * zSize + (j1 + 1)) * ySize + (k1 + 0)];
-                    double d3 = field_28080_q[((i1 + 1) * zSize + (j1 + 0)) * ySize + (k1 + 0)];
-                    double d4 = field_28080_q[((i1 + 1) * zSize + (j1 + 1)) * ySize + (k1 + 0)];
-                    double d5 = (field_28080_q[((i1 + 0) * zSize + (j1 + 0)) * ySize + (k1 + 1)] - d1) * d;
-                    double d6 = (field_28080_q[((i1 + 0) * zSize + (j1 + 1)) * ySize + (k1 + 1)] - d2) * d;
-                    double d7 = (field_28080_q[((i1 + 1) * zSize + (j1 + 0)) * ySize + (k1 + 1)] - d3) * d;
+                    double d1 = field_28080_q[((i1) * zSize + (j1)) * ySize + (k1)];
+                    double d2 = field_28080_q[((i1) * zSize + (j1 + 1)) * ySize + (k1)];
+                    double d3 = field_28080_q[((i1 + 1) * zSize + (j1)) * ySize + (k1)];
+                    double d4 = field_28080_q[((i1 + 1) * zSize + (j1 + 1)) * ySize + (k1)];
+                    double d5 = (field_28080_q[((i1) * zSize + (j1)) * ySize + (k1 + 1)] - d1) * d;
+                    double d6 = (field_28080_q[((i1) * zSize + (j1 + 1)) * ySize + (k1 + 1)] - d2) * d;
+                    double d7 = (field_28080_q[((i1 + 1) * zSize + (j1)) * ySize + (k1 + 1)] - d3) * d;
                     double d8 = (field_28080_q[((i1 + 1) * zSize + (j1 + 1)) * ySize + (k1 + 1)] - d4) * d;
                     for (int l1 = 0; l1 < 4; l1++) {
                         double d9 = 0.125D;
@@ -64,7 +67,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                         double d12 = (d3 - d1) * d9;
                         double d13 = (d4 - d2) * d9;
                         for (int i2 = 0; i2 < 8; i2++) {
-                            int j2 = i2 + i1 * 8 << 11 | 0 + j1 * 8 << 7 | k1 * 4 + l1;
+                            int j2 = i2 + i1 * 8 << 11 | j1 * 8 << 7 | k1 * 4 + l1;
                             char c = '\200';
                             double d14 = 0.125D;
                             double d15 = d10;
@@ -93,18 +96,18 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     public void func_28072_a(int x, int z, byte[] abyte0, Biome[] abiome) {
         double d = 0.03125D;
-        field_28079_r = field_28083_n.generateNoiseOctaves(field_28079_r, x * 16, z * 16, (int) 0.0D, 16, 16, 1, d, d, 1.0D);
+        field_28079_r = field_28083_n.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
         field_28078_s = field_28083_n.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
-        field_28077_t = field_28082_o.generateNoiseOctaves(field_28077_t, x * 16, z * 16, (int) 0.0D, 16, 16, 1, d * 2D, d * 2D, d * 2D);
-        for (int k = 0; k < 16; k++) {
-            for (int l = 0; l < 16; l++) {
-                Biome biome = abiome[k + l * 16];
-                int i1 = (int)(field_28077_t[k + l * 16] / 3D + 3D + seedRandomizer.nextDouble() * 0.25D);
+        field_28077_t = field_28082_o.generateNoiseOctaves(field_28077_t, x * 16, z * 16, 0, 16, 16, 1, d * 2D, d * 2D, d * 2D);
+        for (int gx = 0; gx < 16; gx++) {
+            for (int gz = 0; gz < 16; gz++) {
+                Biome biome = abiome[gx + gz * 16];
+                int i1 = (int)(field_28077_t[gx + gz * 16] / 3D + 3D + seedRandomizer.nextDouble() * 0.25D);
                 int j1 = -1;
                 byte byte0 = (byte) BlockSand.getStateId(biome.topBlock);
                 byte byte1 = (byte) BlockSand.getStateId(biome.fillerBlock);
                 for (int k1 = 127; k1 >= 0; k1--) {
-                    int l1 = (l * 16 + k) * 128 + k1;
+                    int l1 = (gz * 16 + gx) * 128 + k1;
                     byte byte2 = abyte0[l1];
                     if (byte2 == 0) {
                         j1 = -1;
@@ -119,11 +122,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                             byte1 = (byte) BlockSand.getIdFromBlock(Blocks.STONE);
                         }
                         j1 = i1;
-                        if (k1 >= 0) {
-                            abyte0[l1] = byte0;
-                        } else {
-                            abyte0[l1] = byte1;
-                        }
+                        abyte0[l1] = byte0;
                         continue;
                     }
                     if (j1 <= 0) {
@@ -142,21 +141,20 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     @Nonnull
     @Override
-    public Chunk generateChunk(int x, int z)
-    {
+    public Chunk generateChunk(int x, int z) {
         return provideChunk(x, z);
     }
 
     public Chunk provideChunk(int x, int z) {
-        seedRandomizer.setSeed((long)x * 0x4f9939f508L + (long)z * 0x1ef1565bd5L);
+        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) x * 0x1ef1565bd5L);
         byte[] abyte0 = new byte[32768];
-        Chunk chunk = new Chunk(world, bytesToChunkPrimer(abyte0), x, z);
         biomes = world.getBiomeProvider().getBiomes(biomes, x * 16, z * 16, 16, 16);
-        double[] ad = new double[0];
         func_28071_a(x, z, abyte0);
         func_28072_a(x, z, abyte0, biomes);
-        mapGenBase.generate(world, x, z, bytesToChunkPrimer(abyte0));
+        Chunk chunk = bytesToChunk(world, abyte0, x, z);
+        caveGenerator.generate(world, x, z, bytesToChunkPrimer(abyte0));
         chunk.generateSkylightMap();
+        LOGGER.debug("Generating Chunk: (x: " + x + ", z: " + z + ")");
         return chunk;
     }
 
@@ -176,11 +174,11 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, xOffset, yOffset, zOffset, xSize, ySize, zSize, d, d1, d);
         int k1 = 0;
 //        int l1 = 0;
-        int i2 = 16 / xSize;
+//        int i2 = 16 / xSize;
         for (int j2 = 0; j2 < xSize; j2++) {
 //            int k2 = j2 * i2 + i2 / 2;
             for (int l2 = 0; l2 < zSize; l2++) {
-                int i3 = l2 * i2 + i2 / 2;
+//                int i3 = l2 * i2 + i2 / 2;
 //                double d2 = ad1[k2 * 16 + i3];
 //                double d3 = ad2[k2 * 16 + i3] * d2;
 //                double d4 = 1.0D - d3;
@@ -210,7 +208,7 @@ public class ChunkProviderSky implements IChunkGenerator {
 //                l1++;
 //                double d7 = (double) i1 / 2D;
                 for (int j3 = 0; j3 < ySize; j3++) {
-                    double d8 = 0.0D;
+                    double d8;
 //                    double d9 = (((double) j3 - d7) * 8D) / d5;
 //                    if (d9 < 0.0D) {
 //                        d9 *= -1D;
@@ -482,14 +480,18 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     private ChunkPrimer bytesToChunkPrimer(byte[] bytes) {
         ChunkPrimer chunkPrimer = new ChunkPrimer();
-        for (int x = 0; x < 16 / 2; ++x) {
-            for (int z = 0; z < 16 / 2; ++z) {
+        for (int x = 0; x < 16; ++x) {
+            for (int z = 0; z < 16; ++z) {
                 for (int y = 0; y < 256; ++y) {
-                    chunkPrimer.setBlockState(x, y, z, BlockSand.getStateById(bytes[x << 12 | z << 8 | y]));
+                    chunkPrimer.setBlockState(x, y, z, BlockSand.getBlockById(bytes[x << 11 | z << 7 | y]).getDefaultState());
                 }
             }
         }
         return chunkPrimer;
+    }
+
+    private Chunk bytesToChunk(World worldIn, byte[] bytes, int chunkX, int chunkZ) {
+        return new Chunk(worldIn, bytesToChunkPrimer(bytes), chunkX, chunkZ);
     }
 
     private final Random seedRandomizer;
@@ -506,7 +508,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     private double[] field_28079_r;
     private double[] field_28078_s;
     private double[] field_28077_t;
-    private final MapGenBase mapGenBase;
+    private final MapGenBase caveGenerator;
     private Biome[] biomes;
     double[] field_28093_d;
     double[] field_28092_e;
