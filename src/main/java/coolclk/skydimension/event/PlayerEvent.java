@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.Random;
 
@@ -18,6 +19,14 @@ public class PlayerEvent {
         int n = 75;
         if (r >= n) {
             DimensionSky.letPlayerGoDimension(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerWakeUpEvent(TickEvent.PlayerTickEvent event) {
+        EntityPlayer player = event.player;
+        if (player.posY <= 0 && player.dimension == DimensionSky.getDimensionId()) {
+            player.changeDimension(1);
         }
     }
 }
