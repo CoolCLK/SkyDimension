@@ -120,9 +120,6 @@ public class ChunkProviderSky implements IChunkGenerator {
                         }
                         j1 = i1;
                         abyte0[l1] = byte0;
-                        if (WorldProviderSky.spawnCoordinate == null) {
-                            WorldProviderSky.spawnCoordinate = findBlockPosByIndex(l1);
-                        }
                         continue;
                     }
                     if (j1 <= 0) {

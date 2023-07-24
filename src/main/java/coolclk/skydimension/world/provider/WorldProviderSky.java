@@ -17,8 +17,8 @@ import java.util.Random;
 public class WorldProviderSky extends WorldProvider {
     public static BlockPos spawnCoordinate = null;
 
-    private final static int getSpawnCoordinateMaxRange = 256;
-    private final static int getSpawnCoordinateMaxTimes = 2000;
+    private final static int getSpawnCoordinateMaxRange = 1024;
+    private final static int getSpawnCoordinateMaxTimes = 1000;
     public WorldProviderSky() {
         this.nether = false;
     }
@@ -99,7 +99,7 @@ public class WorldProviderSky extends WorldProvider {
                 success = true;
                 break;
             }
-            spawnCoordinate.add(new Vec3d(tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange, 0, tryRandom.nextInt(getSpawnCoordinateMaxRange * 2) - getSpawnCoordinateMaxRange));
+            spawnCoordinate.add(new Vec3d(tryRandom.nextInt(getSpawnCoordinateMaxRange) - tryRandom.nextInt(getSpawnCoordinateMaxRange), 0, tryRandom.nextInt(getSpawnCoordinateMaxRange) - tryRandom.nextInt(getSpawnCoordinateMaxRange)));
             tryTimes++;
         }
         if (success) {
