@@ -13,12 +13,10 @@ import net.minecraft.world.gen.IChunkGenerator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
-    private final static List<Integer> getSpawnCoordinateMaxRanges = Collections.singletonList(128);
+    private final static List<Integer> getSpawnCoordinateMaxRanges = Arrays.asList(16, 32, 64, 96, 128);
     public WorldProviderSky() {
         this.nether = false;
     }
