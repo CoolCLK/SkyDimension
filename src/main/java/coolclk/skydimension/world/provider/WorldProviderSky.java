@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WorldProviderSky extends WorldProvider {
-    private final static List<Integer> getSpawnCoordinateMaxRanges = Arrays.asList(16, 32, 64, 96, 128);
+    private final static List<Integer> getSpawnCoordinateMaxRanges = Arrays.asList(128);
     public WorldProviderSky() {
         this.nether = false;
     }
@@ -79,16 +79,15 @@ public class WorldProviderSky extends WorldProvider {
 
     @Nullable
     public BlockPos getSpawnCoordinate() {
-        BlockPos spawnCoordinate = null;
-        getSpawnCoordinateMaxRanges.forEach(r -> {
-            for (int a = 0; a <= 360; a += 2.5) {
+        for (int r : getSpawnCoordinateMaxRanges) {
+            for (int a = 0; a <= 360; a += 5) {
                 BlockPos tryPos = new BlockPos(Math.cos(a) * r, 0, Math.sin(a) * r);
                 IBlockState tryState = world.getBlockState(world.getTopSolidOrLiquidBlock(tryPos));
                 if (tryState.getBlock() != Blocks.AIR && tryState.getMaterial().isSolid()) {
-                    break;
+                    return tryPos;
                 }
             }
-        });
-        return spawnCoordinate;
+        };
+        return null;
     }
 }
