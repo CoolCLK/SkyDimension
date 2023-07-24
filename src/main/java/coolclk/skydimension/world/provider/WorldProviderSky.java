@@ -12,8 +12,6 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
 
 public class WorldProviderSky extends WorldProvider {
     public WorldProviderSky() {
