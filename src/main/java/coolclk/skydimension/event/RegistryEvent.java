@@ -10,7 +10,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -20,16 +21,16 @@ import java.util.List;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
-@Mod.EventBusSubscriber(modid = SkyDimension.MOD_ID)
+@EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
-    @Mod.EventHandler
+    @EventHandler
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
         LOGGER.debug("Start pre-initialization.");
         registryDimension();
     }
 
-    @Mod.EventHandler
-    public void onServerStarting(FMLServerStartingEvent event) {
+    @EventHandler
+    public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(true, event);
     }
 
