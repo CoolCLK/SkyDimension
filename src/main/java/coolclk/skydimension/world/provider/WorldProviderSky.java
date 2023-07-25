@@ -14,6 +14,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import static coolclk.skydimension.SkyDimension.LOGGER;
+
 public class WorldProviderSky extends WorldProvider {
     public WorldProviderSky() {
         this.nether = false;
@@ -79,20 +81,18 @@ public class WorldProviderSky extends WorldProvider {
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = super.getSpawnCoordinate();
         if (spawnCoordinate == null) {
-            Random random = new Random(world.getSeed());
-            for (int times = 0; times < 1000; times++) {
-                int triedChunkX = random.nextInt(32) - 16;
-                int triedChunkZ = random.nextInt(32) - 16;
-                for (int triedX = 0; triedX < 16; triedX++) {
-                    for (int triedZ = 0; triedZ < 16; triedZ++) {
-                        BlockPos triedCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedChunkX + triedX, 0, triedChunkZ + triedZ));
-                        if (world.getBlockState(triedCoordinate).getBlock() == Blocks.GRASS) {
-                            return triedCoordinate;
-                        }
+            int range = 256;
+            for (int triedX = -range; triedX < range; triedX++) {
+                for (int triedZ = -range; triedZ < range; triedZ++) {
+                    BlockPos triedCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
+                    if (world.getBlockState(triedCoordinate).getBlock() == Blocks.GRASS) {
+                        LOGGER.debug("Spawn Coordinate found: " + triedCoordinate);
+                        return triedCoordinate;
                     }
                 }
             }
         }
+        LOGGER.debug("Spawn Coordinate found fail.");
         return spawnCoordinate;
     }
 }
