@@ -12,7 +12,6 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
