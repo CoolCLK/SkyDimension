@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "skydimension:sky_ore_model"
+    }
+  }
+}

@@ -9,9 +9,10 @@
   },
   "parent": "skydimension:exploration",
   "criteria": {
-    "join": {
+    "sleep": {
       "trigger": "minecraft:changed_dimension",
       "conditions": {
+        "from": "minecraft:overworld",
         "to": "skydimension:sky"
       }
     }

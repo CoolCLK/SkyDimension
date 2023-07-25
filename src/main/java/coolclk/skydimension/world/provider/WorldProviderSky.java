@@ -19,9 +19,11 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 public class WorldProviderSky extends WorldProvider {
     protected void generateLightBrightnessTable() {
         for (int i = 0; i <= 15; i++) {
-            float f = (float) i / 15;
-            this.lightBrightnessTable[i] = f / (f * 3 + 1);
-            this.lightBrightnessTable[i] = 0.25F;
+            float f = 0.5F + i / 10F;
+            if (f > 1) {
+                f = 1;
+            }
+            this.lightBrightnessTable[i] = f;
         }
     }
 

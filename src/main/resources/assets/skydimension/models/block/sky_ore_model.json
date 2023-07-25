@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "my_mod:blocks/sky_ore"
+  }
+}
