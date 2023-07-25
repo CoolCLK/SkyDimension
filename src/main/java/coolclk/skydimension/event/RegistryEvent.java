@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
@@ -20,7 +19,6 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 
 public class RegistryEvent {
     public static void beforeFMLPreInitializationEvent(FMLPreInitializationEvent event) {
-        LOGGER.debug("Start pre-initialization.");
         registryDimension();
     }
 
@@ -29,12 +27,12 @@ public class RegistryEvent {
     }
 
     public static void registryDimension() {
-        LOGGER.debug("Registering dimension(s)...");
-        DimensionManager.registerDimension(DimensionSky.getDimensionId(), DimensionSky.getDimensionType());
+        LOGGER.info("Registering dimension(s)...");
+        DimensionSky.registry();
     }
 
     public static void registryCommand(boolean isServer, FMLServerStartingEvent serverEvent) {
-        LOGGER.debug("Registering command(s)...");
+        LOGGER.info("Registering command(s)...");
         List<ICommand> commands = Collections.singletonList(new CommandBase() {
             @Nonnull
             @Override

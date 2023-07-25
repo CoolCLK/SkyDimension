@@ -80,7 +80,9 @@ public class WorldProviderSky extends WorldProvider {
         if (spawnCoordinate == null) {
             spawnCoordinate = new BlockPos(8, 64, 8);
             for (int w = -5; w <= 5; w++) {
-                world.setBlockState(spawnCoordinate.add(w, 0, w), Blocks.GRASS.getDefaultState());
+                for (int h = -5; h <= 5; h++) {
+                    world.setBlockState(spawnCoordinate.add(w, 0, h), Blocks.GRASS.getDefaultState());
+                }
             }
         }
         return spawnCoordinate;
