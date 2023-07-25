@@ -57,6 +57,10 @@ public class WorldProviderSky extends WorldProvider {
         return false;
     }
 
+    public boolean hasSkyLight() {
+        return false;
+    }
+
     public float getCloudHeight() {
         return 8F;
     }
@@ -68,6 +72,9 @@ public class WorldProviderSky extends WorldProvider {
     }
 
     public boolean canCoordinateBeSpawn(int x, int z) {
+        if (world.isChunkGeneratedAt(x, z)) {
+            return false;
+        }
         IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z)));
         if (k.getBlock() == Blocks.AIR) {
             return false;
@@ -80,13 +87,13 @@ public class WorldProviderSky extends WorldProvider {
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = super.getSpawnCoordinate();
         if (spawnCoordinate == null) {
+            int skip = 8;
             int range = 256;
-            for (int triedX = -range; triedX < range; triedX++) {
-                for (int triedZ = -range; triedZ < range; triedZ++) {
-                    BlockPos triedCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
-                    if (world.getBlockState(triedCoordinate).getBlock() == Blocks.GRASS) {
-                        LOGGER.debug("Spawn Coordinate found: " + triedCoordinate);
-                        return triedCoordinate;
+            for (int triedX = -range; triedX <= range; triedX += skip) {
+                for (int triedZ = -range; triedZ <= range; triedZ += skip) {
+                    if (canCoordinateBeSpawn(triedX, triedZ)) {
+                        LOGGER.debug("Spawn Coordinate found: (x: " + triedX + ", z: " + triedZ + ")");
+                        return world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
                     }
                 }
             }
