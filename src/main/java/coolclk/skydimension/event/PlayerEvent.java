@@ -27,9 +27,7 @@ public class PlayerEvent {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
         if (player.getPosition().getY() <= 0 && player.dimension == DimensionSky.getDimensionId()) {
-            player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {
-                entity.setPosition(world.getSpawnPoint().getX(), world.getTopSolidOrLiquidBlock(world.getSpawnPoint()).getY(), world.getSpawnPoint().getZ());
-            });
+            player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> entity.setPosition(world.getSpawnPoint().getX(), world.getTopSolidOrLiquidBlock(world.getSpawnPoint()).getY(), world.getSpawnPoint().getZ()));
         }
     }
 }
