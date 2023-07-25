@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class WorldEvent {
     @SubscribeEvent
-    public static void onWorldTick(LivingFallEvent event) {
+    public static void onLivingFall(LivingFallEvent event) {
         Entity fallEntity = event.getEntity();
         if (fallEntity.getPosition().getY() <= 0 && fallEntity.dimension == DimensionSky.getDimensionId()) {
             fallEntity.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {
