@@ -12,7 +12,6 @@ public class SkyDimension {
     public final static String MOD_VERSION = "1.0.0";
 
     public static Logger LOGGER;
-
     @EventHandler
     public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
