@@ -44,7 +44,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         int xSize = scale + 1;
         byte ySize = 33;
         int zSize = scale + 1;
-        field_28080_q = generateANoiseOctave(field_28080_q, xOffset * scale, 0, zOffset * scale, xSize, ySize, zSize);
+        field_28080_q = generateANoiseOctave(field_28080_q, xOffset * scale, zOffset * scale, xSize, ySize, zSize);
         for (int i1 = 0; i1 < scale; i1++) {
             for (int j1 = 0; j1 < scale; j1++) {
                 for (int k1 = 0; k1 < 32; k1++) {
@@ -155,7 +155,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         return chunk;
     }
 
-    private double[] generateANoiseOctave(double[] ad, int xOffset, int yOffset, int zOffset, int xSize, int ySize, int zSize) {
+    private double[] generateANoiseOctave(double[] ad, int xOffset, int zOffset, int xSize, int ySize, int zSize) {
         if (ad == null) {
             ad = new double[xSize * ySize * zSize];
         }
@@ -164,9 +164,9 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28090_g = field_28096_a.generateNoiseOctaves(field_28090_g, xOffset, zOffset, xSize, zSize, 1.121D, 1.121D, 0.5D);
         field_28089_h = field_28095_b.generateNoiseOctaves(field_28089_h, xOffset, zOffset, xSize, zSize, 200D, 200D, 0.5D);
         d *= 2D;
-        field_28093_d = field_28084_m.generateNoiseOctaves(field_28093_d, xOffset, yOffset, zOffset, xSize, ySize, zSize, d / 80D, d1 / 160D, d / 80D);
-        field_28092_e = field_28086_k.generateNoiseOctaves(field_28092_e, xOffset, yOffset, zOffset, xSize, ySize, zSize, d, d1, d);
-        field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, xOffset, yOffset, zOffset, xSize, ySize, zSize, d, d1, d);
+        field_28093_d = field_28084_m.generateNoiseOctaves(field_28093_d, xOffset, 0, zOffset, xSize, ySize, zSize, d / 80D, d1 / 160D, d / 80D);
+        field_28092_e = field_28086_k.generateNoiseOctaves(field_28092_e, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
+        field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
         int k1 = 0;
         for (int j2 = 0; j2 < xSize; j2++) {
             for (int l2 = 0; l2 < zSize; l2++) {
