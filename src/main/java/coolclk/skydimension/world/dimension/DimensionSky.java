@@ -12,7 +12,7 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 public class DimensionSky {
     private final static int dimensionId = 2;
     private final static String dimensionName = "sky";
-    private final static String dimensionSuffix = "_" + dimensionName;
+    private final static String dimensionSuffix = "_dim" + dimensionId;
     private static DimensionType dimensionType;
     public static void registry() {
         dimensionType = DimensionType.register(DimensionSky.getDimensionName(), DimensionSky.getDimensionSuffix(), DimensionSky.getDimensionId(), WorldProviderSky.class, false);

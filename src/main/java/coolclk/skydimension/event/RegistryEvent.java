@@ -1,17 +1,15 @@
 package coolclk.skydimension.event;
 
-import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.init.Blocks;
 import coolclk.skydimension.init.Items;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockOre;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -20,6 +18,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -32,6 +31,7 @@ public class RegistryEvent {
     @EventHandler
     public static void beforeFMLPreInitialization(FMLPreInitializationEvent event) {
         registryDimension();
+        registrySmelting();
     }
 
     @EventHandler
@@ -41,25 +41,31 @@ public class RegistryEvent {
 
     @SubscribeEvent
     public static void onRegisterBlock(net.minecraftforge.event.RegistryEvent.Register<Block> event) {
-        event.getRegistry().register(
-                (Blocks.SKY_ORE = (new BlockOre()).setHardness(3.0F).setResistance(5.0F).setUnlocalizedName("oreSky").setRegistryName(SkyDimension.MOD_ID, "sky_ore"))
+        event.getRegistry().registerAll(
+                Blocks.SKY_ORE
         );
     }
 
     @SubscribeEvent
     public static void onRegisterItem(net.minecraftforge.event.RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(
-                (Items.SKY_ORE = (ItemBlock) (new ItemBlock(Blocks.SKY_ORE)).setRegistryName(SkyDimension.MOD_ID, "sky_ore"))
+        event.getRegistry().registerAll(
+                Items.SKY_ORE,
+                Items.SKY_INGOT
         );
     }
 
     public static void registryDimension() {
-        LOGGER.info("Registering dimension(s)...");
+        LOGGER.debug("Registering dimension(s)...");
         DimensionSky.registry();
     }
 
+    public static void registrySmelting() {
+        LOGGER.debug("Registering recipe(s)...");
+        GameRegistry.addSmelting(Blocks.SKY_ORE, new ItemStack(Items.SKY_INGOT), 1.0F);
+    }
+
     public static void registryCommand(boolean isServer, FMLServerStartingEvent serverEvent) {
-        LOGGER.info("Registering command(s)...");
+        LOGGER.debug("Registering command(s)...");
         List<ICommand> commands = Collections.singletonList(new CommandBase() {
             @Nonnull
             @Override
