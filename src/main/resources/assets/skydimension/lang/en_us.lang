@@ -3,5 +3,6 @@ advancement.skydimension.it_is_sky.description=A hidden world...
 
 command.skydimension.go-sky.usage=/go-sky [player]
 
-item.skydimension.sky_ore.name=Sky Ore
+tile.skydimension.sky_ore.name=Sky Ore
+
 item.skydimension.sky_ingot.name=Sky Ingot

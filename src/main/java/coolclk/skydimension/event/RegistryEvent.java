@@ -41,7 +41,6 @@ public class RegistryEvent {
     }
 
     @SubscribeEvent
-    @SideOnly(value = Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
         ModelLoader.setCustomModelResourceLocation(Items.SKY_ORE, 0, new ModelResourceLocation(Items.SKY_ORE.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(Items.SKY_INGOT, 0, new ModelResourceLocation(Items.SKY_INGOT.getRegistryName(), "inventory"));
