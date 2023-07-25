@@ -2,11 +2,13 @@ package coolclk.skydimension.world.provider;
 
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
@@ -16,8 +18,12 @@ import javax.annotation.Nullable;
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
 public class WorldProviderSky extends WorldProvider {
-    public WorldProviderSky() {
-        this.nether = false;
+    protected void generateLightBrightnessTable() {
+        for (int i = 0; i <= 15; i++) {
+            float f = (float) i / 15;
+            this.lightBrightnessTable[i] = f / (f * 3 + 1);
+            this.lightBrightnessTable[i] = 0.25F;
+        }
     }
 
     @Nonnull
@@ -27,7 +33,7 @@ public class WorldProviderSky extends WorldProvider {
 
     public float calculateCelestialAngle(long worldTime, float partialTicks)
     {
-        return 0.0F;
+        return 0F;
     }
 
     public float[] calcSunriseSunsetColors(float f, float f1) {
@@ -57,8 +63,9 @@ public class WorldProviderSky extends WorldProvider {
         return false;
     }
 
-    public boolean hasSkyLight() {
-        return false;
+    @Nonnull
+    public WorldSleepResult canSleepAt(@Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
+        return WorldSleepResult.DENY;
     }
 
     public float getCloudHeight() {
@@ -92,8 +99,9 @@ public class WorldProviderSky extends WorldProvider {
             for (int triedX = -range; triedX <= range; triedX += skip) {
                 for (int triedZ = -range; triedZ <= range; triedZ += skip) {
                     if (canCoordinateBeSpawn(triedX, triedZ)) {
+                        spawnCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
                         LOGGER.debug("Spawn Coordinate found: (x: " + triedX + ", z: " + triedZ + ")");
-                        return world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
+                        return spawnCoordinate;
                     }
                 }
             }

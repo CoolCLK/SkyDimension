@@ -18,7 +18,9 @@ import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class ChunkProviderSky implements IChunkGenerator {
     public ChunkProviderSky(World world, long l) {
@@ -39,7 +41,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28094_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
     }
 
-    public void generateUnderground(int xOffset, int zOffset, byte[] abyte0) {
+    public void generateUnderground(int xOffset, int zOffset, byte[] bytes) {
         byte scale = 2;
         int xSize = scale + 1;
         byte ySize = 33;
@@ -74,7 +76,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                                 if (d15 > 0.0D) {
                                     l2 = BlockSand.getIdFromBlock(Blocks.STONE);
                                 }
-                                abyte0[j2] = (byte)l2;
+                                bytes[j2] = (byte)l2;
                                 j2 += c;
                                 d15 += d16;
                             }
@@ -91,7 +93,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
     }
 
-    public void generateBiomes(int x, int z, byte[] abyte0, Biome[] abiome) {
+    public void generateBiomes(int x, int z, byte[] bytes, Biome[] abiome) {
         double d = 0.03125D;
         field_28079_r = field_28083_n.generateNoiseOctaves(field_28079_r, x * 16, z * 16, 0, 16, 16, 1, d, d, 1.0D);
         field_28078_s = field_28083_n.generateNoiseOctaves(field_28078_s, x * 16, (int) 109.0134D, z * 16, 16, 1, 16, d, 1.0D, d);
@@ -105,7 +107,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                 byte byte1 = (byte) BlockSand.getStateId(biome.fillerBlock);
                 for (int k1 = 127; k1 >= 0; k1--) {
                     int l1 = (gz * 16 + gx) * 128 + k1;
-                    byte byte2 = abyte0[l1];
+                    byte byte2 = bytes[l1];
                     if (byte2 == 0) {
                         j1 = -1;
                         continue;
@@ -119,7 +121,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                             byte1 = (byte) BlockSand.getIdFromBlock(Blocks.STONE);
                         }
                         j1 = i1;
-                        abyte0[l1] = byte0;
+                        bytes[l1] = byte0;
 
                         continue;
                     }
@@ -127,7 +129,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                         continue;
                     }
                     j1--;
-                    abyte0[l1] = byte1;
+                    bytes[l1] = byte1;
                     if (j1 == 0 && byte1 == BlockSand.getIdFromBlock(Blocks.SAND)) {
                         j1 = seedRandomizer.nextInt(4);
                         byte1 = (byte) BlockSand.getIdFromBlock(Blocks.SANDSTONE);
@@ -137,20 +139,14 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
     }
 
-    @Nonnull
-    @Override
-    public Chunk generateChunk(int x, int z) {
-        return provideChunk(x, z);
-    }
-
     public Chunk provideChunk(int x, int z) {
         seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) x * 0x1ef1565bd5L);
-        byte[] abyte0 = new byte[32768];
+        byte[] bytes = new byte[32768];
         biomes = world.getBiomeProvider().getBiomes(biomes, x * 16, z * 16, 16, 16);
-        generateUnderground(x, z, abyte0);
-        generateBiomes(x, z, abyte0, biomes);
-        Chunk chunk = bytesToChunk(world, abyte0, x, z);
-        caveGenerator.generate(world, x, z, bytesToChunkPrimer(abyte0));
+        generateUnderground(x, z, bytes);
+        generateBiomes(x, z, bytes, biomes);
+        Chunk chunk = bytesToChunk(world, bytes, x, z);
+        caveGenerator.generate(world, x, z, bytesToChunkPrimer(bytes));
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -199,6 +195,12 @@ public class ChunkProviderSky implements IChunkGenerator {
             }
         }
         return ad;
+    }
+
+    @Nonnull
+    @Override
+    public Chunk generateChunk(int x, int z) {
+        return provideChunk(x, z);
     }
 
     @Override
@@ -406,7 +408,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     }
 
     @Override
-    public boolean generateStructures(@Nonnull Chunk chunk, int x, int z) {
+    public boolean generateStructures(@Nonnull Chunk chunkIn, int x, int z) {
         return false;
     }
 
@@ -423,7 +425,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     }
 
     @Override
-    public void recreateStructures(@Nonnull Chunk chunk, int x, int z) {
+    public void recreateStructures(@Nonnull Chunk chunkIn, int x, int z) {
 
     }
 
