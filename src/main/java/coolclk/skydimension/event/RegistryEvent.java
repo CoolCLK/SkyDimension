@@ -1,9 +1,11 @@
 package coolclk.skydimension.event;
 
+import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.init.Blocks;
 import coolclk.skydimension.init.Items;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -13,12 +15,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -26,12 +32,19 @@ import java.util.List;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
     @EventHandler
     public static void beforeFMLPreInitialization(FMLPreInitializationEvent event) {
         registryDimension();
         registrySmelting();
+    }
+
+    @SubscribeEvent
+    @SideOnly(value = Side.CLIENT)
+    public static void onModelRegistry(ModelRegistryEvent event) {
+        ModelLoader.setCustomModelResourceLocation(Items.SKY_ORE, 0, new ModelResourceLocation(Items.SKY_ORE.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(Items.SKY_INGOT, 0, new ModelResourceLocation(Items.SKY_INGOT.getRegistryName(), "inventory"));
     }
 
     @EventHandler

@@ -8,13 +8,5 @@
     "hidden": false
   },
   "parent": "skydimension:exploration",
-  "criteria": {
-    "sleep": {
-      "trigger": "minecraft:changed_dimension",
-      "conditions": {
-        "from": "overworld",
-        "to": "skydimension:sky"
-      }
-    }
-  }
+  "criteria": {}
 }

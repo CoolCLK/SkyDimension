@@ -6,6 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
 public class Items {
-    public final static Item SKY_ORE = (new ItemBlock(Blocks.SKY_ORE)).setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setUnlocalizedName(SkyDimension.MOD_ID + ".sky_ingot").setRegistryName(SkyDimension.MOD_ID, "sky_ore");
+    public final static Item SKY_ORE = (new ItemBlock(Blocks.SKY_ORE)).setCreativeTab(CreativeTabs.BUILDING_BLOCKS).setUnlocalizedName(SkyDimension.MOD_ID + ".sky_ore").setRegistryName(SkyDimension.MOD_ID, "sky_ore");
     public final static Item SKY_INGOT = (new Item()).setCreativeTab(CreativeTabs.MISC).setUnlocalizedName(SkyDimension.MOD_ID + ".sky_ingot").setRegistryName(SkyDimension.MOD_ID, "sky_ingot");
 }
