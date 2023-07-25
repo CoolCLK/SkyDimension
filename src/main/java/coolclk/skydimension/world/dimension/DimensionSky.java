@@ -1,8 +1,10 @@
 package coolclk.skydimension.world.dimension;
 
 import coolclk.skydimension.world.provider.WorldProviderSky;
+import coolclk.skydimension.world.teleporter.TeleporterSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.Teleporter;
 import net.minecraftforge.common.DimensionManager;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
@@ -36,7 +38,7 @@ public class DimensionSky {
     public static void letPlayerGoDimension(EntityPlayer player) {
         if (player.dimension != DimensionSky.getDimensionId()) {
             LOGGER.debug("Sending player to dimension.");
-            if (player.changeDimension(DimensionSky.getDimensionId()) != null) {
+            if (player.changeDimension(DimensionSky.getDimensionId(), new TeleporterSky()) != null) {
                 LOGGER.debug("Sent player successfully.");
             }
         }
