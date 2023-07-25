@@ -12,6 +12,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class WorldProviderSky extends WorldProvider {
     public WorldProviderSky() {
@@ -78,10 +79,17 @@ public class WorldProviderSky extends WorldProvider {
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = super.getSpawnCoordinate();
         if (spawnCoordinate == null) {
-            spawnCoordinate = new BlockPos(8, 8, 8);
-            for (int w = -5; w <= 5; w++) {
-                for (int h = -5; h <= 5; h++) {
-                    world.setBlockState(spawnCoordinate.add(w, -1, h), Blocks.GRASS.getDefaultState());
+            Random random = new Random(world.getSeed());
+            for (int times = 0; times < 1000; times++) {
+                int triedChunkX = random.nextInt(32) - 16;
+                int triedChunkZ = random.nextInt(32) - 16;
+                for (int triedX = 0; triedX < 16; triedX++) {
+                    for (int triedZ = 0; triedZ < 16; triedZ++) {
+                        BlockPos triedCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedChunkX + triedX, 0, triedChunkZ + triedZ));
+                        if (world.getBlockState(triedCoordinate).getBlock() == Blocks.GRASS) {
+                            return triedCoordinate;
+                        }
+                    }
                 }
             }
         }

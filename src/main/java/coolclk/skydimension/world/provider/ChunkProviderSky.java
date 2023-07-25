@@ -120,6 +120,7 @@ public class ChunkProviderSky implements IChunkGenerator {
                         }
                         j1 = i1;
                         abyte0[l1] = byte0;
+
                         continue;
                     }
                     if (j1 <= 0) {
@@ -324,7 +325,7 @@ public class ChunkProviderSky implements IChunkGenerator {
             int k15 = k + seedRandomizer.nextInt(16) + 8;
             int j18 = l + seedRandomizer.nextInt(16) + 8;
             WorldGenerator worldgenerator = biome.getRandomTreeFeature(seedRandomizer);
-            worldgenerator.generate(world, seedRandomizer, new BlockPos(k15, world.getHeight(), j18));
+            worldgenerator.generate(world, seedRandomizer, new BlockPos(k15, world.getHeight(k15, j18), j18));
         }
         for (int j11 = 0; j11 < 2; j11++) {
             int l15 = k + seedRandomizer.nextInt(16) + 8;
@@ -445,20 +446,6 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     private Chunk bytesToChunk(World worldIn, byte[] bytes, int chunkX, int chunkZ) {
         return new Chunk(worldIn, bytesToChunkPrimer(bytes), chunkX, chunkZ);
-    }
-
-    private BlockPos findBlockPosByIndex(int index) {
-        BlockPos blockPos = null;
-        for (int x = 0; x < 16; ++x) {
-            for (int z = 0; z < 16; ++z) {
-                for (int y = 0; y < 256; ++y) {
-                    if ((x << 11 | z << 7 | y) == index) {
-                        blockPos = new BlockPos(x, y, z);
-                    }
-                }
-            }
-        }
-        return blockPos;
     }
 
     private final Random seedRandomizer;

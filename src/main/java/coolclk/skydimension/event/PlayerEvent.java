@@ -2,8 +2,11 @@ package coolclk.skydimension.event;
 
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.world.dimension.DimensionSky;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,8 +30,9 @@ public class PlayerEvent {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
         if (player.getPosition().getY() <= 0 && player.dimension == DimensionSky.getDimensionId()) {
-            player.changeDimension(DimensionType.OVERWORLD.getId());
-            player.setPosition(player.world.getSpawnPoint().getX(), player.world.getSpawnPoint().getY(), player.world.getSpawnPoint().getZ());
+            player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {
+                entity.setPosition(world.getSpawnPoint().getX(), world.getTopSolidOrLiquidBlock(world.getSpawnPoint()).getY(), world.getSpawnPoint().getZ());
+            });
         }
     }
 }

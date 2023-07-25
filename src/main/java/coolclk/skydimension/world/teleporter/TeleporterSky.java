@@ -12,6 +12,6 @@ public class TeleporterSky implements ITeleporter {
         if (spawnPos == null) {
             spawnPos = new BlockPos(8, 8, 8);
         }
-        entity.setLocationAndAngles(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), 90, 0);
+        entity.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
     }
 }
