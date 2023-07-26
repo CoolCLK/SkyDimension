@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "skydimension:block/cold_coal_ore"
+    }
+  }
+}

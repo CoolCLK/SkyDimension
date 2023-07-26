@@ -3,7 +3,9 @@ advancement.skydimension.it_is_sky.description=一个隐藏的世界...
 
 command.skydimension.go-sky.usage=/go-sky [玩家]
 
+tile.skydimension.ice_coal_block.name=冻煤炭块
+tile.skydimension.ice_coal_ore.name=冻煤炭矿
 tile.skydimension.sky_ore.name=天空矿
 
-item.skydimension.sky_ore.name=天空矿
+item.skydimension.ice_coal.name=冻煤炭
 item.skydimension.sky_ingot.name=天空锭

@@ -3,7 +3,9 @@ advancement.skydimension.it_is_sky.description=A hidden world...
 
 command.skydimension.go-sky.usage=/go-sky [player]
 
+tile.skydimension.ice_coal_block.name=Ice Coal Block
+tile.skydimension.ice_coal_ore.name=Ice Coal Ore
 tile.skydimension.sky_ore.name=Sky Ore
 
-item.skydimension.sky_ore.name=Sky Ore
+item.skydimension.ice_coal.name=Ice Coal
 item.skydimension.sky_ingot.name=Sky Ingot

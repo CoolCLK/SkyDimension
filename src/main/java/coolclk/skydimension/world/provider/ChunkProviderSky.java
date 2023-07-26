@@ -256,7 +256,7 @@ public class ChunkProviderSky implements IChunkGenerator {
             int j6 = x + seedRandomizer.nextInt(16);
             int k9 = seedRandomizer.nextInt(128);
             int i14 = z + seedRandomizer.nextInt(16);
-            (new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), 16)).generate(world, seedRandomizer, new BlockPos(j6, k9, i14));
+            (new WorldGenMinable(coolclk.skydimension.init.Blocks.ICE_COAL_ORE.getDefaultState(), 16)).generate(world, seedRandomizer, new BlockPos(j6, k9, i14));
         }
         for (int j3 = 0; j3 < 25; j3++) {
             int k6 = x + seedRandomizer.nextInt(16);
