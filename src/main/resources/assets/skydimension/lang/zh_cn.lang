@@ -5,4 +5,5 @@ command.skydimension.go-sky.usage=/go-sky [玩家]
 
 tile.skydimension.sky_ore.name=天空矿
 
+item.skydimension.sky_ore.name=天空矿
 item.skydimension.sky_ingot.name=天空锭

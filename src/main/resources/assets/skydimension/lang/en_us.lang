@@ -5,4 +5,5 @@ command.skydimension.go-sky.usage=/go-sky [player]
 
 tile.skydimension.sky_ore.name=Sky Ore
 
+item.skydimension.sky_ore.name=Sky Ore
 item.skydimension.sky_ingot.name=Sky Ingot
