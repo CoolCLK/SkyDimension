@@ -1,7 +1,6 @@
 package coolclk.skydimension.init;
 
 import coolclk.skydimension.SkyDimension;
-import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
