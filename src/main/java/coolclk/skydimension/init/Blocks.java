@@ -21,6 +21,7 @@ import java.util.Random;
 public class Blocks {
     private final static List<Block> CACHE = Arrays.asList(
             (new Block(Material.ROCK))
+                    .setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
                     .setHardness(3.0F)
                     .setResistance(5.0F)
                     .setTranslationKey(SkyDimension.MOD_ID + ".ice_coal_block")
@@ -31,16 +32,19 @@ public class Blocks {
                     return Item.getByNameOrId("ice_coal");
                 }
             })
+                    .setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
                     .setHardness(3.0F)
                     .setResistance(5.0F)
                     .setTranslationKey(SkyDimension.MOD_ID + ".ice_coal_ore")
                     .setRegistryName(SkyDimension.MOD_ID, "ice_coal_ore"),
             (new BlockOre())
+                    .setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
                     .setHardness(3.0F)
                     .setResistance(5.0F)
                     .setTranslationKey(SkyDimension.MOD_ID + ".sky_ore")
                     .setRegistryName(SkyDimension.MOD_ID, "sky_ore"),
             (new Block(Material.ROCK))
+                    .setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
                     .setHardness(3.0F)
                     .setResistance(5.0F)
                     .setTranslationKey(SkyDimension.MOD_ID + ".sky_block")
@@ -50,7 +54,7 @@ public class Blocks {
     static {
         CACHE.forEach(block -> {
             Item item = new ItemBlock(block)
-                    .setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
+                    .setCreativeTab(block.getCreativeTab())
                     .setTranslationKey(block.getTranslationKey())
                     .setRegistryName(block.getRegistryName());
             ITEM_CACHE.add(item);

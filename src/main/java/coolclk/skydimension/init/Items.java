@@ -27,14 +27,14 @@ public class Items {
 
     static {
         TOOL_MATERIAL_SKY = EnumHelper.addToolMaterial("tool_material_sky", 3, 750, 7, 3, 14);
-        ARMOR_MATERIAL_SKY = EnumHelper.addArmorMaterial("armor_material_sky", "sky", 24, new int[] { 2, 5, 7, 2 } , 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1);
+        ARMOR_MATERIAL_SKY = EnumHelper.addArmorMaterial("armor_material_sky", SkyDimension.MOD_ID + ":sky", 24, new int[] { 2, 5, 7, 2 } , 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1);
 
         CACHE = Arrays.asList(
                 (new Item())
                         .setCreativeTab(CreativeTabs.MISC)
                         .setTranslationKey(SkyDimension.MOD_ID + ".ice_coal")
                         .setRegistryName(SkyDimension.MOD_ID, "ice_coal"),
-                (new ItemAxe(TOOL_MATERIAL_SKY) {
+                (new ItemAxe(TOOL_MATERIAL_SKY, 7, -3) {
                 })
                         .setTranslationKey(SkyDimension.MOD_ID + ".sky_axe")
                         .setRegistryName(SkyDimension.MOD_ID, "sky_axe"),
