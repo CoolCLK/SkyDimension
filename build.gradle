@@ -23,11 +23,7 @@ minecraft {
     runDir = "run"
 
     mappings = "stable_39"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-}
-
-repositories {
-
+    // makeObfSourceJar = false
 }
 
 dependencies {
@@ -37,11 +33,21 @@ dependencies {
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        include '*.json'
         expand 'mod_id': mod_id, 'mod_name': mod_name, 'mod_description': mod_description, 'mod_version': mod_version, 'mod_minecraft_version': mod_minecraft_version, 'mod_url': mod_url, 'mod_update_url': mod_update_url, 'mod_authors': mod_authors, 'mod_credits': mod_credits
     }
 
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = file('build/combined')
+        java.outputDir = file('build/combined')
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
