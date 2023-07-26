@@ -5,7 +5,17 @@ command.skydimension.go-sky.usage=/go-sky [player]
 
 tile.skydimension.ice_coal_block.name=Ice Coal Block
 tile.skydimension.ice_coal_ore.name=Ice Coal Ore
+tile.skydimension.sky_block.name=Sky Block
 tile.skydimension.sky_ore.name=Sky Ore
 
 item.skydimension.ice_coal.name=Ice Coal
+item.skydimension.sky_axe.name=Sky Axe
+item.skydimension.sky_boots.name=Sky Boots
+item.skydimension.sky_chestplate.name=Sky Chestplate
+item.skydimension.sky_helmet.name=Sky Helmet
+item.skydimension.sky_hoe.name=Sky Axe
 item.skydimension.sky_ingot.name=Sky Ingot
+item.skydimension.sky_nugget.name=Sky Nugget
+item.skydimension.sky_pickaxe.name=Sky Pickaxe
+item.skydimension.sky_shovel.name=Sky Shovel
+item.skydimension.sky_sword.name=Sky Sword

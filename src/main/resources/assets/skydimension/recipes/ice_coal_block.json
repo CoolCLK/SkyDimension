@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skydimension:sky",
+  "pattern": [
+    "AAA",
+    "AAA",
+    "AAA"
+  ],
+  "key": {
+    "A": { "item": "skydimension:ice_coal" }
+  },
+  "result": { "item": "skydimension:ice_coal_block", "count": 1 }
+}

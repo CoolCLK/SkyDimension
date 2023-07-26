@@ -1,5 +1,6 @@
 package coolclk.skydimension.world.provider;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
@@ -256,7 +257,7 @@ public class ChunkProviderSky implements IChunkGenerator {
             int j6 = x + seedRandomizer.nextInt(16);
             int k9 = seedRandomizer.nextInt(128);
             int i14 = z + seedRandomizer.nextInt(16);
-            (new WorldGenMinable(coolclk.skydimension.init.Blocks.ICE_COAL_ORE.getDefaultState(), 16)).generate(world, seedRandomizer, new BlockPos(j6, k9, i14));
+            (new WorldGenMinable(Block.getBlockFromName("ice_coal").getDefaultState(), 16)).generate(world, seedRandomizer, new BlockPos(j6, k9, i14));
         }
         for (int j3 = 0; j3 < 25; j3++) {
             int k6 = x + seedRandomizer.nextInt(16);
@@ -292,7 +293,7 @@ public class ChunkProviderSky implements IChunkGenerator {
             int k6 = x + seedRandomizer.nextInt(16);
             int l9 = seedRandomizer.nextInt(64);
             int j14 = z + seedRandomizer.nextInt(16);
-            (new WorldGenMinable(coolclk.skydimension.init.Blocks.SKY_ORE.getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(k6, l9, j14));
+            (new WorldGenMinable(Block.getBlockFromName("sky_ore").getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(k6, l9, j14));
         }
         d = 0.5D;
 

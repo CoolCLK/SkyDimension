@@ -38,17 +38,12 @@ public class RegistryEvent {
 
     @SubscribeEvent
     public static void onRegisterBlock(net.minecraftforge.event.RegistryEvent.Register<Block> event) {
-        event.getRegistry().registerAll(
-                Blocks.SKY_ORE
-        );
+        Blocks.registerBlocks(event.getRegistry());
     }
 
     @SubscribeEvent
     public static void onRegisterItem(net.minecraftforge.event.RegistryEvent.Register<Item> event) {
-        event.getRegistry().registerAll(
-                Items.SKY_ORE,
-                Items.SKY_INGOT
-        );
+        Items.registerItems(event.getRegistry());
     }
 
     private static void registryDimension() {
@@ -58,9 +53,9 @@ public class RegistryEvent {
 
     public static void registrySmelting() {
         LOGGER.debug("Registering recipe(s)...");
-        GameRegistry.addSmelting(Blocks.SKY_ORE, new ItemStack(Items.SKY_INGOT), 5.0F);
-        GameRegistry.addSmelting(Items.ICE_COAL, new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
-        GameRegistry.addSmelting(Blocks.ICE_COAL_BLOCK, new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
+        GameRegistry.addSmelting(Block.getBlockFromName("sky_ore"), new ItemStack(Item.getByNameOrId("sky_ingot")), 5.0F);
+        GameRegistry.addSmelting(Item.getByNameOrId("ice_coal"), new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
+        GameRegistry.addSmelting(Block.getBlockFromName("ice_coal_block"), new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {

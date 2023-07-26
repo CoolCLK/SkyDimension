@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "skydimension:block/ice_coal_block"
+    }
+  }
+}
