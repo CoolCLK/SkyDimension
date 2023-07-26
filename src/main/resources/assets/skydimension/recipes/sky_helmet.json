@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skydimension:sky",
+  "pattern": [
+    "AAA",
+    "A A"
+  ],
+  "key": {
+    "A": { "item": "skydimension:sky_ingot" }
+  },
+  "result": { "item": "skydimension:sky_helmet", "count": 1 }
+}

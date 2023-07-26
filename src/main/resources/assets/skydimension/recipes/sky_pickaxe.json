@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skydimension:sky",
+  "pattern": [
+    "BBB",
+    " A ",
+    " A "
+  ],
+  "key": {
+    "A": { "item": "minecraft:stick" },
+    "B": { "item": "skydimension:sky_ingot" }
+  },
+  "result": { "item": "skydimension:sky_pickaxe", "count": 1 }
+}

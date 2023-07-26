@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "skydimension:sky",
+  "pattern": [
+    "BB",
+    "BA",
+    " A"
+  ],
+  "key": {
+    "A": { "item": "minecraft:stick" },
+    "B": { "item": "skydimension:sky_ingot" }
+  },
+  "result": { "item": "skydimension:sky_axe", "count": 1 }
+}
