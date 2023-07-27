@@ -37,6 +37,6 @@ public class Blocks {
         for (Item item : ITEM_CACHE) {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "normal"));
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-        };
+        }
     }
 }

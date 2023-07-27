@@ -60,7 +60,7 @@ public class RegistryEvent {
 
     public static void registrySmelting() {
         LOGGER.debug("Registering recipe(s)...");
-        GameRegistry.addSmelting(Block.getBlockFromName("sky_ore"), new ItemStack(Item.getByNameOrId("sky_ingot")), 5.0F);
+        GameRegistry.addSmelting(Block.getBlockFromName("sky_ore"), new ItemStack(Items.SKY_INGOT), 5.0F);
         GameRegistry.addSmelting(Item.getByNameOrId("ice_coal"), new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
         GameRegistry.addSmelting(Block.getBlockFromName("ice_coal_block"), new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
     }
