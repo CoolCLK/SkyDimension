@@ -3,6 +3,8 @@ advancement.skydimension.it_is_sky.description=A hidden world...
 
 command.skydimension.go-sky.usage=/go-sky [player]
 
+potion.skydimension.slow_falling.name=Slow Falling
+
 tile.skydimension.ice_coal_block.name=Ice Coal Block
 tile.skydimension.ice_coal_ore.name=Ice Coal Ore
 tile.skydimension.sky_block.name=Sky Block
@@ -15,6 +17,7 @@ item.skydimension.sky_chestplate.name=Sky Chestplate
 item.skydimension.sky_helmet.name=Sky Helmet
 item.skydimension.sky_hoe.name=Sky Axe
 item.skydimension.sky_ingot.name=Sky Ingot
+item.skydimension.sky_leggings.name=Sky Leggings
 item.skydimension.sky_nugget.name=Sky Nugget
 item.skydimension.sky_pickaxe.name=Sky Pickaxe
 item.skydimension.sky_shovel.name=Sky Shovel

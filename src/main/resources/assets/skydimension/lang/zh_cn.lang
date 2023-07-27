@@ -3,6 +3,8 @@ advancement.skydimension.it_is_sky.description=一个隐藏的世界...
 
 command.skydimension.go-sky.usage=/go-sky [玩家]
 
+potion.skydimension.slow_falling.name=缓降
+
 tile.skydimension.ice_coal_block.name=冻煤炭块
 tile.skydimension.ice_coal_ore.name=冻煤炭矿
 tile.skydimension.sky_block.name=天空块
@@ -11,10 +13,11 @@ tile.skydimension.sky_ore.name=天空矿
 item.skydimension.ice_coal.name=冻煤炭
 item.skydimension.sky_axe.name=天空斧
 item.skydimension.sky_boots.name=天空靴子
-item.skydimension.sky_chestplate.name=Sky Chestplate
+item.skydimension.sky_chestplate.name=天空胸甲
 item.skydimension.sky_helmet.name=天空头盔
 item.skydimension.sky_hoe.name=天空锄
 item.skydimension.sky_ingot.name=天空锭
+item.skydimension.sky_leggings.name=天空护腿
 item.skydimension.sky_nugget.name=天空粒
 item.skydimension.sky_pickaxe.name=天空镐
 item.skydimension.sky_shovel.name=天空锹

@@ -3,6 +3,7 @@ package coolclk.skydimension.event;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.init.Blocks;
 import coolclk.skydimension.init.Items;
+import coolclk.skydimension.init.Potions;
 import coolclk.skydimension.world.dimension.DimensionSky;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
@@ -11,6 +12,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -44,6 +46,11 @@ public class RegistryEvent {
     @SubscribeEvent
     public static void onRegisterItem(net.minecraftforge.event.RegistryEvent.Register<Item> event) {
         Items.registerItems(event.getRegistry());
+    }
+
+    @SubscribeEvent
+    public static void onRegisterPotion(net.minecraftforge.event.RegistryEvent.Register<Potion> event) {
+        Potions.registerPotions(event.getRegistry());
     }
 
     private static void registryDimension() {
