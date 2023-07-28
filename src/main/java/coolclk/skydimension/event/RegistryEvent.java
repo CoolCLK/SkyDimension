@@ -35,7 +35,7 @@ public class RegistryEvent {
     }
 
     public static void onFMLInitialization() {
-        RegistryEvent.registrySmelting();
+        registrySmelting();
     }
 
     public static void onServerStarting(FMLServerStartingEvent event) {
@@ -64,9 +64,9 @@ public class RegistryEvent {
 
     public static void registrySmelting() {
         LOGGER.debug("Registering recipe(s)...");
-        GameRegistry.addSmelting(Block.getBlockFromName("sky_ore"), new ItemStack(Items.SKY_INGOT), 5.0F);
-        GameRegistry.addSmelting(Item.getByNameOrId("ice_coal"), new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
-        GameRegistry.addSmelting(Block.getBlockFromName("ice_coal_block"), new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
+        GameRegistry.addSmelting(Blocks.SKY_ORE, new ItemStack(Items.SKY_INGOT), 5.0F);
+        GameRegistry.addSmelting(Items.ICE_COAL, new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
+        GameRegistry.addSmelting(Blocks.ICE_COAL_BLOCK, new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {
