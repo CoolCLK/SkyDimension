@@ -1,7 +1,6 @@
 package coolclk.skydimension.event;
 
 import coolclk.skydimension.SkyDimension;
-import coolclk.skydimension.api.ProjectE;
 import coolclk.skydimension.init.Blocks;
 import coolclk.skydimension.init.Items;
 import coolclk.skydimension.init.Potions;
@@ -41,7 +40,6 @@ public class RegistryEvent {
 
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(event);
-        ProjectE.registerEMC(event.getServer());
     }
 
     @SubscribeEvent
