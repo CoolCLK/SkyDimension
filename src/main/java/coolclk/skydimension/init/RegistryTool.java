@@ -13,6 +13,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -34,8 +35,23 @@ public class RegistryTool {
             @Override
             public void onArmorTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
                 if (this.getArmorMaterial() == coolclk.skydimension.init.ArmorMaterial.SKY) {
-                    if (player.inventory.armorItemInSlot(slot.getSlotIndex()).getItem() == this) {
-                        player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
+                    switch (this.getEquipmentSlot()) {
+                        case HEAD: {
+                            player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
+                            break;
+                        }
+                        case CHEST: {
+                            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1, 2));
+                            break;
+                        }
+                        case LEGS: {
+                            player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 2));
+                            break;
+                        }
+                        case FEET: {
+                            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 2));
+                            break;
+                        }
                     }
                 }
                 super.onArmorTick(world, player, itemStack);
@@ -83,11 +99,7 @@ public class RegistryTool {
     }
 
     public static Item createSword(String name, Item.ToolMaterial material) {
-        return (new ItemSword(material) {
-            public void onUsingTick(@Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entityLivingBase, int slot) {
-                entityLivingBase.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 2));
-            }
-        })
+        return (new ItemSword(material))
                 .setTranslationKey(SkyDimension.MOD_ID + "." + name)
                 .setRegistryName(SkyDimension.MOD_ID, name);
     }

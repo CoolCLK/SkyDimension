@@ -3,6 +3,7 @@ package coolclk.skydimension;
 import coolclk.skydimension.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +26,11 @@ public class SkyDimension {
         LOGGER.info("=====================================");
 
         RegistryEvent.beforeFMLPreInitialization();
+    }
+
+    @EventHandler
+    public static void onFMLInitialization(FMLInitializationEvent event) {
+        RegistryEvent.onFMLPreInitialization();
     }
 
     @EventHandler
