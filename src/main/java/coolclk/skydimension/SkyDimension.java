@@ -24,7 +24,12 @@ public class SkyDimension {
         LOGGER.info("Thanks for your using!");
         LOGGER.info("=====================================");
 
-        RegistryEvent.beforeFMLPreInitialization();
+        RegistryEvent.beforeFMLInitialization();
+    }
+
+    @EventHandler
+    public static void onFMLInitialization(FMLPreInitializationEvent event) {
+        RegistryEvent.onFMLInitialization();
     }
 
     @EventHandler

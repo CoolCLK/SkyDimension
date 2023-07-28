@@ -50,4 +50,5 @@ sourceSets {
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    baseName mod_id + "-" + mod_minecraft_version
 }

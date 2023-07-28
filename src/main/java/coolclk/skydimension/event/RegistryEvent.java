@@ -18,7 +18,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -32,8 +31,12 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 
 @EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class RegistryEvent {
-    public static void beforeFMLPreInitialization() {
+    public static void beforeFMLInitialization() {
         registryDimension();
+    }
+
+    public static void onFMLInitialization() {
+        RegistryEvent.registrySmelting();
     }
 
     public static void onServerStarting(FMLServerStartingEvent event) {
