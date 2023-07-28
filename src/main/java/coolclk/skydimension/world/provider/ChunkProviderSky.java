@@ -2,12 +2,10 @@ package coolclk.skydimension.world.provider;
 
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -15,6 +13,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.MapGenVillage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -139,14 +138,20 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
     }
 
-    public Chunk provideChunk(int x, int z) {
-        seedRandomizer.setSeed((long) x * 0x4f9939f508L + (long) x * 0x1ef1565bd5L);
+    public Chunk provideChunk(int chunkX, int chunkZ) {
+        seedRandomizer.setSeed((long) chunkX * 0x4f9939f508L + (long) chunkX * 0x1ef1565bd5L);
         byte[] bytes = new byte[32768];
-        biomes = world.getBiomeProvider().getBiomes(biomes, x * 16, z * 16, 16, 16);
-        generateUnderground(x, z, bytes);
-        generateBiomes(x, z, bytes, biomes);
-        Chunk chunk = bytesToChunk(world, bytes, x, z);
-        caveGenerator.generate(world, x, z, bytesToChunkPrimer(bytes));
+        biomes = world.getBiomeProvider().getBiomes(biomes, chunkX * 16, chunkZ * 16, 16, 16);
+        generateUnderground(chunkX, chunkZ, bytes);
+        generateBiomes(chunkX, chunkZ, bytes, biomes);
+        ChunkPrimer chunkPrimer = bytesToChunkPrimer(bytes);
+        if (seedRandomizer.nextInt(32) == 0) {
+            int villageX = chunkX + seedRandomizer.nextInt(16) + 8;
+            int villageZ = chunkZ + seedRandomizer.nextInt(16) + 8;
+            (new MapGenVillage()).generate(world, villageX, villageZ, chunkPrimer);
+        }
+        Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
+        caveGenerator.generate(world, chunkX, chunkZ, bytesToChunkPrimer(bytes));
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -266,25 +271,31 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
         for (int k3 = 0; k3 < 3; k3++) {
             int l6 = x + seedRandomizer.nextInt(16);
-            int i10 = seedRandomizer.nextInt(32);
+            int i10 = seedRandomizer.nextInt(64);
             int k14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(l6, i10, k14));
         }
         for (int l3 = 0; l3 < 12; l3++) {
             int i7 = x + seedRandomizer.nextInt(16);
-            int j10 = seedRandomizer.nextInt(16);
+            int j10 = seedRandomizer.nextInt(64);
             int l14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(i7, j10, l14));
         }
-        for (int i4 = 0; i4 < 3; i4++) {
+        for (int i4 = 0; i4 < 5; i4++) {
             int j7 = x + seedRandomizer.nextInt(16);
-            int k10 = seedRandomizer.nextInt(16);
+            int k10 = seedRandomizer.nextInt(64);
             int i15 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(j7, k10, i15));
         }
-        for (int j4 = 0; j4 < 4; j4++) {
+        for (int i4 = 0; i4 < 3; i4++) {
+            int j7 = x + seedRandomizer.nextInt(16);
+            int k10 = seedRandomizer.nextInt(64);
+            int i15 = z + seedRandomizer.nextInt(16);
+            (new WorldGenMinable(Blocks.EMERALD_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(j7, k10, i15));
+        }
+        for (int j4 = 0; j4 < 8; j4++) {
             int k7 = x + seedRandomizer.nextInt(16);
-            int l10 = seedRandomizer.nextInt(16) + seedRandomizer.nextInt(16);
+            int l10 = seedRandomizer.nextInt(64) + seedRandomizer.nextInt(16);
             int j15 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), 6)).generate(world, seedRandomizer, new BlockPos(k7, l10, j15));
         }
@@ -364,49 +375,32 @@ public class ChunkProviderSky implements IChunkGenerator {
             int j21 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenReed()).generate(world, seedRandomizer, new BlockPos(l16, k19, j21));
         }
-
         if (seedRandomizer.nextInt(32) == 0) {
             int k12 = x + seedRandomizer.nextInt(16) + 8;
             int i17 = seedRandomizer.nextInt(128);
             int l19 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenPumpkin()).generate(world, seedRandomizer, new BlockPos(k12, i17, l19));
         }
-        int l12 = 0;
-        if (biome == Biomes.DESERT) {
-            l12 += 10;
-        }
-        for (int j17 = 0; j17 < l12; j17++) {
-            int i20 = x + seedRandomizer.nextInt(16) + 8;
-            int k21 = seedRandomizer.nextInt(128);
-            int k22 = z + seedRandomizer.nextInt(16) + 8;
-            (new WorldGenCactus()).generate(world, seedRandomizer, new BlockPos(i20, k21, k22));
-        }
 
+        if (biome == Biomes.DESERT) {
+            for (int j17 = 0; j17 < 10; j17++) {
+                int i20 = x + seedRandomizer.nextInt(16) + 8;
+                int k21 = seedRandomizer.nextInt(128);
+                int k22 = z + seedRandomizer.nextInt(16) + 8;
+                (new WorldGenCactus()).generate(world, seedRandomizer, new BlockPos(i20, k21, k22));
+            }
+        }
         for (int k17 = 0; k17 < 50; k17++) {
             int j20 = x + seedRandomizer.nextInt(16) + 8;
             int l21 = seedRandomizer.nextInt(seedRandomizer.nextInt(120) + 8);
             int l22 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenLiquids(Blocks.FLOWING_WATER)).generate(world, seedRandomizer, new BlockPos(j20, l21, l22));
         }
-
         for (int l17 = 0; l17 < 20; l17++) {
             int k20 = x + seedRandomizer.nextInt(16) + 8;
             int i22 = seedRandomizer.nextInt(seedRandomizer.nextInt(seedRandomizer.nextInt(112) + 8) + 8);
             int i23 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenLiquids(Blocks.FLOWING_LAVA)).generate(world, seedRandomizer, new BlockPos(k20, i22, i23));
-        }
-
-        for (int i18 = x + 8; i18 < x + 8 + 16; i18++) {
-            for (int l20 = z + 8; l20 < z + 8 + 16; l20++) {
-                int j22 = i18 - (x + 8);
-                int j23 = l20 - (z + 8);
-                int k23 = world.getTopSolidOrLiquidBlock(new BlockPos(i18, 0, l20)).getY();
-                double d1 = world.getBiome(new BlockPos(j22, k23, j23)).getDefaultTemperature() - ((double) (k23 - 64) / 64D) * 0.29999999999999999D;
-                BlockPos b1 = new BlockPos(i18, k23 - 1, l20);
-                if (d1 < 0.5D && k23 > 0 && k23 < 128 && world.isAirBlock(new BlockPos(i18, k23, l20)) && world.getBlockState(b1).isSideSolid(world, b1, EnumFacing.UP) && world.getBlockState(new BlockPos(i18, k23 - 1, l20)).getMaterial() != Material.ICE) {
-                    world.setBlockState(new BlockPos(i18, k23, l20), Blocks.SNOW.getDefaultState());
-                }
-            }
         }
         BlockSand.fallInstantly = false;
     }
