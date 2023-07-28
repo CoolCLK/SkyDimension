@@ -3,6 +3,7 @@ package coolclk.skydimension.init;
 import coolclk.skydimension.SkyDimension;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
@@ -17,8 +18,20 @@ public class Potions {
     static {
         SLOW_FALLING = new Potion(false, 0xF3CFB9) {
             @Override
+            public void performEffect(@Nonnull EntityLivingBase entityLivingBase, int amplifier) {
+                if (!entityLivingBase.onGround) {
+                    entityLivingBase.fallDistance = 0;
+                }
+            }
+
+            @Override
+            public boolean isReady(int duration, int amplifier) {
+                return true;
+            }
+
+            @Override
             public boolean hasStatusIcon() {
-                return false;
+                return true;
             }
 
             public void renderInventoryEffect(@Nonnull PotionEffect potionEffect, @Nonnull Gui gui, int x, int y, float alpha) {
@@ -26,10 +39,13 @@ public class Potions {
             }
 
             public void renderHUDEffect(@Nonnull PotionEffect potionEffect, @Nonnull Gui gui, int x, int y, float p_renderHUDEffect_5_, float alpha) {
+                int w = 16, h = 16;
+
                 Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(SkyDimension.MOD_ID, "textures/icons/potions/slow_falling.png"));
-                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+                Gui.drawModalRectWithCustomSizedTexture(x + (w / 2), y + (h / 2), 0, 0, w, h, w, h);
             }
         }.setPotionName("potion.skydimension.slow_falling.name").setRegistryName(SkyDimension.MOD_ID, "slow_falling");
+
         CACHE = new Potion[] { SLOW_FALLING };
     }
 

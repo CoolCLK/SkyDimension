@@ -145,12 +145,12 @@ public class ChunkProviderSky implements IChunkGenerator {
         generateUnderground(chunkX, chunkZ, bytes);
         generateBiomes(chunkX, chunkZ, bytes, biomes);
         ChunkPrimer chunkPrimer = bytesToChunkPrimer(bytes);
+        Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
         if (seedRandomizer.nextInt(32) == 0) {
-            int villageX = chunkX + seedRandomizer.nextInt(16) + 8;
-            int villageZ = chunkZ + seedRandomizer.nextInt(16) + 8;
+            int villageX = chunkX + seedRandomizer.nextInt(16);
+            int villageZ = chunkZ + seedRandomizer.nextInt(16);
             (new MapGenVillage()).generate(world, villageX, villageZ, chunkPrimer);
         }
-        Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
         caveGenerator.generate(world, chunkX, chunkZ, bytesToChunkPrimer(bytes));
         chunk.generateSkylightMap();
         return chunk;
@@ -211,14 +211,15 @@ public class ChunkProviderSky implements IChunkGenerator {
     @Override
     public void populate(int chunkX, int chunkZ) {
         BlockSand.fallInstantly = true;
+
         int x = chunkX * 16;
         int z = chunkZ * 16;
         Biome biome = world.getBiome(new BlockPos(x + 16, 0, z + 16));
+
         seedRandomizer.setSeed(world.getSeed());
         long l1 = (seedRandomizer.nextLong() / 2L) * 2L + 1L;
         long l2 = (seedRandomizer.nextLong() / 2L) * 2L + 1L;
         seedRandomizer.setSeed((long) chunkX * l1 + (long) chunkZ * l2 ^ world.getSeed());
-        double d;
         if (seedRandomizer.nextInt(4) == 0) {
             int i1 = x + seedRandomizer.nextInt(16) + 8;
             int l4 = seedRandomizer.nextInt(128);
@@ -305,8 +306,8 @@ public class ChunkProviderSky implements IChunkGenerator {
             int j14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(coolclk.skydimension.init.Blocks.SKY_ORE.getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(k6, l9, j14));
         }
-        d = 0.5D;
 
+        double d = 0.5D;
         NoiseGeneratorPerlin[] generatorCollection = new NoiseGeneratorPerlin[8];
         for (int j = 0; j < 8; j++) {
             generatorCollection[j] = new NoiseGeneratorPerlin(seedRandomizer, 0);
@@ -402,11 +403,12 @@ public class ChunkProviderSky implements IChunkGenerator {
             int i23 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenLiquids(Blocks.FLOWING_LAVA)).generate(world, seedRandomizer, new BlockPos(k20, i22, i23));
         }
+
         BlockSand.fallInstantly = false;
     }
 
     @Override
-    public boolean generateStructures(@Nonnull Chunk chunkIn, int x, int z) {
+    public boolean generateStructures(@Nonnull Chunk chunk, int chunkX, int chunkZ) {
         return false;
     }
 
@@ -442,10 +444,6 @@ public class ChunkProviderSky implements IChunkGenerator {
             }
         }
         return chunkPrimer;
-    }
-
-    private Chunk bytesToChunk(World worldIn, byte[] bytes, int chunkX, int chunkZ) {
-        return new Chunk(worldIn, bytesToChunkPrimer(bytes), chunkX, chunkZ);
     }
 
     private final Random seedRandomizer;

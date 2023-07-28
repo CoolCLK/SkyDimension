@@ -1,6 +1,7 @@
 package coolclk.skydimension.event;
 
 import coolclk.skydimension.SkyDimension;
+import coolclk.skydimension.api.ProjectE;
 import coolclk.skydimension.init.Blocks;
 import coolclk.skydimension.init.Items;
 import coolclk.skydimension.init.Potions;
@@ -17,6 +18,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -34,12 +36,9 @@ public class RegistryEvent {
         registryDimension();
     }
 
-    public static void onFMLPreInitialization() {
-
-    }
-
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(event);
+        ProjectE.registerEMC(event.getServer());
     }
 
     @SubscribeEvent
