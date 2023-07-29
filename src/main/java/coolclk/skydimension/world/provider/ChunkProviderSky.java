@@ -222,13 +222,13 @@ public class ChunkProviderSky implements IChunkGenerator {
         seedRandomizer.setSeed((long) chunkX * l1 + (long) chunkZ * l2 ^ world.getSeed());
         if (seedRandomizer.nextInt(4) == 0) {
             int i1 = x + seedRandomizer.nextInt(16) + 8;
-            int l4 = seedRandomizer.nextInt(128);
+            int l4 = seedRandomizer.nextInt(256);
             int i8 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenLakes(Blocks.WATER)).generate(world, seedRandomizer, new BlockPos(i1, l4, i8));
         }
         if (seedRandomizer.nextInt(8) == 0) {
             int j1 = x + seedRandomizer.nextInt(16) + 8;
-            int i5 = seedRandomizer.nextInt(seedRandomizer.nextInt(120) + 8);
+            int i5 = seedRandomizer.nextInt(seedRandomizer.nextInt(240) + 8);
             int j8 = z + seedRandomizer.nextInt(16) + 8;
             if (i5 < 64 || seedRandomizer.nextInt(10) == 0) {
                 (new WorldGenLakes(Blocks.LAVA)).generate(world, seedRandomizer, new BlockPos(j1, i5, j8));
@@ -236,71 +236,71 @@ public class ChunkProviderSky implements IChunkGenerator {
         }
         for (int k1 = 0; k1 < 8; k1++) {
             int j5 = x + seedRandomizer.nextInt(16) + 8;
-            int k8 = seedRandomizer.nextInt(128);
+            int k8 = seedRandomizer.nextInt(256);
             int i13 = z + seedRandomizer.nextInt(16) + 8;
             (new WorldGenDungeons()).generate(world, seedRandomizer, new BlockPos(j5, k8, i13));
         }
         for (int i2 = 0; i2 < 10; i2++) {
             int k5 = x + seedRandomizer.nextInt(16);
-            int l8 = seedRandomizer.nextInt(128);
+            int l8 = seedRandomizer.nextInt(256);
             int j13 = z + seedRandomizer.nextInt(16);
             (new WorldGenClay(32)).generate(world, seedRandomizer, new BlockPos(k5, l8, j13));
         }
         for (int j2 = 0; j2 < 20; j2++) {
             int l5 = x + seedRandomizer.nextInt(16);
-            int i9 = seedRandomizer.nextInt(128);
+            int i9 = seedRandomizer.nextInt(256);
             int k13 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.DIRT.getDefaultState(), 32)).generate(world, seedRandomizer, new BlockPos(l5, i9, k13));
         }
         for (int k2 = 0; k2 < 10; k2++) {
             int i6 = x + seedRandomizer.nextInt(16);
-            int j9 = seedRandomizer.nextInt(128);
+            int j9 = seedRandomizer.nextInt(256);
             int l13 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), 32)).generate(world, seedRandomizer, new BlockPos(i6, j9, l13));
         }
         for (int i3 = 0; i3 < 30; i3++) {
             int j6 = x + seedRandomizer.nextInt(16);
-            int k9 = seedRandomizer.nextInt(128);
+            int k9 = seedRandomizer.nextInt(256);
             int i14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(coolclk.skydimension.init.Blocks.ICE_COAL_ORE.getDefaultState(), 16)).generate(world, seedRandomizer, new BlockPos(j6, k9, i14));
         }
         for (int j3 = 0; j3 < 25; j3++) {
             int k6 = x + seedRandomizer.nextInt(16);
-            int l9 = seedRandomizer.nextInt(64);
+            int l9 = seedRandomizer.nextInt(128);
             int j14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(k6, l9, j14));
         }
         for (int k3 = 0; k3 < 3; k3++) {
             int l6 = x + seedRandomizer.nextInt(16);
-            int i10 = seedRandomizer.nextInt(64);
+            int i10 = seedRandomizer.nextInt(128);
             int k14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), 8)).generate(world, seedRandomizer, new BlockPos(l6, i10, k14));
         }
         for (int l3 = 0; l3 < 12; l3++) {
             int i7 = x + seedRandomizer.nextInt(16);
-            int j10 = seedRandomizer.nextInt(64);
+            int j10 = seedRandomizer.nextInt(128);
             int l14 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(i7, j10, l14));
         }
-        for (int i4 = 0; i4 < 5; i4++) {
+        for (int i4 = 0; i4 < 2; i4++) {
             int j7 = x + seedRandomizer.nextInt(16);
             int k10 = seedRandomizer.nextInt(64);
             int i15 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(j7, k10, i15));
         }
-        for (int i4 = 0; i4 < 3; i4++) {
+        for (int i4 = 0; i4 < 1; i4++) {
             int j7 = x + seedRandomizer.nextInt(16);
             int k10 = seedRandomizer.nextInt(64);
             int i15 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.EMERALD_ORE.getDefaultState(), 7)).generate(world, seedRandomizer, new BlockPos(j7, k10, i15));
         }
-        for (int j4 = 0; j4 < 8; j4++) {
+        for (int j4 = 0; j4 < 2; j4++) {
             int k7 = x + seedRandomizer.nextInt(16);
             int l10 = seedRandomizer.nextInt(64) + seedRandomizer.nextInt(16);
             int j15 = z + seedRandomizer.nextInt(16);
             (new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), 6)).generate(world, seedRandomizer, new BlockPos(k7, l10, j15));
         }
-        for (int j3 = 0; j3 < 20; j3++) {
+        for (int j3 = 0; j3 < 15; j3++) {
             int k6 = x + seedRandomizer.nextInt(16);
             int l9 = seedRandomizer.nextInt(64);
             int j14 = z + seedRandomizer.nextInt(16);

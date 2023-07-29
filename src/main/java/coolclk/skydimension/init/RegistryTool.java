@@ -33,21 +33,29 @@ public class RegistryTool {
             @Override
             public void onArmorTick(@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
                 if (this.getArmorMaterial() == coolclk.skydimension.init.ArmorMaterial.SKY) {
-                    switch (this.getEquipmentSlot()) {
+                    switch (slot) {
                         case HEAD: {
-                            player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
+                            if (!player.isPotionActive(Potions.SLOW_FALLING)) {
+                                player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
+                            }
                             break;
                         }
                         case CHEST: {
-                            player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1, 2));
+                            if (!player.isPotionActive(MobEffects.RESISTANCE)) {
+                                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1, 2));
+                            }
                             break;
                         }
                         case LEGS: {
-                            player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 2));
+                            if (!player.isPotionActive(MobEffects.SPEED)) {
+                                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 2));
+                            }
                             break;
                         }
                         case FEET: {
-                            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 2));
+                            if (!player.isPotionActive(MobEffects.JUMP_BOOST)) {
+                                player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 2));
+                            }
                             break;
                         }
                     }
