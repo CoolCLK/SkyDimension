@@ -146,11 +146,6 @@ public class ChunkProviderSky implements IChunkGenerator {
         generateBiomes(chunkX, chunkZ, bytes, biomes);
         ChunkPrimer chunkPrimer = bytesToChunkPrimer(bytes);
         Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
-        if (seedRandomizer.nextInt(32) == 0) {
-            int villageX = chunkX + seedRandomizer.nextInt(16);
-            int villageZ = chunkZ + seedRandomizer.nextInt(16);
-            (new MapGenVillage()).generate(world, villageX, villageZ, chunkPrimer);
-        }
         caveGenerator.generate(world, chunkX, chunkZ, bytesToChunkPrimer(bytes));
         chunk.generateSkylightMap();
         return chunk;
@@ -409,6 +404,11 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     @Override
     public boolean generateStructures(@Nonnull Chunk chunk, int chunkX, int chunkZ) {
+        for (Biome biome : this.biomes) {
+            if (!MapGenVillage.VILLAGE_SPAWN_BIOMES.contains(biome)) {
+                MapGenVillage.VILLAGE_SPAWN_BIOMES.add(biome);
+            }
+        }
         return false;
     }
 
@@ -425,7 +425,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     }
 
     @Override
-    public void recreateStructures(@Nonnull Chunk chunkIn, int x, int z) {
+    public void recreateStructures(@Nonnull Chunk chunk, int x, int z) {
 
     }
 

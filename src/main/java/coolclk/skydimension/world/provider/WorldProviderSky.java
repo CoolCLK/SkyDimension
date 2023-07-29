@@ -9,6 +9,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
@@ -109,5 +110,13 @@ public class WorldProviderSky extends WorldProvider {
         }
         LOGGER.error("Spawn Coordinate found fail.");
         return spawnCoordinate;
+    }
+
+    public boolean canDoLightning(@Nonnull Chunk chunk) {
+        return false;
+    }
+
+    public boolean canDoRainSnowIce(@Nonnull Chunk chunk) {
+        return false;
     }
 }

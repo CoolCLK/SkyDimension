@@ -19,9 +19,12 @@ public class Potions {
         SLOW_FALLING = new Potion(false, 0xF3CFB9) {
             @Override
             public void performEffect(@Nonnull EntityLivingBase entityLivingBase, int amplifier) {
-                if (!entityLivingBase.onGround) {
+                if (!entityLivingBase.onGround && entityLivingBase.motionY < 0) {
+                    double fallSpeed = 0.1D / 2;
+                    entityLivingBase.motionY += fallSpeed;
                     entityLivingBase.fallDistance = 0;
                 }
+                entityLivingBase.setNoGravity(false);
             }
 
             @Override
@@ -35,14 +38,16 @@ public class Potions {
             }
 
             public void renderInventoryEffect(@Nonnull PotionEffect potionEffect, @Nonnull Gui gui, int x, int y, float alpha) {
-                this.renderHUDEffect(potionEffect, gui, x, y, 0, alpha);
+                this.renderEffect(x + 8, y + 8);
             }
 
-            public void renderHUDEffect(@Nonnull PotionEffect potionEffect, @Nonnull Gui gui, int x, int y, float p_renderHUDEffect_5_, float alpha) {
-                int w = 16, h = 16;
+            public void renderHUDEffect(@Nonnull PotionEffect potionEffect, @Nonnull Gui gui, int x, int y, float rotation, float alpha) {
+                this.renderEffect(x + 4, y + 4);
+            }
 
-                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(SkyDimension.MOD_ID, "textures/icons/potions/slow_falling.png"));
-                Gui.drawModalRectWithCustomSizedTexture(x + (w / 2), y + (h / 2), 0, 0, w, h, w, h);
+            public void renderEffect(int x, int y) {
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(SkyDimension.MOD_ID, "textures/mob_effect/slow_falling.png"));
+                Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
             }
         }.setPotionName("potion.skydimension.slow_falling.name").setRegistryName(SkyDimension.MOD_ID, "slow_falling");
 
