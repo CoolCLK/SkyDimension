@@ -19,7 +19,7 @@ public class Potions {
         SLOW_FALLING = new Potion(false, 0xF3CFB9) {
             @Override
             public void performEffect(@Nonnull EntityLivingBase entityLivingBase, int amplifier) {
-                if (!entityLivingBase.onGround && entityLivingBase.motionY < 0) {
+                if (!entityLivingBase.onGround && !(entityLivingBase.isInLava() || entityLivingBase.isInWater()) && entityLivingBase.motionY < 0) {
                     double fallSpeed = 0.1D / 2;
                     entityLivingBase.motionY += fallSpeed;
                     entityLivingBase.fallDistance = 0;
