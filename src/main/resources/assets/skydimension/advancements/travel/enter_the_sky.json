@@ -10,6 +10,7 @@
             "translate": "advancements.skydimension.travel.enter_the_sky.description"
         }
     },
+    "parent": "skydimension:travel/root",
     "criteria": {
         "entered_sky": {
             "trigger": "minecraft:changed_dimension",
