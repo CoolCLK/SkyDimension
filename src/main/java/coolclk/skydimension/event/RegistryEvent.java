@@ -64,9 +64,18 @@ public class RegistryEvent {
 
     public static void registrySmelting() {
         LOGGER.debug("Registering recipe(s)...");
-        GameRegistry.addSmelting(Blocks.SKY_ORE, new ItemStack(Items.SKY_INGOT), 5.0F);
-        GameRegistry.addSmelting(Items.ICE_COAL, new ItemStack(net.minecraft.init.Items.COAL), 1.0F);
-        GameRegistry.addSmelting(Blocks.ICE_COAL_BLOCK, new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 1.0F);
+        GameRegistry.addSmelting(Blocks.SKY_ORE, new ItemStack(Items.SKY_INGOT), 5);
+        GameRegistry.addSmelting(Items.SKY_AXE, new ItemStack(Items.SKY_NUGGET, 3), 5);
+        GameRegistry.addSmelting(Items.SKY_BOOTS, new ItemStack(Items.SKY_NUGGET, 4), 5);
+        GameRegistry.addSmelting(Items.SKY_CHESTPLATE, new ItemStack(Items.SKY_NUGGET, 8), 5);
+        GameRegistry.addSmelting(Items.SKY_HELMET, new ItemStack(Items.SKY_NUGGET, 5), 5);
+        GameRegistry.addSmelting(Items.SKY_HOE, new ItemStack(Items.SKY_NUGGET, 2), 5);
+        GameRegistry.addSmelting(Items.SKY_LEGGINGS, new ItemStack(Items.SKY_NUGGET, 5), 5);
+        GameRegistry.addSmelting(Items.SKY_PICKAXE, new ItemStack(Items.SKY_NUGGET, 3), 5);
+        GameRegistry.addSmelting(Items.SKY_SHOVEL, new ItemStack(Items.SKY_NUGGET, 1), 5);
+        GameRegistry.addSmelting(Items.SKY_SWORD, new ItemStack(Items.SKY_NUGGET, 2), 5);
+        GameRegistry.addSmelting(Items.ICE_COAL, new ItemStack(net.minecraft.init.Items.COAL), 3);
+        GameRegistry.addSmelting(Blocks.ICE_COAL_BLOCK, new ItemStack(net.minecraft.init.Blocks.COAL_BLOCK), 3);
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {

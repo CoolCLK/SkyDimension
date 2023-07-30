@@ -13,6 +13,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.MapGenVillage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -403,13 +404,14 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     @Override
     public boolean generateStructures(@Nonnull Chunk chunk, int chunkX, int chunkZ) {
-        return false;
+        new MapGenVillage.Start(world, seedRandomizer, chunkX, chunkZ, 10);
+        return true;
     }
 
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType enumCreatureType, @Nonnull BlockPos blockPos) {
-        return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 4, 4));
+        return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 4, 20));
     }
 
     @Nullable

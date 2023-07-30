@@ -21,8 +21,8 @@ public class PlayerEvent {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
         if (player.dimension == DimensionSky.getDimensionId()) {
-            player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
-            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 2));
+            player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 0));
+            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 1));
 
             if (player.getPosition().getY() <= 0) {
                 player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {

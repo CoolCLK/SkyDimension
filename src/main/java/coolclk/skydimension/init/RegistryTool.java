@@ -36,25 +36,25 @@ public class RegistryTool {
                     switch (slot) {
                         case HEAD: {
                             if (!player.isPotionActive(Potions.SLOW_FALLING)) {
-                                player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 1));
+                                player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 0));
                             }
                             break;
                         }
                         case CHEST: {
                             if (!player.isPotionActive(MobEffects.RESISTANCE)) {
-                                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1, 2));
+                                player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1, 0));
                             }
                             break;
                         }
                         case LEGS: {
                             if (!player.isPotionActive(MobEffects.SPEED)) {
-                                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 2));
+                                player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1, 0));
                             }
                             break;
                         }
                         case FEET: {
                             if (!player.isPotionActive(MobEffects.JUMP_BOOST)) {
-                                player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 2));
+                                player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 1));
                             }
                             break;
                         }

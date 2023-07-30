@@ -13,7 +13,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
 
@@ -92,12 +91,11 @@ public class WorldProviderSky extends WorldProvider {
         }
     }
 
-    @Nullable
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = super.getSpawnCoordinate();
         if (spawnCoordinate == null) {
-            int skip = 16;
-            int range = 512;
+            int skip = 8;
+            int range = 256;
             for (int triedX = -range; triedX <= range; triedX += skip) {
                 for (int triedZ = -range; triedZ <= range; triedZ += skip) {
                     if (canCoordinateBeSpawn(triedX, triedZ)) {
