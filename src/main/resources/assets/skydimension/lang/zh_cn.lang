@@ -1,5 +1,9 @@
-advancement.skydimension.it_is_sky.title=这里是天域吗？
-advancement.skydimension.it_is_sky.description=一个隐藏的世界...
+advancements.skydimension.travel.enter_the_sky.title=这是个梦吗？
+advancements.skydimension.travel.enter_the_sky.description=一个轻飘飘的世界~
+advancements.skydimension.travel.smelt_ice_coal.title=加热时间！
+advancements.skydimension.travel.smelt_ice_coal.description=那是你的热巧克力吗？
+advancements.skydimension.travel.smelt_sky.title=变得更轻！
+advancements.skydimension.travel.smelt_sky.description=它会飘走吗？
 
 command.skydimension.go-sky.usage=/go-sky [玩家]
 

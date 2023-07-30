@@ -13,7 +13,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.structure.MapGenVillage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -404,11 +403,6 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     @Override
     public boolean generateStructures(@Nonnull Chunk chunk, int chunkX, int chunkZ) {
-        for (Biome biome : this.biomes) {
-            if (!MapGenVillage.VILLAGE_SPAWN_BIOMES.contains(biome)) {
-                MapGenVillage.VILLAGE_SPAWN_BIOMES.add(biome);
-            }
-        }
         return false;
     }
 

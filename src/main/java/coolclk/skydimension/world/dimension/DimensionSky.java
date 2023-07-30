@@ -4,7 +4,6 @@ import coolclk.skydimension.world.provider.WorldProviderSky;
 import coolclk.skydimension.world.teleporter.TeleporterSky;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.DimensionType;
-import net.minecraft.world.Teleporter;
 import net.minecraftforge.common.DimensionManager;
 
 import static coolclk.skydimension.SkyDimension.LOGGER;
@@ -12,8 +11,9 @@ import static coolclk.skydimension.SkyDimension.LOGGER;
 public class DimensionSky {
     private final static int dimensionId = 2;
     private final static String dimensionName = "sky";
-    private final static String dimensionSuffix = "_dim" + dimensionId;
+    private final static String dimensionSuffix = "_dim";
     private static DimensionType dimensionType;
+
     public static void registry() {
         dimensionType = DimensionType.register(DimensionSky.getDimensionName(), DimensionSky.getDimensionSuffix(), DimensionSky.getDimensionId(), WorldProviderSky.class, false);
         DimensionManager.registerDimension(DimensionSky.getDimensionId(), dimensionType);

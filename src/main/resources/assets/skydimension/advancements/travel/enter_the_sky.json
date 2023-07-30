@@ -1,0 +1,21 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:glowstone"
+        },
+        "title": {
+            "translate": "advancements.skydimension.travel.enter_the_sky.title"
+        },
+        "description": {
+            "translate": "advancements.skydimension.travel.enter_the_sky.description"
+        }
+    },
+    "criteria": {
+        "entered_sky": {
+            "trigger": "minecraft:changed_dimension",
+            "conditions": {
+              "to": "sky"
+            }
+        }
+    }
+}
