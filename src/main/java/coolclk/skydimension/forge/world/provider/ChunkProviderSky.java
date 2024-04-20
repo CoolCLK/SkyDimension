@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.provider;
 
-import com.google.common.collect.Lists;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
@@ -45,7 +44,6 @@ public class ChunkProviderSky implements IChunkGenerator {
     double[] field_28089_h;
 
     private final MapGenVillage villageGenerator = new MapGenVillage();
-    private final ArrayList<Biome.SpawnListEntry> spawnableList = Lists.newArrayList();
 
     public ChunkProviderSky(World world, long l) {
         field_28079_r = new double[256];
@@ -63,8 +61,6 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28096_a = new NoiseGeneratorOctaves(seedRandomizer, 10);
         field_28095_b = new NoiseGeneratorOctaves(seedRandomizer, 16);
         field_28094_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
-
-        this.spawnableList.add(new Biome.SpawnListEntry(EntityChicken.class, 10, 0, 1));
     }
 
     public void generateUnderground(int xOffset, int zOffset, byte[] bytes) {
@@ -438,7 +434,7 @@ public class ChunkProviderSky implements IChunkGenerator {
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType creatureType, @Nonnull BlockPos blockPos) {
-        return this.spawnableList;
+        return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 0, 1));
     }
 
     @Nullable
