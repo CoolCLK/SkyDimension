@@ -5,9 +5,6 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -67,10 +64,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28095_b = new NoiseGeneratorOctaves(seedRandomizer, 16);
         field_28094_c = new NoiseGeneratorOctaves(seedRandomizer, 8);
 
-        this.spawnableList.add(new Biome.SpawnListEntry(EntitySheep.class, 12, 1, 4));
-        this.spawnableList.add(new Biome.SpawnListEntry(EntityPig.class, 10, 1, 4));
-        this.spawnableList.add(new Biome.SpawnListEntry(EntityChicken.class, 10, 1, 4));
-        this.spawnableList.add(new Biome.SpawnListEntry(EntityCow.class, 8, 1, 4));
+        this.spawnableList.add(new Biome.SpawnListEntry(EntityChicken.class, 10, 0, 1));
     }
 
     public void generateUnderground(int xOffset, int zOffset, byte[] bytes) {
