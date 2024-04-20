@@ -1,0 +1,14 @@
+{
+  "homepage": "https://github.com/CoolCLK/SkyDimension/releases",
+  "1.12.2": {
+    "1.0.4": "Fixed when you effect Slow Falling in the water or lava will float over than them. Fixed advancements render.",
+    "1.0.3": "Fixed some bugs.",
+    "1.0.2": "Fixed some bugs.",
+    "1.0.1": "Adds blocks and items, powerful world. Also add high version effect Slow Falling.",
+    "1.0.0": "First version, newer version will based on it."
+  },
+  "promos": {
+    "1.12.2-latest": "1.0.4",
+    "1.12.2-recommended": "1.0.4"
+  }
+}
