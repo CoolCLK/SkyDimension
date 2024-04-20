@@ -2,29 +2,9 @@ advancements.skydimension.travel.root.title=Sky
 advancements.skydimension.travel.root.description=Mystery, and your bravery
 advancements.skydimension.travel.enter_the_sky.title=Is it a dream?
 advancements.skydimension.travel.enter_the_sky.description=A fluttering world~
-advancements.skydimension.travel.smelt_ice_coal.title=Heating time!
-advancements.skydimension.travel.smelt_ice_coal.description=Is that your hot chocolate?
-advancements.skydimension.travel.smelt_sky.title=Get lighter!
-advancements.skydimension.travel.smelt_sky.description=Will it float away?
+advancements.skydimension.travel.village_over_sky.title=A village over sky
+advancements.skydimension.travel.village_over_sky.description=A village that needs your head up.
 
 command.skydimension.go-sky.usage=/go-sky [player]
 
 potion.skydimension.slow_falling.name=Slow Falling
-
-tile.skydimension.ice_coal_block.name=Ice Coal Block
-tile.skydimension.ice_coal_ore.name=Ice Coal Ore
-tile.skydimension.sky_block.name=Sky Block
-tile.skydimension.sky_ore.name=Sky Ore
-
-item.skydimension.ice_coal.name=Ice Coal
-item.skydimension.sky_axe.name=Sky Axe
-item.skydimension.sky_boots.name=Sky Boots
-item.skydimension.sky_chestplate.name=Sky Chestplate
-item.skydimension.sky_helmet.name=Sky Helmet
-item.skydimension.sky_hoe.name=Sky Axe
-item.skydimension.sky_ingot.name=Sky Ingot
-item.skydimension.sky_leggings.name=Sky Leggings
-item.skydimension.sky_nugget.name=Sky Nugget
-item.skydimension.sky_pickaxe.name=Sky Pickaxe
-item.skydimension.sky_shovel.name=Sky Shovel
-item.skydimension.sky_sword.name=Sky Sword

@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    { "item": "skydimension:sky_block" }
-  ],
-  "result": { "item": "skydimension:sky_ingot", "count": 9 }
-}

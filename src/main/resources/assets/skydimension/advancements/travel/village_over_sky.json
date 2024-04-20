@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:log"
+        },
+        "title": {
+            "translate": "advancements.skydimension.travel.village_over_sky.title"
+        },
+        "description": {
+            "translate": "advancements.skydimension.travel.village_over_sky.description"
+        }
+    },
+    "parent": "skydimension:travel/enter_the_sky",
+    "criteria": {
+        "entered_village": {
+            "trigger": "minecraft:tick",
+            "conditions": {
+                "player": {
+                    "location": {
+                        "structure": "Village",
+                        "dimension": "skydimension:sky"
+                    }
+                }
+            }
+        }
+    }
+}

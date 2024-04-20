@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    { "item": "skydimension:ice_coal_block" }
-  ],
-  "result": { "item": "skydimension:ice_coal", "count": 9 }
-}
