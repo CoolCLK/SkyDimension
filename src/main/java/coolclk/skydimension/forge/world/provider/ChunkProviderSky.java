@@ -3,7 +3,6 @@ package coolclk.skydimension.forge.world.provider;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -170,9 +169,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         ChunkPrimer chunkPrimer = bytesToChunkPrimer(bytes);
         Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
         caveGenerator.generate(world, chunkX, chunkZ, bytesToChunkPrimer(bytes));
-        //
         villageGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
-        //
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -237,9 +234,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         int z = chunkZ * 16;
         Biome biome = world.getBiome(new BlockPos(x + 16, 0, z + 16));
 
-        //
         this.villageGenerator.generateStructure(this.world, this.seedRandomizer, new ChunkPos(chunkX, chunkZ));
-        //
 
         seedRandomizer.setSeed(world.getSeed());
         long l1 = (seedRandomizer.nextLong() / 2L) * 2L + 1L;
@@ -434,7 +429,8 @@ public class ChunkProviderSky implements IChunkGenerator {
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType creatureType, @Nonnull BlockPos blockPos) {
-        return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 0, 1));
+        return Collections.emptyList();
+        // return Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 1, 4));
     }
 
     @Nullable
