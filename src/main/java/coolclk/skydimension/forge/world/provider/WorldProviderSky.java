@@ -33,7 +33,7 @@ public class WorldProviderSky extends WorldProvider {
     @Override
     @Nonnull
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkProviderSky(world, world.getSeed());
+        return new SkyChunkGenerator(world, world.getSeed());
     }
 
     @Override

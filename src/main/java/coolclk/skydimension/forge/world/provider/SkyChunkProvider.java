@@ -1,27 +1,23 @@
 package coolclk.skydimension.forge.world.provider;
 
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.BlockSand;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.*;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.structure.MapGenVillage;
+import net.minecraft.world.gen.OctavesNoiseGenerator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Random;
 
-public class ChunkProviderSky implements IChunkGenerator {
+public class SkyChunkProvider {
     private final Random seedRandomizer;
-    private final NoiseGeneratorOctaves field_28086_k;
+    private final OctavesNoiseGenerator field_28086_k;
     private final NoiseGeneratorOctaves field_28085_l;
     private final NoiseGeneratorOctaves field_28084_m;
     private final NoiseGeneratorOctaves field_28083_n;
@@ -44,7 +40,8 @@ public class ChunkProviderSky implements IChunkGenerator {
 
     private final MapGenVillage villageGenerator = new MapGenVillage();
 
-    public ChunkProviderSky(World world, long l) {
+    public SkyChunkProvider(World world, long l) {
+        super(BiomeProvider, DimensionStructuresSettings);
         field_28079_r = new double[256];
         field_28078_s = new double[256];
         field_28077_t = new double[256];
@@ -184,7 +181,7 @@ public class ChunkProviderSky implements IChunkGenerator {
         field_28089_h = field_28095_b.generateNoiseOctaves(field_28089_h, xOffset, zOffset, xSize, zSize, 200D, 200D, 0.5D);
         d *= 2D;
         field_28093_d = field_28084_m.generateNoiseOctaves(field_28093_d, xOffset, 0, zOffset, xSize, ySize, zSize, d / 80D, d1 / 160D, d / 80D);
-        field_28092_e = field_28086_k.generateNoiseOctaves(field_28092_e, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
+        field_28092_e = field_28086_k.getOctaveNoise(field_28092_e, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
         field_28091_f = field_28085_l.generateNoiseOctaves(field_28091_f, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
         int k1 = 0;
         for (int j2 = 0; j2 < xSize; j2++) {
