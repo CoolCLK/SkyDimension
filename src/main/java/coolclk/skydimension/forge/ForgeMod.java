@@ -1,31 +1,29 @@
 package coolclk.skydimension.forge;
 
 import coolclk.skydimension.SkyDimension;
-import coolclk.skydimension.forge.event.EventHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = SkyDimension.MOD_ID)
+@Mod(SkyDimension.MOD_ID)
 public class ForgeMod {
-    public static Logger LOGGER;
+    public static Logger LOGGER = LogManager.getLogger();
+    public static MinecraftServer SERVER;
 
-    @Mod.EventHandler
-    public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
-        LOGGER = event.getModLog();
+    public ForgeMod() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onServerStarted);
 
         LOGGER.info("========== [Sky Dimension] ==========");
         LOGGER.info("The mod successfully launched!");
         LOGGER.info("Author: CoolCLK");
         LOGGER.info("Thanks for your using!");
         LOGGER.info("=====================================");
-
-        EventHandler.beforeFMLInitialization();
     }
 
-    @Mod.EventHandler
-    public static void onServerStarting(FMLServerStartingEvent event) {
-        EventHandler.onServerStarting(event);
+    public void onServerStarted(FMLServerStartedEvent event) {
+        SERVER = event.getServer();
     }
 }
