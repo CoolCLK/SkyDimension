@@ -1,6 +1,6 @@
-package coolclk.skydimension.forge.world.provider;
+package coolclk.skydimension.forge.world;
 
-import coolclk.skydimension.forge.world.dimension.DimensionSky;
+import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -33,7 +33,7 @@ public class WorldProviderSky extends WorldProvider {
     @Override
     @Nonnull
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkProviderSky(world, world.getSeed());
+        return new ChunkGeneratorSky(this.world);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class WorldProviderSky extends WorldProvider {
     @Nonnull
     @Override
     public DimensionType getDimensionType() {
-        return DimensionSky.getDimensionType();
+        return coolclk.skydimension.forge.world.DimensionType.SKY;
     }
 
     @Override
@@ -101,8 +101,8 @@ public class WorldProviderSky extends WorldProvider {
     public BlockPos getSpawnCoordinate() {
         BlockPos spawnCoordinate = super.getSpawnCoordinate();
         if (spawnCoordinate == null) {
-            int skip = 8;
-            int range = 256;
+            int skip = 16;
+            int range = 512;
             for (int triedX = -range; triedX <= range; triedX += skip) {
                 for (int triedZ = -range; triedZ <= range; triedZ += skip) {
                     if (canCoordinateBeSpawn(triedX, triedZ)) {
