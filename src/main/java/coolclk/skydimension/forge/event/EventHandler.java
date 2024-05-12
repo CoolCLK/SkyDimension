@@ -2,7 +2,7 @@ package coolclk.skydimension.forge.event;
 
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.potion.Potions;
-import coolclk.skydimension.forge.world.dimension.DimensionSky;
+import coolclk.skydimension.forge.world.teleporter.SpawnTeleporter;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -32,10 +32,6 @@ import static coolclk.skydimension.forge.ForgeMod.LOGGER;
 
 @EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class EventHandler {
-    public static void beforeFMLInitialization() {
-        registryDimension();
-    }
-
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(event);
     }
@@ -43,11 +39,6 @@ public class EventHandler {
     @SubscribeEvent
     public static void onRegisterPotion(net.minecraftforge.event.RegistryEvent.Register<Potion> event) {
         Potions.registerPotions(event.getRegistry());
-    }
-
-    private static void registryDimension() {
-        LOGGER.debug("Registering dimension(s)...");
-        DimensionSky.registry();
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {
@@ -74,7 +65,9 @@ public class EventHandler {
                     player = (EntityPlayer) sender;
                 }
                 if (player != null) {
-                    DimensionSky.letPlayerGoDimension(player);
+                    if (player.dimension != coolclk.skydimension.forge.world.DimensionType.SKY.getId()) {
+                        player.changeDimension(coolclk.skydimension.forge.world.DimensionType.SKY.getId(), new SpawnTeleporter());
+                    }
                 }
             }
         });
@@ -90,7 +83,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
-        if (player.dimension == DimensionSky.getDimensionId()) {
+        if (player.dimension == coolclk.skydimension.forge.world.DimensionType.SKY.getId()) {
             player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 0));
             player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 1));
 
@@ -109,13 +102,15 @@ public class EventHandler {
         int r = new Random().nextInt(100);
         int n = 75;
         if (r >= n) {
-            DimensionSky.letPlayerGoDimension(player);
+            if (player.dimension != coolclk.skydimension.forge.world.DimensionType.SKY.getId()) {
+                player.changeDimension(coolclk.skydimension.forge.world.DimensionType.SKY.getId(), new SpawnTeleporter());
+            }
         }
     }
 
     @SubscribeEvent
     public static void onVillageSiege(VillageSiegeEvent event) {
-        if (event.getWorld().provider.getDimensionType() == DimensionSky.getDimensionType()) {
+        if (event.getWorld().provider.getDimensionType() == coolclk.skydimension.forge.world.DimensionType.SKY) {
             event.setCanceled(true);
         }
     }
