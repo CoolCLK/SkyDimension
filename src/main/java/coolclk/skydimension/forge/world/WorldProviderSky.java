@@ -16,9 +16,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 
-import static coolclk.skydimension.forge.ForgeMod.LOGGER;
-
+/**
+ * The world provider of sky dimension.
+ * @author CoolCLK
+ */
 public class WorldProviderSky extends WorldProvider {
+    /**
+     * Make the world full-bright.
+     * @author CoolCLK
+     */
     @Override
     protected void generateLightBrightnessTable() {
         for (int i = 0; i <= 15; i++) {
@@ -30,25 +36,32 @@ public class WorldProviderSky extends WorldProvider {
         }
     }
 
+    /**
+     * Create a chunk generator.
+     * @author CoolCLK
+     */
     @Override
     @Nonnull
     public IChunkGenerator createChunkGenerator() {
         return new ChunkGeneratorSky(this.world);
     }
 
+    /**
+     * Lock the sky angle.
+     * @author CoolCLK
+     */
     @Override
-    public float calculateCelestialAngle(long worldTime, float partialTicks)
-    {
+    public float calculateCelestialAngle(long worldTime, float partialTicks){
         return 0F;
     }
 
-    @Override
-    public float[] calcSunriseSunsetColors(float f, float f1) {
-        return null;
-    }
-
+    /**
+     * Get the color of fog.
+     * @author CoolCLK
+     */
     @Override
     @Nonnull
+    @SideOnly(Side.CLIENT)
     public Vec3d getFogColor(float x, float z) {
         int i = 0x8080a0;
         float f2 = MathHelper.cos(x * 3.141593F * 2.0F) * 2.0F + 0.5F;
@@ -67,29 +80,45 @@ public class WorldProviderSky extends WorldProvider {
         return new Vec3d(f3, f4, f5);
     }
 
+    /**
+     * Switch the result of sleep.
+     * @author CoolCLK
+     */
     @Override
     @Nonnull
     public WorldSleepResult canSleepAt(@Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
         return WorldSleepResult.ALLOW;
     }
 
+    /**
+     * Get the height of cloud.
+     * @author CoolCLK
+     */
     @Override
     public float getCloudHeight() {
         return 8F;
     }
 
+    /**
+     * Get the type of the dimension.
+     * @author CoolCLK
+     */
     @Nonnull
     @Override
     public DimensionType getDimensionType() {
         return coolclk.skydimension.forge.world.DimensionType.SKY;
     }
 
+    /**
+     * Get the height of cloud.
+     * @author CoolCLK
+     */
     @Override
     public boolean canCoordinateBeSpawn(int x, int z) {
         if (world.isChunkGeneratedAt(x, z)) {
             return false;
         }
-        IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z)));
+        IBlockState k = world.getBlockState(world.getTopSolidOrLiquidBlock(new BlockPos(x, 128, z)));
         if (k.getBlock() == Blocks.AIR) {
             return false;
         } else {
@@ -97,40 +126,54 @@ public class WorldProviderSky extends WorldProvider {
         }
     }
 
+    /**
+     * Get a coordinate for player to spawn, or else create a platform.
+     * @author CoolCLK
+     */
     @Override
     public BlockPos getSpawnCoordinate() {
-        BlockPos spawnCoordinate = super.getSpawnCoordinate();
-        if (spawnCoordinate == null) {
-            int skip = 16;
-            int range = 512;
-            for (int triedX = -range; triedX <= range; triedX += skip) {
-                for (int triedZ = -range; triedZ <= range; triedZ += skip) {
-                    if (canCoordinateBeSpawn(triedX, triedZ)) {
-                        spawnCoordinate = world.getTopSolidOrLiquidBlock(new BlockPos(triedX, 0, triedZ));
-                        LOGGER.debug("Spawn Coordinate found: (x: " + triedX + ", z: " + triedZ + ")");
-                        return spawnCoordinate;
-                    }
-                }
-            }
+        BlockPos coordinate = super.getSpawnCoordinate();
+        if (coordinate == null) {
+            coordinate = new BlockPos(0, 128, 0);
+            IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
+            this.world.setBlockState(coordinate.down().west().north(), ground);
+            this.world.setBlockState(coordinate.down().west(), ground);
+            this.world.setBlockState(coordinate.down().west().south(), ground);
+            this.world.setBlockState(coordinate.down().north(), ground);
+            this.world.setBlockState(coordinate.down(), ground);
+            this.world.setBlockState(coordinate.down().south(), ground);
+            this.world.setBlockState(coordinate.down().east().north(), ground);
+            this.world.setBlockState(coordinate.down().east(), ground);
+            this.world.setBlockState(coordinate.down().east().south(), ground);
         }
-        LOGGER.error("Spawn Coordinate found fail.");
-        return spawnCoordinate;
+        return coordinate;
     }
 
+    /**
+     * Lock weather.
+     * @author CoolCLK
+     */
     @Override
     public boolean canDoLightning(@Nonnull Chunk chunk) {
         return false;
     }
 
+    /**
+     * Lock weather.
+     * @author CoolCLK
+     */
     @Override
     public boolean canDoRainSnowIce(@Nonnull Chunk chunk) {
         return false;
     }
 
+    /**
+     * Lock sky color state.
+     * @author CoolCLK
+     */
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean isSkyColored()
-    {
+    public boolean isSkyColored() {
         return true;
     }
 }

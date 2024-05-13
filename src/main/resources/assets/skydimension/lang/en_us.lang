@@ -5,6 +5,6 @@ advancements.skydimension.travel.enter_the_sky.description=A fluttering world~
 advancements.skydimension.travel.village_over_sky.title=A village over sky
 advancements.skydimension.travel.village_over_sky.description=A village that needs your head up.
 
-command.skydimension.go-sky.usage=/go-sky [player]
+command.skydimension.tp-sky.usage=/tp-sky [player]
 
 potion.skydimension.slow_falling.name=Slow Falling

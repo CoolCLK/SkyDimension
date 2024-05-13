@@ -5,6 +5,6 @@ advancements.skydimension.travel.enter_the_sky.description=一个轻飘飘的世
 advancements.skydimension.travel.village_over_sky.title=天上之村
 advancements.skydimension.travel.village_over_sky.description=需要抬起头才看得见的村庄
 
-command.skydimension.go-sky.usage=/go-sky [玩家]
+command.skydimension.tp-sky.usage=/tp-sky [玩家]
 
 potion.skydimension.slow_falling.name=缓降

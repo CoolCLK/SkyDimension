@@ -27,9 +27,10 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import static coolclk.skydimension.forge.ForgeMod.LOGGER;
-
+/**
+ * Handling events in Forge.
+ * @author CoolCLK
+ */
 @EventBusSubscriber(modid = SkyDimension.MOD_ID)
 public class EventHandler {
     public static void onServerStarting(FMLServerStartingEvent event) {
@@ -42,18 +43,17 @@ public class EventHandler {
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {
-        LOGGER.debug("Registering command(s)...");
         List<ICommand> commands = Collections.singletonList(new CommandBase() {
             @Nonnull
             @Override
             public String getName() {
-                return "go-sky";
+                return "tp-sky";
             }
 
             @Nonnull
             @Override
             public String getUsage(@Nonnull ICommandSender sender) {
-                return new TextComponentTranslation("command.skydimension.go-sky.usage").getFormattedText();
+                return new TextComponentTranslation("command.skydimension.tp-sky.usage").getFormattedText();
             }
 
             @Override

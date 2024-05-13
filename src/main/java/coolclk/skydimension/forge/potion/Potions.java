@@ -11,9 +11,12 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Simple teleporter with only function which teleport player.
+ * @author CoolCLK
+ */
 public class Potions {
     public final static Potion SLOW_FALLING;
-    private final static Potion[] CACHE;
 
     static {
         SLOW_FALLING = new Potion(false, 0xF3CFB9) {
@@ -50,11 +53,9 @@ public class Potions {
                 Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
             }
         }.setPotionName("potion.skydimension.slow_falling.name").setRegistryName(SkyDimension.MOD_ID, "slow_falling");
-
-        CACHE = new Potion[] { SLOW_FALLING };
     }
 
     public static void registerPotions(IForgeRegistry<Potion> registry) {
-        registry.registerAll(CACHE);
+        registry.register(SLOW_FALLING);
     }
 }
