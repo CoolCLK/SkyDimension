@@ -1,7 +1,9 @@
+item.skydimension.eyeOfSky.name=天域之眼
+
+advancements.story.enter_the_sky.title=天域？
+advancements.story.enter_the_sky.description=进入天域传送门
 advancements.skydimension.travel.root.title=天域
 advancements.skydimension.travel.root.description=神秘，与你的勇敢
-advancements.skydimension.travel.enter_the_sky.title=这是个梦吗？
-advancements.skydimension.travel.enter_the_sky.description=一个轻飘飘的世界~
 advancements.skydimension.travel.village_over_sky.title=天上之村
 advancements.skydimension.travel.village_over_sky.description=需要抬起头才看得见的村庄
 

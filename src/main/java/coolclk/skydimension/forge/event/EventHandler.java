@@ -1,21 +1,32 @@
 package coolclk.skydimension.forge.event;
 
 import coolclk.skydimension.SkyDimension;
-import coolclk.skydimension.forge.potion.Potions;
+import coolclk.skydimension.forge.block.BlockProperties;
+import coolclk.skydimension.forge.block.PropertyHelper;
+import coolclk.skydimension.forge.init.Blocks;
+import coolclk.skydimension.forge.init.Items;
 import coolclk.skydimension.forge.world.teleporter.SpawnTeleporter;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEndPortalFrame;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillageSiegeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -26,7 +37,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
+
 /**
  * Handling events in Forge.
  * @author CoolCLK
@@ -35,11 +47,6 @@ import java.util.Random;
 public class EventHandler {
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(event);
-    }
-
-    @SubscribeEvent
-    public static void onRegisterPotion(net.minecraftforge.event.RegistryEvent.Register<Potion> event) {
-        Potions.registerPotions(event.getRegistry());
     }
 
     private static void registryCommand(@Nullable FMLServerStartingEvent serverEvent) {
@@ -81,12 +88,24 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public static void onRegisterItem(RegistryEvent.Register<Item> event) {
+        event.getRegistry().register(Items.SKY_EYE.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "sky_eye")));
+    }
+
+    @SubscribeEvent
+    public static void onRegisterBlock(RegistryEvent.Register<Block> event) {
+        event.getRegistry().register(Blocks.SKY_PORTAL.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "sky_portal"))); // Test
+    }
+
+    @SubscribeEvent
+    public static void onRegisterItemModel(ModelRegistryEvent event) {
+        ModelLoader.setCustomModelResourceLocation(Items.SKY_EYE, 0, new ModelResourceLocation(Objects.requireNonNull(Items.SKY_EYE.getRegistryName()), "inventory"));
+    }
+
+    @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
-        if (player.dimension == coolclk.skydimension.forge.world.DimensionType.SKY.getId()) {
-            player.addPotionEffect(new PotionEffect(Potions.SLOW_FALLING, 1, 0));
-            player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 1, 1));
-
+        if (player.dimension == coolclk.skydimension.forge.world.DimensionType.SKY.getId()) { // TODO Remove it
             if (player.getPosition().getY() <= 0) {
                 player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {
                     BlockPos pos = world.getTopSolidOrLiquidBlock(entity.getPosition());
@@ -97,15 +116,22 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerWakeUpEvent(PlayerWakeUpEvent event) {
-        EntityPlayer player = event.getEntityPlayer();
-        int r = new Random().nextInt(100);
-        int n = 75;
-        if (r >= n) {
-            if (player.dimension != coolclk.skydimension.forge.world.DimensionType.SKY.getId()) {
-                player.changeDimension(coolclk.skydimension.forge.world.DimensionType.SKY.getId(), new SpawnTeleporter());
+    public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        IBlockState blockState = event.getWorld().getBlockState(event.getPos());
+        if (blockState.getBlock() == net.minecraft.init.Blocks.END_PORTAL_FRAME) {
+            if (blockState.getValue(BlockEndPortalFrame.EYE)) {
+                blockState = blockState.withProperty(BlockEndPortalFrame.EYE, false);
+                Item spawnItem = net.minecraft.init.Items.ENDER_EYE;
+                if (PropertyHelper.getBlockPropertyValue(event.getWorld(), event.getPos(), BlockProperties.IS_SKY, false)) {
+                    blockState = blockState.withProperty(BlockProperties.IS_SKY, false);
+                    spawnItem = Items.SKY_EYE;
+                }
+                event.getEntityPlayer().swingArm(event.getHand());
+                event.getWorld().spawnEntity(new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY() + 0.5D, event.getPos().getZ(), new ItemStack(spawnItem)));
+                event.setCanceled(true);
             }
         }
+        event.getWorld().setBlockState(event.getPos(), blockState);
     }
 
     @SubscribeEvent

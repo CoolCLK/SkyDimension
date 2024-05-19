@@ -10,17 +10,13 @@
             "translate": "advancements.skydimension.travel.village_over_sky.description"
         }
     },
-    "parent": "skydimension:travel/enter_the_sky",
+    "parent": "skydimension:travel/root",
     "criteria": {
-        "entered_village": {
-            "trigger": "minecraft:tick",
+        "in_sky_village": {
+            "trigger": "minecraft:location",
             "conditions": {
-                "player": {
-                    "location": {
-                        "structure": "Village",
-                        "dimension": "skydimension:sky"
-                    }
-                }
+                "dimension": "sky",
+                "feature": "Village"
             }
         }
     }

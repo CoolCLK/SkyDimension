@@ -24,11 +24,14 @@ import java.util.*;
 /**
  * The chunk generator for sky dimension.<br>
  * <br>
- * <i>I have been re-write the code without any anti-obfuscation. What's a shit time.</i><br>
+ * <i>I have been re-write the code without any deobfuscation. Don't think the code will bring you a good read.</i><br>
  * <i><strong>Note: </strong>original author is notch.</i>
  * @author CoolCLK
  */
 public class ChunkGeneratorSky implements IChunkGenerator {
+    private final NoiseGeneratorOctaves xNoiseGenerator;
+    private final NoiseGeneratorOctaves yNoiseGenerator;
+    private final NoiseGeneratorOctaves zNoiseGenerator;
     private final Random seedRandomizer;
     private final World world;
     private final boolean mapFeaturesEnabled;
@@ -53,9 +56,9 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         this.settings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
         this.world.setSeaLevel(this.settings.seaLevel);
 
-        field_28093_d_g = new NoiseGeneratorOctaves(seedRandomizer, 8);
-        field_28093_d_f = new NoiseGeneratorOctaves(seedRandomizer, 16);
-        field_28093_d_e = new NoiseGeneratorOctaves(seedRandomizer, 16);
+        xNoiseGenerator = new NoiseGeneratorOctaves(seedRandomizer, 8);
+        yNoiseGenerator = new NoiseGeneratorOctaves(seedRandomizer, 16);
+        zNoiseGenerator = new NoiseGeneratorOctaves(seedRandomizer, 16);
     }
 
     /**
@@ -179,59 +182,55 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         }
     }
 
-    NoiseGeneratorOctaves field_28093_d_g;
-    NoiseGeneratorOctaves field_28093_d_f;
-    NoiseGeneratorOctaves field_28093_d_e;
     /**
-     * Generate a noise octave.<br>
-     * <i>I gave up to re-write it.</i>
+     * Generate a noise octave.
      * @author notch
      */
-    private double[] generateANoiseOctave(double[] ad, int xOffset, int zOffset, int xSize, int ySize, int zSize) {
-        if (ad == null) {
-            ad = new double[xSize * ySize * zSize];
+    private double[] generateANoiseOctave(double[] temperatures, int xOffset, int zOffset, int xSize, int ySize, int zSize) {
+        if (temperatures == null) {
+            temperatures = new double[xSize * ySize * zSize];
         }
         double d = 684.41200000000003D;
         double d1 = 684.41200000000003D;
         d *= 2D;
-        double[] field_28093_d = null;
-        double[] field_28091_f = null;
-        double[] field_28092_e = null;
-        field_28093_d = field_28093_d_g.generateNoiseOctaves(field_28093_d, xOffset, 0, zOffset, xSize, ySize, zSize, d / 80D, d1 / 160D, d / 80D);
-        field_28092_e = field_28093_d_f.generateNoiseOctaves(field_28092_e, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
-        field_28091_f = field_28093_d_e.generateNoiseOctaves(field_28091_f, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
-        int k1 = 0;
-        for (int j2 = 0; j2 < xSize; j2++) {
-            for (int l2 = 0; l2 < zSize; l2++) {
-                for (int j3 = 0; j3 < ySize; j3++) {
-                    double d8;
-                    double d10 = field_28092_e[k1] / 512D;
-                    double d11 = field_28091_f[k1] / 512D;
-                    double d12 = (field_28093_d[k1] / 10D + 1.0D) / 2D;
-                    if (d12 < 0.0D) {
-                        d8 = d10;
-                    } else if (d12 > 1.0D) {
-                        d8 = d11;
+        double[] xNoises = null;
+        double[] yNoises = null;
+        double[] zNoises = null;
+        xNoises = xNoiseGenerator.generateNoiseOctaves(xNoises, xOffset, 0, zOffset, xSize, ySize, zSize, d / 80D, d1 / 160D, d / 80D);
+        yNoises = yNoiseGenerator.generateNoiseOctaves(yNoises, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
+        zNoises = zNoiseGenerator.generateNoiseOctaves(zNoises, xOffset, 0, zOffset, xSize, ySize, zSize, d, d1, d);
+        int index = 0;
+        for (int x = 0; x < xSize; x++) {
+            for (int z = 0; z < zSize; z++) {
+                for (int y = 0; y < ySize; y++) {
+                    double temperature;
+                    double d10 = yNoises[index] / 512D;
+                    double d11 = zNoises[index] / 512D;
+                    double selector = (xNoises[index] / 10D + 1.0D) / 2D;
+                    if (selector < 0.0D) {
+                        temperature = d10;
+                    } else if (selector > 1.0D) {
+                        temperature = d11;
                     } else {
-                        d8 = d10 + (d11 - d10) * d12;
+                        temperature = d10 + (d11 - d10) * selector;
                     }
-                    d8 -= 8D;
-                    int k3 = 32;
-                    if (j3 > ySize - k3) {
-                        double d13 = (float) (j3 - (ySize - k3)) / ((float) k3 - 1.0F);
-                        d8 = d8 * (1.0D - d13) + -30D * d13;
+                    temperature -= 8D;
+                    int yOffset = 32;
+                    if (y > ySize - yOffset) {
+                        double fullTemperature = (float) (y - (ySize - yOffset)) / ((float) yOffset - 1.0F);
+                        temperature = temperature * (1.0D - fullTemperature) + -30D * fullTemperature;
                     }
-                    k3 = 8;
-                    if (j3 < k3) {
-                        double d14 = (float) (k3 - j3) / ((float) k3 - 1.0F);
-                        d8 = d8 * (1.0D - d14) + -30D * d14;
+                    yOffset = 8;
+                    if (y < yOffset) {
+                        double partTemperature = (float) (yOffset - y) / ((float) yOffset - 1.0F);
+                        temperature = temperature * (1.0D - partTemperature) + -30D * partTemperature;
                     }
-                    ad[k1] = d8;
-                    k1++;
+                    temperatures[index] = temperature;
+                    index++;
                 }
             }
         }
-        return ad;
+        return temperatures;
     }
 
     /**
@@ -252,6 +251,9 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         if (this.mapFeaturesEnabled) {
             if (this.settings.useVillages) {
                 this.villageGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
+            }
+            if (this.settings.useStrongholds) {
+                // TODO Generate Strongholds for going back to overworld.
             }
         }
 
@@ -274,6 +276,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         Biome biome = world.getBiome(new BlockPos(x + 16, 0, z + 16));
 
         this.villageGenerator.generateStructure(this.world, this.seedRandomizer, new ChunkPos(chunkX, chunkZ));
+        // TODO Generate Strongholds structure for going back to overworld.
 
         seedRandomizer.setSeed(world.getSeed());
         long l1 = (seedRandomizer.nextLong() / 2L) * 2L + 1L;

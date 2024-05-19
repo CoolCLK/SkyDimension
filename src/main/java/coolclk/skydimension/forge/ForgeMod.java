@@ -4,6 +4,7 @@ import coolclk.skydimension.ModLoader;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.common.DimensionManager;
 import coolclk.skydimension.forge.event.EventHandler;
+import coolclk.skydimension.forge.tileentity.TileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -18,6 +19,7 @@ public class ForgeMod {
     @Mod.EventHandler
     public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
         new DimensionManager();
+        new TileEntity();
     }
 
     @Mod.EventHandler

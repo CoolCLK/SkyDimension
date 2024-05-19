@@ -1,0 +1,26 @@
+{
+    "variants": {
+        "normal": { "model": "minecraft:end_portal_frame_empty" },
+        "eye=false,facing=south": { "model": "minecraft:end_portal_frame_empty" },
+        "eye=false,facing=west": { "model": "minecraft:end_portal_frame_empty", "y": 90 },
+        "eye=false,facing=north": { "model": "minecraft:end_portal_frame_empty", "y": 180 },
+        "eye=false,facing=east": { "model": "minecraft:end_portal_frame_empty", "y": 270 },
+        "eye=true,facing=south": { "model": "minecraft:end_portal_frame_filled" },
+        "eye=true,facing=west": { "model": "minecraft:end_portal_frame_filled", "y": 90 },
+        "eye=true,facing=north": { "model": "minecraft:end_portal_frame_filled", "y": 180 },
+        "eye=true,facing=east": { "model": "minecraft:end_portal_frame_filled", "y": 270 },
+
+        "eye=false,facing=south,sky=false": { "model": "minecraft:end_portal_frame_empty" },
+        "eye=false,facing=west,sky=false": { "model": "minecraft:end_portal_frame_empty", "y": 90 },
+        "eye=false,facing=north,sky=false": { "model": "minecraft:end_portal_frame_empty", "y": 180 },
+        "eye=false,facing=east,sky=false": { "model": "minecraft:end_portal_frame_empty", "y": 270 },
+        "eye=true,facing=south,sky=false": { "model": "minecraft:end_portal_frame_filled" },
+        "eye=true,facing=west,sky=false": { "model": "minecraft:end_portal_frame_filled", "y": 90 },
+        "eye=true,facing=north,sky=false": { "model": "minecraft:end_portal_frame_filled", "y": 180 },
+        "eye=true,facing=east,sky=false": { "model": "minecraft:end_portal_frame_filled", "y": 270 },
+        "eye=true,facing=south,sky=true": { "model": "skydimension:end_portal_frame_filled_with_sky_eye" },
+        "eye=true,facing=west,sky=true": { "model": "skydimension:end_portal_frame_filled_with_sky_eye", "y": 90 },
+        "eye=true,facing=north,sky=true": { "model": "skydimension:end_portal_frame_filled_with_sky_eye", "y": 180 },
+        "eye=true,facing=east,sky=true": { "model": "skydimension:end_portal_frame_filled_with_sky_eye", "y": 270 }
+    }
+}

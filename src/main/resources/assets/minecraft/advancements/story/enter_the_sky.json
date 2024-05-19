@@ -1,16 +1,16 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:glowstone"
+            "item": "minecraft:grass_block"
         },
         "title": {
-            "translate": "advancements.skydimension.travel.enter_the_sky.title"
+            "translate": "advancements.story.enter_the_sky.title"
         },
         "description": {
-            "translate": "advancements.skydimension.travel.enter_the_sky.description"
+            "translate": "advancements.story.enter_the_sky.description"
         }
     },
-    "parent": "skydimension:travel/root",
+    "parent": "minecraft:story/follow_ender_eye",
     "criteria": {
         "entered_sky": {
             "trigger": "minecraft:changed_dimension",

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "coolclk.skydimension.mixins",
+  "refmap": "mixins.skydimension.refmap.json",
+  "mixins": [
+    "MixinBlockEndPortalFrame",
+    "MixinEntityEnderEye",
+    "MixinItemEnderEye"
+  ],
+  "client": [
+    "MixinTileEntityEndPortalRenderer"
+  ],
+  "server": []
+}

@@ -1,7 +1,9 @@
-advancements.skydimension.travel.root.title=Sky
+item.skydimension.eyeOfSky.name=Eye of Sky
+
+advancements.story.enter_the_sky.title=The Sky?
+advancements.story.enter_the_sky.description=Enter the Sky Portal
+advancements.skydimension.travel.root.title=The Sky
 advancements.skydimension.travel.root.description=Mystery, and your bravery
-advancements.skydimension.travel.enter_the_sky.title=Is it a dream?
-advancements.skydimension.travel.enter_the_sky.description=A fluttering world~
 advancements.skydimension.travel.village_over_sky.title=A village over sky
 advancements.skydimension.travel.village_over_sky.description=A village that needs your head up.
 
