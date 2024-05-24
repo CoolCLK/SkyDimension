@@ -11,6 +11,10 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
  */
 public class TileEntityRendererHandler {
     static {
-        instance.renderers.put(TileEntitySkyPortal.class, new TileEntitySkyPortalRenderer());
+        instance.renderers.put(TileEntitySkyPortal.class, new TileEntitySkyPortalRenderer() {
+            {
+                this.rendererDispatcher = instance;
+            }
+        });
     }
 }

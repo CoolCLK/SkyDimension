@@ -116,7 +116,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    public static void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+    public static void onPlayerLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         IBlockState blockState = event.getWorld().getBlockState(event.getPos());
         if (blockState.getBlock() == net.minecraft.init.Blocks.END_PORTAL_FRAME) {
             if (blockState.getValue(BlockEndPortalFrame.EYE)) {
@@ -127,7 +127,9 @@ public class EventHandler {
                     spawnItem = Items.SKY_EYE;
                 }
                 event.getEntityPlayer().swingArm(event.getHand());
-                event.getWorld().spawnEntity(new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY() + 0.5D, event.getPos().getZ(), new ItemStack(spawnItem)));
+                if (!event.getWorld().isRemote && !event.getEntityPlayer().isCreative() && !event.getEntityPlayer().isSpectator()) {
+                    event.getWorld().spawnEntity(new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY() + 0.5D, event.getPos().getZ(), new ItemStack(spawnItem)));
+                }
                 event.setCanceled(true);
             }
         }

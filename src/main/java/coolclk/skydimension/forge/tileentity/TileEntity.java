@@ -12,7 +12,6 @@ import static net.minecraft.tileentity.TileEntity.register;
 public class TileEntity {
     static {
         register("sky_portal", TileEntitySkyPortal.class);
-
         new TileEntityRendererHandler();
     }
 }
