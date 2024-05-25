@@ -1,7 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:grass_block"
+            "item": "minecraft:grass"
         },
         "title": {
             "translate": "advancements.story.enter_the_sky.title"

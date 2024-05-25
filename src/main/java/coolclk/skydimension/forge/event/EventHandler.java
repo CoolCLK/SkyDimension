@@ -15,10 +15,12 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
@@ -127,8 +129,9 @@ public class EventHandler {
                     spawnItem = Items.SKY_EYE;
                 }
                 event.getEntityPlayer().swingArm(event.getHand());
+                event.getWorld().playSound(null, event.getPos(), SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 if (!event.getWorld().isRemote && !event.getEntityPlayer().isCreative() && !event.getEntityPlayer().isSpectator()) {
-                    event.getWorld().spawnEntity(new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY() + 0.5D, event.getPos().getZ(), new ItemStack(spawnItem)));
+                    event.getWorld().spawnEntity(new EntityItem(event.getWorld(), event.getPos().getX(), event.getPos().getY() + 1, event.getPos().getZ(), new ItemStack(spawnItem)));
                 }
                 event.setCanceled(true);
             }

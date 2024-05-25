@@ -1,7 +1,5 @@
 package coolclk.skydimension.forge.tileentity;
 
-import coolclk.skydimension.forge.client.renderer.tileentity.TileEntityRendererHandler;
-
 import static net.minecraft.tileentity.TileEntity.register;
 
 /**
@@ -12,6 +10,5 @@ import static net.minecraft.tileentity.TileEntity.register;
 public class TileEntity {
     static {
         register("sky_portal", TileEntitySkyPortal.class);
-        new TileEntityRendererHandler();
     }
 }

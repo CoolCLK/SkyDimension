@@ -81,6 +81,16 @@ public class WorldProviderSky extends WorldProvider {
     }
 
     /**
+     * Fix dark void.
+     * @author CoolCLK
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public double getVoidFogYFactor() {
+        return 0.0F;
+    }
+
+    /**
      * Switch the result of sleep.
      * @author CoolCLK
      */
@@ -136,15 +146,18 @@ public class WorldProviderSky extends WorldProvider {
         if (coordinate == null) {
             coordinate = new BlockPos(0, 128, 0);
             IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
-            this.world.setBlockState(coordinate.down().west().north(), ground);
-            this.world.setBlockState(coordinate.down().west(), ground);
-            this.world.setBlockState(coordinate.down().west().south(), ground);
-            this.world.setBlockState(coordinate.down().north(), ground);
-            this.world.setBlockState(coordinate.down(), ground);
-            this.world.setBlockState(coordinate.down().south(), ground);
-            this.world.setBlockState(coordinate.down().east().north(), ground);
-            this.world.setBlockState(coordinate.down().east(), ground);
-            this.world.setBlockState(coordinate.down().east().south(), ground);
+            for (int i = -1; i < 3; i++) {
+                this.world.setBlockState(coordinate.add(0, i, 0).west().north(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).west(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).west().south(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).north(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).south(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).east().north(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).east(), ground);
+                this.world.setBlockState(coordinate.add(0, i, 0).east().south(), ground);
+                ground = Blocks.AIR.getDefaultState();
+            }
         }
         return coordinate;
     }

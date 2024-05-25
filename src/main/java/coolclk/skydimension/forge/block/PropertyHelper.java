@@ -18,14 +18,28 @@ public class PropertyHelper {
      * @param defaultValue Return and set the value to block if the block did not exist the property
      * @author CoolCLK7065
      */
-    public static  <T extends Comparable<T>> T getBlockPropertyValue(World world, BlockPos pos, IProperty<T> property, T defaultValue) {
+    public static <T extends Comparable<T>> T getBlockPropertyValue(World world, BlockPos pos, IProperty<T> property, T defaultValue) {
         IBlockState state = world.getBlockState(pos);
-        if (state.getPropertyKeys().contains(property)) {
-            return state.getValue(property);
+        T value = getStatePropertyValue(state, property, null);
+        if (value != null) {
+            return value;
         } else {
             state = state.withProperty(property, defaultValue);
         }
         world.setBlockState(pos, state);
+        return defaultValue;
+    }
+
+    /**
+     * Get a block state property value, or if it not exists, will return the default value.
+     * @param property Target property
+     * @param defaultValue Return and set the value to block if the block did not exist the property
+     * @author CoolCLK7065
+     */
+    public static <T extends Comparable<T>> T getStatePropertyValue(IBlockState state, IProperty<T> property, T defaultValue) {
+        if (state.getPropertyKeys().contains(property)) {
+            return state.getValue(property);
+        }
         return defaultValue;
     }
 }

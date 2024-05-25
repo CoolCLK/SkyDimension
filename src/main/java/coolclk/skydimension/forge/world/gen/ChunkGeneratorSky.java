@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.world.gen;
 
+import coolclk.skydimension.forge.world.gen.structure.MapGenStrongholdPortalRoom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenVillage;
 
 import javax.annotation.Nonnull;
@@ -40,6 +42,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     private double[] biomeTemplates;
     private final MapGenCaves caveGenerator;
     private final MapGenVillage villageGenerator;
+    private final MapGenStrongholdPortalRoom strongholdGenerator;
+    private final List<? extends MapGenStructure> allowedStructureGenerators;
 
     /**
      * THe function will be involved when sky dimension started to generate.<br>
@@ -52,6 +56,8 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         this.seedRandomizer = new Random(world.getSeed());
         this.caveGenerator = new MapGenCaves();
         this.villageGenerator = new MapGenVillage();
+        this.strongholdGenerator = new MapGenStrongholdPortalRoom();
+        this.allowedStructureGenerators = Arrays.asList(this.villageGenerator, this.strongholdGenerator);
 
         this.settings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
         this.world.setSeaLevel(this.settings.seaLevel);
@@ -253,7 +259,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
                 this.villageGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
             }
             if (this.settings.useStrongholds) {
-                // TODO Generate Strongholds for going back to overworld.
+                this.strongholdGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
             }
         }
 
@@ -276,7 +282,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         Biome biome = world.getBiome(new BlockPos(x + 16, 0, z + 16));
 
         this.villageGenerator.generateStructure(this.world, this.seedRandomizer, new ChunkPos(chunkX, chunkZ));
-        // TODO Generate Strongholds structure for going back to overworld.
+        this.strongholdGenerator.generateStructure(this.world, this.seedRandomizer, new ChunkPos(chunkX, chunkZ));
 
         seedRandomizer.setSeed(world.getSeed());
         long l1 = (seedRandomizer.nextLong() / 2L) * 2L + 1L;
@@ -492,13 +498,14 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Nullable
     @Override
     public BlockPos getNearestStructurePos(@Nonnull World world, @Nonnull String structureName, @Nonnull BlockPos blockPos, boolean findUnexplored) {
-        if (!this.mapFeaturesEnabled) {
-            return null;
-        } else if ("Village".equals(structureName) && this.villageGenerator != null) {
-            return this.villageGenerator.getNearestStructurePos(world, blockPos, findUnexplored);
-        } else {
-            return null;
+        if (this.mapFeaturesEnabled) {
+            for (MapGenStructure generator : this.allowedStructureGenerators) {
+                if (generator != null && generator.getStructureName().equals(structureName)) {
+                    return generator.getNearestStructurePos(world, blockPos, findUnexplored);
+                }
+            }
         }
+        return null;
     }
 
     /**
@@ -508,6 +515,9 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Override
     public void recreateStructures(@Nonnull Chunk chunk, int x, int z) {
         if (this.mapFeaturesEnabled) {
+            if (this.settings.useStrongholds) {
+                this.strongholdGenerator.generate(this.world, x, z, null);
+            }
             if (this.settings.useVillages) {
                 this.villageGenerator.generate(this.world, x, z, null);
             }
@@ -520,12 +530,13 @@ public class ChunkGeneratorSky implements IChunkGenerator {
      */
     @Override
     public boolean isInsideStructure(@Nonnull World world, @Nonnull String structureName, @Nonnull BlockPos blockPos) {
-        if (!this.mapFeaturesEnabled) {
-            return false;
-        } else if ("Village".equals(structureName) && this.villageGenerator != null) {
-            return this.villageGenerator.isInsideStructure(blockPos);
-        } else {
-            return false;
+        if (this.mapFeaturesEnabled) {
+            for (MapGenStructure generator : this.allowedStructureGenerators) {
+                if (generator != null && generator.getStructureName().equals(structureName)) {
+                    return generator.isInsideStructure(blockPos);
+                }
+            }
         }
+        return false;
     }
 }

@@ -12,7 +12,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = TileEntityEndPortalRenderer.class, priority = 1001)
 public abstract class MixinTileEntityEndPortalRenderer {
+    @Shadow @Final private static ResourceLocation END_SKY_TEXTURE;
     @Shadow @Final private static ResourceLocation END_PORTAL_TEXTURE;
+
+    @Redirect(method = "render*", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/tileentity/TileEntityEndPortalRenderer;END_SKY_TEXTURE:Lnet/minecraft/util/ResourceLocation;"))
+    private ResourceLocation injectEndSkyTexture() {
+        return ((Object) this) instanceof TileEntitySkyPortalRenderer ? new ResourceLocation(SkyDimension.MOD_ID, "textures/environment/sky_sky.png") : END_SKY_TEXTURE;
+    }
 
     @Redirect(method = "render*", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/tileentity/TileEntityEndPortalRenderer;END_PORTAL_TEXTURE:Lnet/minecraft/util/ResourceLocation;"))
     private ResourceLocation injectEndPortalTexture() {

@@ -40,7 +40,7 @@ public class BlockSkyPortal extends BlockEndPortal {
     @Override
     public void onEntityCollidedWithBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState blockState, @Nonnull Entity entity) {
         if (!world.isRemote && !entity.isRiding() && !entity.isBeingRidden() && entity.isNonBoss() && entity.getEntityBoundingBox().intersects(blockState.getBoundingBox(world, pos).offset(pos))) {
-            entity.changeDimension(DimensionType.SKY.getId(), new SpawnTeleporter());
+            entity.changeDimension(entity.dimension == DimensionType.SKY.getId() ? net.minecraft.world.DimensionType.OVERWORLD.getId() : DimensionType.SKY.getId(), new SpawnTeleporter());
         }
     }
 
