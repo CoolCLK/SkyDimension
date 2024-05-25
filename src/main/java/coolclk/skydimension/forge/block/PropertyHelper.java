@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 /**
  * Help to operate the properties of blocks in a world.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class PropertyHelper {
     /**
@@ -16,7 +16,7 @@ public class PropertyHelper {
      * @param pos To locate the block
      * @param property Target property
      * @param defaultValue Return and set the value to block if the block did not exist the property
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     public static <T extends Comparable<T>> T getBlockPropertyValue(World world, BlockPos pos, IProperty<T> property, T defaultValue) {
         IBlockState state = world.getBlockState(pos);
@@ -34,7 +34,7 @@ public class PropertyHelper {
      * Get a block state property value, or if it not exists, will return the default value.
      * @param property Target property
      * @param defaultValue Return and set the value to block if the block did not exist the property
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     public static <T extends Comparable<T>> T getStatePropertyValue(IBlockState state, IProperty<T> property, T defaultValue) {
         if (state.getPropertyKeys().contains(property)) {

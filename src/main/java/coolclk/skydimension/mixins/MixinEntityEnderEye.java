@@ -11,9 +11,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class MixinEntityEnderEye {
     /**
      * Change dropped item to {@link coolclk.skydimension.forge.init.Items#SKY_EYE} instead of {@link net.minecraft.init.Items#ENDER_EYE}.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Redirect(method = "onUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/init/Items;ENDER_EYE:Lnet/minecraft/item/Item;"))
+    @SuppressWarnings("all")
     private Item injectDropItem() {
         return ((Object) this) instanceof EntityEnderEye ? Items.SKY_EYE : net.minecraft.init.Items.ENDER_EYE;
     }

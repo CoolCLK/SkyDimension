@@ -13,15 +13,16 @@ import net.minecraft.world.World;
 public class EntitySkyEye extends EntityEnderEye {
     /**
      * Create a new throwing sky eye.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
+    @SuppressWarnings("unused")
     public EntitySkyEye(World worldIn) {
         super(worldIn);
     }
 
     /**
      * Create a new throwing sky eye.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     public EntitySkyEye(World worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);

@@ -11,8 +11,13 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 public class MapGenStrongholdPortalRoom extends MapGenStronghold {
+    /**
+     * Get a start.
+     * @author CoolCLK
+     */
     @Nonnull
     @Override
+    @SuppressWarnings("all")
     protected StructureStart getStructureStart(int chunkX, int chunkZ) {
         Start start;
         for (start = new Start(this.world, this.rand, chunkX, chunkZ);
@@ -28,9 +33,15 @@ public class MapGenStrongholdPortalRoom extends MapGenStronghold {
          * For extends.
          * @author CoolCLK
          */
+        @SuppressWarnings("unused")
         public Start() {
         }
 
+        /**
+         * Create a new start.
+         * @author CoolCLK
+         */
+        @SuppressWarnings("all")
         public Start(World worldIn, Random random, int chunkX, int chunkZ) {
             super(chunkX, chunkZ);
             StructureStrongholdPieces.prepareStructurePieces();

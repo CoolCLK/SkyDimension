@@ -26,7 +26,7 @@ public abstract class MixinBlockEndPortalFrame {
 
     /**
      * Make the property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} is allowed in the block container.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @ModifyArg(method = "createBlockState", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/BlockStateContainer;<init>(Lnet/minecraft/block/Block;[Lnet/minecraft/block/properties/IProperty;)V"), index = 1)
     private IProperty<?>[] injectCreateBlockState(IProperty<?>[] properties) {
@@ -38,7 +38,7 @@ public abstract class MixinBlockEndPortalFrame {
 
     /**
      * Make place block with the property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} .
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Inject(method = "getStateForPlacement", at = @At(value = "RETURN"), cancellable = true)
     private void injectStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, CallbackInfoReturnable<IBlockState> cir) {
@@ -47,7 +47,7 @@ public abstract class MixinBlockEndPortalFrame {
 
     /**
      * Turn meta to a block state with the property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} .
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Inject(method = "getStateFromMeta", at = @At(value = "RETURN"), cancellable = true)
     private void injectStateFromMeta(int meta, CallbackInfoReturnable<IBlockState> cir) {
@@ -56,7 +56,7 @@ public abstract class MixinBlockEndPortalFrame {
 
     /**
      * Make the property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} is savable.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Inject(method = "getMetaFromState", at = @At(value = "RETURN"), cancellable = true)
     private void injectMetaFromState(IBlockState state, CallbackInfoReturnable<Integer> cir) {

@@ -5,7 +5,7 @@ import coolclk.skydimension.forge.item.ItemSkyEye;
 
 /**
  * Init items.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class Items {
     public static final ItemSkyEye SKY_EYE = (ItemSkyEye) new ItemSkyEye().setUnlocalizedName(SkyDimension.MOD_ID + ".eyeOfSky");

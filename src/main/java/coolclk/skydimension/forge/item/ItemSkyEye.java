@@ -4,7 +4,7 @@ import net.minecraft.item.ItemEnderEye;
 
 /**
  * Init the item. Others are handling by Mixin.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class ItemSkyEye extends ItemEnderEye {
 }

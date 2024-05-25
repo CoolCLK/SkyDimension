@@ -4,7 +4,7 @@ import net.minecraft.block.properties.PropertyBool;
 
 /**
  * Block properties will put here.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class BlockProperties {
     public static final PropertyBool IS_SKY;

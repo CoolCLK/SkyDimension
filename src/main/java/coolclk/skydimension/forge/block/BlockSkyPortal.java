@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 
 /**
  * The portal of dimension sky.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class BlockSkyPortal extends BlockEndPortal {
     public BlockSkyPortal(Material material) {
@@ -26,7 +26,7 @@ public class BlockSkyPortal extends BlockEndPortal {
 
     /**
      * Change the tile to sky portal's tile.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Nonnull
     public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
@@ -35,7 +35,7 @@ public class BlockSkyPortal extends BlockEndPortal {
 
     /**
      * Change dimension to sky.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Override
     public void onEntityCollidedWithBlock(World world, @Nonnull BlockPos pos, @Nonnull IBlockState blockState, @Nonnull Entity entity) {
@@ -46,7 +46,7 @@ public class BlockSkyPortal extends BlockEndPortal {
 
     /**
      * Just a map color.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Nonnull
     @Override

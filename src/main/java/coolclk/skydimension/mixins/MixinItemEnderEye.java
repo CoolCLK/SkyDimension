@@ -34,9 +34,10 @@ public abstract class MixinItemEnderEye {
 
     /**
      * Add property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} and make it <code>true</code>.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;withProperty(Lnet/minecraft/block/properties/IProperty;Ljava/lang/Comparable;)Lnet/minecraft/block/state/IBlockState;", ordinal = 0))
+    @SuppressWarnings("all")
     private <T extends Comparable<T>, V extends T> IBlockState injectPlaceBlock(IBlockState instance, IProperty<T> tiProperty, V v) {
         instance = instance.withProperty(tiProperty, v);
         return ((Object) this) instanceof ItemSkyEye ? instance.withProperty(BlockProperties.IS_SKY, true) : instance;
@@ -44,7 +45,7 @@ public abstract class MixinItemEnderEye {
 
     /**
      * Add new pattern.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockEndPortalFrame;getOrCreatePortalShape()Lnet/minecraft/block/state/pattern/BlockPattern;"))
     private BlockPattern injectPattern() {
@@ -95,14 +96,16 @@ public abstract class MixinItemEnderEye {
     /**
      * Add new pattern.
      *
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "FIELD", target = "Lnet/minecraft/init/Blocks;END_PORTAL:Lnet/minecraft/block/Block;", ordinal = 0))
+    @SuppressWarnings("all")
     private Block injectPortal() {
         return ((Object) this) instanceof ItemSkyEye ? coolclk.skydimension.forge.init.Blocks.SKY_PORTAL : Blocks.END_PORTAL;
     }
 
     @Redirect(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z", ordinal = 0))
+    @SuppressWarnings("all")
     private boolean injectRightClick(World worldIn, Entity entity) {
         if (((Object) this) instanceof ItemSkyEye) {
             EntityEnderEye instance = (EntityEnderEye) entity;

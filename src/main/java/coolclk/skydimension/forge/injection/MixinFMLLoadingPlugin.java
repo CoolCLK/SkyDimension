@@ -9,12 +9,12 @@ import java.util.Map;
 
 /**
  * Load Mixin if tweak class can not be loaded successfully.
- * @author CoolCLK7065
+ * @author CoolCLK
  */
 public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
     /**
      * Init event.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     public MixinFMLLoadingPlugin() {
         MixinBootstrap.init();
@@ -23,7 +23,7 @@ public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
 
     /**
      * Empty here.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Override
     public String[] getASMTransformerClass() {
@@ -32,7 +32,7 @@ public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
 
     /**
      * Empty here.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Override
     public String getModContainerClass() {
@@ -41,7 +41,7 @@ public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
 
     /**
      * Empty here.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Nullable
     @Override
@@ -51,7 +51,7 @@ public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
 
     /**
      * Empty here.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Override
     public void injectData(Map<String, Object> data) {
@@ -60,7 +60,7 @@ public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
 
     /**
      * Empty here.
-     * @author CoolCLK7065
+     * @author CoolCLK
      */
     @Override
     public String getAccessTransformerClass() {
