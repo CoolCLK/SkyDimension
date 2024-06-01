@@ -2,6 +2,7 @@ package coolclk.skydimension.forge.world;
 
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -15,12 +16,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * The world provider of sky dimension.
  * @author CoolCLK
  */
 public class WorldProviderSky extends WorldProvider {
+    /**
+     * Init provider.
+     * @author CoolCLK
+     */
+    @Override
+    public void init() {
+        super.init();
+        this.setAllowedSpawnTypes(false, true);
+    }
+
     /**
      * Make the world full-bright.
      * @author CoolCLK
@@ -62,32 +74,33 @@ public class WorldProviderSky extends WorldProvider {
     @Override
     @Nonnull
     @SideOnly(Side.CLIENT)
-    public Vec3d getFogColor(float x, float z) {
+    public Vec3d getFogColor(float celestialAngle, float partialTicks) {
         int i = 0x8080a0;
-        float f2 = MathHelper.cos(x * 3.141593F * 2.0F) * 2.0F + 0.5F;
+        float f2 = MathHelper.cos(celestialAngle * 3.141593F * 2.0F) * 2.0F + 0.5F;
         if (f2 < 0.0F) {
             f2 = 0.0F;
         }
         if (f2 > 1.0F) {
             f2 = 1.0F;
         }
-        float f3 = (float) (i >> 16 & 0xff) / 255F;
-        float f4 = (float) (i >> 8 & 0xff) / 255F;
-        float f5 = (float) (i & 0xff) / 255F;
-        f3 *= f2 * 0.94F + 0.06F;
-        f4 *= f2 * 0.94F + 0.06F;
-        f5 *= f2 * 0.91F + 0.09F;
-        return new Vec3d(f3, f4, f5);
+        float r = (float) (i >> 16 & 0xff) / 255F;
+        float g = (float) (i >> 8 & 0xff) / 255F;
+        float b = (float) (i & 0xff) / 255F;
+        r *= f2 * 0.94F + 0.06F;
+        g *= f2 * 0.94F + 0.06F;
+        b *= f2 * 0.91F + 0.09F;
+        return new Vec3d(r, g, b);
     }
 
     /**
-     * Fix dark void.
+     * Change sky color.
      * @author CoolCLK
      */
-    @Override
+    @Nonnull
     @SideOnly(Side.CLIENT)
-    public double getVoidFogYFactor() {
-        return 0.0F;
+    @Override
+    public Vec3d getSkyColor(@Nullable Entity cameraEntity, float partialTicks) {
+        return new Vec3d(186 / 255F,184 / 255F,242 / 255F);
     }
 
     /**
@@ -98,6 +111,24 @@ public class WorldProviderSky extends WorldProvider {
     @Nonnull
     public WorldSleepResult canSleepAt(@Nonnull EntityPlayer player, @Nonnull BlockPos pos) {
         return WorldSleepResult.ALLOW;
+    }
+
+    /**
+     * Make void lower.
+     * @author CoolCLK
+     */
+    @Override
+    public double getHorizon() {
+        return Double.MIN_VALUE;
+    }
+
+    /**
+     * Change the void factor.
+     * @author CoolCLK
+     */
+    @Override
+    public double getVoidFogYFactor() {
+        return 8F;
     }
 
     /**
@@ -141,23 +172,21 @@ public class WorldProviderSky extends WorldProvider {
      * @author CoolCLK
      */
     @Override
+    @SuppressWarnings("ReassignedVariable")
     public BlockPos getSpawnCoordinate() {
-        BlockPos coordinate = super.getSpawnCoordinate();
-        if (coordinate == null) {
-            coordinate = new BlockPos(0, 128, 0);
-            IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
-            for (int i = -1; i < 3; i++) {
-                this.world.setBlockState(coordinate.add(0, i, 0).west().north(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).west(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).west().south(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).north(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).south(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).east().north(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).east(), ground);
-                this.world.setBlockState(coordinate.add(0, i, 0).east().south(), ground);
-                ground = Blocks.AIR.getDefaultState();
-            }
+        BlockPos coordinate = new BlockPos(0, 128, 0);
+        IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
+        for (int i = -1; i < 3; i++) {
+            this.world.setBlockState(coordinate.add(0, i, 0).west().north(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).west(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).west().south(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).north(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).south(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).east().north(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).east(), ground);
+            this.world.setBlockState(coordinate.add(0, i, 0).east().south(), ground);
+            ground = Blocks.AIR.getDefaultState();
         }
         return coordinate;
     }
@@ -188,5 +217,31 @@ public class WorldProviderSky extends WorldProvider {
     @SideOnly(Side.CLIENT)
     public boolean isSkyColored() {
         return true;
+    }
+
+    /**
+     * Ready for higher version of Minecraft.
+     * @author CoolCLK
+     */
+    public int getBaseHeight() {
+        return 0;
+    }
+
+    /**
+     * Change height of dimension.
+     * @author CoolCLK
+     */
+    @Override
+    public int getHeight() {
+        return 256;
+    }
+
+    /**
+     * Let it same as {@link #getHeight()}.
+     * @author CoolCLK
+     */
+    @Override
+    public int getActualHeight() {
+        return this.getHeight();
     }
 }

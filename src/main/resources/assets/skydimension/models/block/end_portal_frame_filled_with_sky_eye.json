@@ -2,9 +2,9 @@
     "textures": {
         "particle": "minecraft:blocks/endframe_side",
         "bottom": "minecraft:blocks/end_stone",
-        "top": "minecraft:blocks/endframe_top",
+        "top": "skydimension:blocks/skyframe_top",
         "side": "minecraft:blocks/endframe_side",
-        "eye": "skydimension:blocks/endframe_sky_eye"
+        "eye": "skydimension:blocks/skyframe_eye"
     },
     "elements": [
         {   "from": [ 0, 0, 0 ],

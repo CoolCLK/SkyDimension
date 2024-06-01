@@ -1,6 +1,7 @@
 package coolclk.skydimension.forge.world.teleporter;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
@@ -14,6 +15,8 @@ public class SpawnTeleporter extends Teleporter {
 
     @Override
     public void placeEntity(World world, Entity entity, float yaw) {
-        new Teleporter(world.provider.getSpawnCoordinate()).placeEntity(world, entity, yaw);
+        BlockPos pos = world.provider.getSpawnCoordinate();
+        if (pos == null) pos = world.provider.getSpawnPoint();
+        new Teleporter(pos).placeEntity(world, entity, yaw);
     }
 }

@@ -14,7 +14,7 @@ public abstract class MixinEntityEnderEye {
      * @author CoolCLK
      */
     @Redirect(method = "onUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/init/Items;ENDER_EYE:Lnet/minecraft/item/Item;"))
-    @SuppressWarnings("all")
+    @SuppressWarnings("UnreachableCode")
     private Item injectDropItem() {
         return ((Object) this) instanceof EntityEnderEye ? Items.SKY_EYE : net.minecraft.init.Items.ENDER_EYE;
     }

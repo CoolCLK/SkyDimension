@@ -37,7 +37,7 @@ public abstract class MixinItemEnderEye {
      * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;withProperty(Lnet/minecraft/block/properties/IProperty;Ljava/lang/Comparable;)Lnet/minecraft/block/state/IBlockState;", ordinal = 0))
-    @SuppressWarnings("all")
+    @SuppressWarnings("UnreachableCode")
     private <T extends Comparable<T>, V extends T> IBlockState injectPlaceBlock(IBlockState instance, IProperty<T> tiProperty, V v) {
         instance = instance.withProperty(tiProperty, v);
         return ((Object) this) instanceof ItemSkyEye ? instance.withProperty(BlockProperties.IS_SKY, true) : instance;
@@ -99,20 +99,21 @@ public abstract class MixinItemEnderEye {
      * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "FIELD", target = "Lnet/minecraft/init/Blocks;END_PORTAL:Lnet/minecraft/block/Block;", ordinal = 0))
-    @SuppressWarnings("all")
+    @SuppressWarnings("UnreachableCode")
     private Block injectPortal() {
         return ((Object) this) instanceof ItemSkyEye ? coolclk.skydimension.forge.init.Blocks.SKY_PORTAL : Blocks.END_PORTAL;
     }
 
     @Redirect(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnEntity(Lnet/minecraft/entity/Entity;)Z", ordinal = 0))
-    @SuppressWarnings("all")
-    private boolean injectRightClick(World worldIn, Entity entity) {
+    @SuppressWarnings("UnreachableCode")
+    private boolean injectRightClick(final World worldIn, final Entity entity) {
         if (((Object) this) instanceof ItemSkyEye) {
             EntityEnderEye instance = (EntityEnderEye) entity;
             EntitySkyEye entitySkyEye = new EntitySkyEye(instance.getEntityWorld(), instance.getPositionVector().x, instance.getPositionVector().y, instance.getPositionVector().z);
             entitySkyEye.moveTowards(Objects.requireNonNull(((WorldServer) worldIn).getChunkProvider().getNearestStructurePos(worldIn, "Stronghold", new BlockPos(instance.getPosition()), false)));
-            worldIn.spawnEntity(entitySkyEye);
+            return worldIn.spawnEntity(entitySkyEye);
+        } else {
+            return worldIn.spawnEntity(entity);
         }
-        return true;
     }
 }

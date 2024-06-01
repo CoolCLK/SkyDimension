@@ -21,9 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.DimensionType;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -33,7 +31,6 @@ import net.minecraftforge.event.village.VillageSiegeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,19 +99,6 @@ public class EventHandler {
     @SubscribeEvent
     public static void onRegisterItemModel(ModelRegistryEvent event) {
         ModelLoader.setCustomModelResourceLocation(Items.SKY_EYE, 0, new ModelResourceLocation(Objects.requireNonNull(Items.SKY_EYE.getRegistryName()), "inventory"));
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        EntityPlayer player = event.player;
-        if (player.dimension == coolclk.skydimension.forge.world.DimensionType.SKY.getId()) { // TODO Remove it
-            if (player.getPosition().getY() <= 0) {
-                player.changeDimension(DimensionType.OVERWORLD.getId(), (world, entity, yaw) -> {
-                    BlockPos pos = world.getTopSolidOrLiquidBlock(entity.getPosition());
-                    entity.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                });
-            }
-        }
     }
 
     @SubscribeEvent
