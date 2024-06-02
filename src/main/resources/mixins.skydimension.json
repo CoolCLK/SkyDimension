@@ -6,6 +6,7 @@
   "refmap": "mixins.skydimension.refmap.json",
   "mixins": [
     "MixinBlockEndPortalFrame",
+    "MixinCommandLocate",
     "MixinEntityEnderEye",
     "MixinItemEnderEye"
   ],

@@ -1,13 +1,12 @@
 package coolclk.skydimension.forge.world.gen;
 
 import coolclk.skydimension.forge.world.WorldProviderSky;
-import coolclk.skydimension.forge.world.gen.structure.MapGenFloatingBoat;
+import coolclk.skydimension.forge.world.gen.structure.MapGenFloatingShip;
 import coolclk.skydimension.forge.world.gen.structure.MapGenStrongholdPortalRoom;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +45,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     private final MapGenCaves caveGenerator;
     private final MapGenVillage villageGenerator;
     private final MapGenStrongholdPortalRoom strongholdGenerator;
-    private final MapGenFloatingBoat floatingBoatGenerator;
+    private final MapGenFloatingShip floatingBoatGenerator;
     private final List<? extends MapGenStructure> allowedStructureGenerators;
 
     /**
@@ -61,15 +60,15 @@ public class ChunkGeneratorSky implements IChunkGenerator {
         this.caveGenerator = new MapGenCaves();
         this.villageGenerator = new MapGenVillage();
         this.strongholdGenerator = new MapGenStrongholdPortalRoom();
-        this.floatingBoatGenerator = new MapGenFloatingBoat();
+        this.floatingBoatGenerator = new MapGenFloatingShip();
         this.allowedStructureGenerators = Arrays.asList(this.villageGenerator, this.strongholdGenerator, this.floatingBoatGenerator);
 
         this.settings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
         this.world.setSeaLevel(this.settings.seaLevel);
 
-        xNoiseGenerator = new NoiseGeneratorOctaves(randomizer, 8);
-        yNoiseGenerator = new NoiseGeneratorOctaves(randomizer, 16);
-        zNoiseGenerator = new NoiseGeneratorOctaves(randomizer, 16);
+        this.xNoiseGenerator = new NoiseGeneratorOctaves(this.randomizer, 8);
+        this.yNoiseGenerator = new NoiseGeneratorOctaves(this.randomizer, 16);
+        this.zNoiseGenerator = new NoiseGeneratorOctaves(this.randomizer, 16);
     }
 
     /**
@@ -307,7 +306,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
             //}
         }
 
-        Chunk chunk = new Chunk(world, chunkPrimer, chunkX, chunkZ);
+        Chunk chunk = new Chunk(this.world, chunkPrimer, chunkX, chunkZ);
         chunk.generateSkylightMap();
         return chunk;
     }
@@ -568,11 +567,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
     @Nonnull
     @Override
     public List<Biome.SpawnListEntry> getPossibleCreatures(@Nonnull EnumCreatureType creatureType, @Nonnull BlockPos blockPos) {
-        return creatureType == EnumCreatureType.CREATURE ||
-                creatureType == EnumCreatureType.WATER_CREATURE ||
-                creatureType == EnumCreatureType.MONSTER ?
-                Collections.singletonList(new Biome.SpawnListEntry(EntityChicken.class, 10, 1, 4)) :
-                Collections.emptyList();
+        return creatureType != EnumCreatureType.MONSTER && creatureType != EnumCreatureType.AMBIENT ? this.world.getBiome(blockPos).getSpawnableList(creatureType) : Collections.emptyList();
     }
 
     /**

@@ -5,7 +5,7 @@ import static net.minecraft.world.gen.structure.MapGenStructureIO.registerStruct
 public class MapGenStructureHandler {
     static {
         registerStructure(MapGenStrongholdPortalRoom.Start.class, "StrongholdPortalRoom");
-        registerStructure(MapGenFloatingBoat.Start.class, "FloatingBoat");
-        StructureFloatingBoatPieces.registerPieces();
+        registerStructure(MapGenFloatingShip.Start.class, "FloatingBoat");
+        StructureFloatingShipPieces.registerPieces();
     }
 }

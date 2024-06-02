@@ -4,11 +4,11 @@ import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
@@ -56,6 +56,29 @@ public class WorldProviderSky extends WorldProvider {
     @Nonnull
     public IChunkGenerator createChunkGenerator() {
         return new ChunkGeneratorSky(this.world);
+    }
+
+    /**
+     * Send back player back to overworld.
+     * @author CoolCLK
+     */
+    @Override
+    public boolean canRespawnHere()
+    {
+        return false;
+    }
+
+    /**
+     * Force set player spawn dimension to overworld if player respawn dimension is in sky dimension.
+     * @author CoolCLK
+     */
+    @Override
+    public int getRespawnDimension(@Nonnull EntityPlayerMP player) {
+        int dimension = super.getRespawnDimension(player);
+        if (dimension == this.getDimension()) {
+            dimension = net.minecraft.world.DimensionType.OVERWORLD.getId();
+        }
+        return dimension;
     }
 
     /**
@@ -146,8 +169,8 @@ public class WorldProviderSky extends WorldProvider {
      */
     @Nonnull
     @Override
-    public DimensionType getDimensionType() {
-        return coolclk.skydimension.forge.world.DimensionType.SKY;
+    public net.minecraft.world.DimensionType getDimensionType() {
+        return DimensionType.SKY;
     }
 
     /**
