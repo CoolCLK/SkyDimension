@@ -20,6 +20,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 public class ForgeMod {
     @Mod.EventHandler
     public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
+        SkyDimension.MOD_LOADER = ModLoader.FORGE;
+        SkyDimension.MOD_LOGGER = event.getModLog();
         // Make static registering active
         new DimensionManager();
         new TileEntity();
@@ -29,7 +31,6 @@ public class ForgeMod {
 
     @Mod.EventHandler
     public static void onFMLInitialization(FMLInitializationEvent event) {
-        SkyDimension.MOD_LOADER = ModLoader.FORGE;
     }
 
     @Mod.EventHandler

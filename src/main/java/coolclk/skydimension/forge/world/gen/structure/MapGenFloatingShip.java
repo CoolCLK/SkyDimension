@@ -90,6 +90,7 @@ public class MapGenFloatingShip extends MapGenStructure {
             component.setBoundingBox(StructureBoundingBox.getComponentToAddBoundingBox(templatePosition.getX(), templatePosition.getY(), templatePosition.getZ(), templatePosition.getX(), templatePosition.getY(), templatePosition.getZ(), 16, 24, 29, RotationFacingHelper.fromRotation(rotation)));
             this.components.add(component);
             this.updateBoundingBox();
+            this.shipCreated = true;
         }
 
         @Nonnull
@@ -114,27 +115,11 @@ public class MapGenFloatingShip extends MapGenStructure {
             if (!this.shipCreated) {
                 this.components.clear();
                 this.create(worldIn, random, this.getChunkPosX(), this.getChunkPosZ());
-                for (StructureComponent component : this.components) {
-                    component.buildComponent(null, null, random);
-                    component.addComponentParts(worldIn, random, structureBoundingBox);
-                }
-                this.shipCreated = true;
             }
-            super.generateStructure(worldIn, random, structureBoundingBox);
-        }
-
-        @Nonnull
-        @Override
-        public NBTTagCompound writeStructureComponentsToNBT(int chunkX, int chunkZ) {
-            NBTTagCompound nbt = super.writeStructureComponentsToNBT(chunkX, chunkZ);
-            nbt.setBoolean("Created", this.shipCreated);
-            return nbt;
-        }
-
-        @Override
-        public void readStructureComponentsFromNBT(@Nonnull World worldIn, @Nonnull NBTTagCompound tagCompound) {
-            super.readStructureComponentsFromNBT(worldIn, tagCompound);
-            this.shipCreated = tagCompound.getBoolean("Created");
+            for (StructureComponent component : this.components) {
+                component.buildComponent(null, null, random);
+            }
+            super.generateStructure(worldIn, random, this.boundingBox);
         }
     }
 }

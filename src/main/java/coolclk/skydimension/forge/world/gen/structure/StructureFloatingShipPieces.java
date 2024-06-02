@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
+import static coolclk.skydimension.SkyDimension.MOD_LOGGER;
+
 public class StructureFloatingShipPieces {
     public static void registerPieces() {
         MapGenStructureIO.registerStructureComponent(FloatingShip.class, "FSFS");
@@ -34,6 +36,9 @@ public class StructureFloatingShipPieces {
     public static class FloatingShip extends StructureComponentTemplate {
         private Rotation rotation;
         private World world;
+        private boolean generated;
+        private boolean templateLoaded;
+        private TemplateManager templateManager;
 
         @SuppressWarnings("unused")
         public FloatingShip() {
@@ -44,13 +49,20 @@ public class StructureFloatingShipPieces {
             this.templatePosition = position;
             this.world = worldIn;
             this.rotation = rotation;
-            this.loadTemplate(templateManager);
+            this.generated = false;
+            this.templateLoaded = false;
+            this.templateManager = templateManager;
         }
 
-        private void loadTemplate(TemplateManager manager) {
-            Template template = manager.getTemplate(null, new ResourceLocation(SkyDimension.MOD_ID, "floating_ship"));
+        private void loadTemplate() {
+            if (this.templateManager == null) {
+                MOD_LOGGER.warn("The structure component ({}, {}, {}) cannot use temple because of loading.", this.templatePosition.getX(), this.templatePosition.getY(), this.templatePosition.getZ());
+                return;
+            }
+            Template template = this.templateManager.getTemplate(null, new ResourceLocation(SkyDimension.MOD_ID, "floating_ship"));
             PlacementSettings placementsettings = new PlacementSettings().setIgnoreEntities(true).setRotation(this.rotation);
             this.setup(template, this.templatePosition, placementsettings);
+            this.templateLoaded = true;
         }
 
         protected void setComponentType(int type) {
@@ -63,24 +75,34 @@ public class StructureFloatingShipPieces {
 
         @Override
         public void buildComponent(@Nullable StructureComponent startComponent, @Nullable List<StructureComponent> components, @Nonnull Random random) {
-            if (startComponent != null && components != null) {
-                super.buildComponent(startComponent, components, random);
-                components.add(this);
+            if (!this.templateLoaded) {
+                MOD_LOGGER.warn("The structure component ({}, {}, {}) may be unloaded fully.", this.templatePosition.getX(), this.templatePosition.getY(), this.templatePosition.getZ());
+                this.loadTemplate();
             }
-            this.template.addBlocksToWorld(this.world, this.templatePosition, this.placeSettings);
+            if (!this.generated) {
+                if (startComponent != null && components != null) {
+                    super.buildComponent(startComponent, components, random);
+                    components.add(this);
+                }
+                this.template.addBlocksToWorld(this.world, this.templatePosition, this.placeSettings);
+                this.generated = true;
+            }
+            this.addComponentParts(this.world, random, this.getBoundingBox());
         }
 
         @Override
         protected void writeStructureToNBT(@Nonnull NBTTagCompound tagCompound) {
             super.writeStructureToNBT(tagCompound);
             tagCompound.setString("Rotation", this.rotation.name());
+            tagCompound.setBoolean("Generated", this.generated);
         }
 
         @Override
         protected void readStructureFromNBT(@Nonnull NBTTagCompound tagCompound, @Nonnull TemplateManager manager) {
             super.readStructureFromNBT(tagCompound, manager);
             this.rotation = Rotation.valueOf(tagCompound.getString("Rotation"));
-            this.loadTemplate(manager);
+            this.generated = tagCompound.hasKey("Generated") && tagCompound.getBoolean("Generated");
+            this.loadTemplate();
         }
 
         @Override
