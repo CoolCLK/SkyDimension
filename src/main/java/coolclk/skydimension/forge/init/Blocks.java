@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.init;
 
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.block.BlockSkyPortal;
 import net.minecraft.block.material.Material;
 
@@ -7,6 +8,6 @@ import net.minecraft.block.material.Material;
  * Init blocks.
  * @author CoolCLK
  */
-public class Blocks {
+public class Blocks implements IObject {
     public static final BlockSkyPortal SKY_PORTAL = (BlockSkyPortal) new BlockSkyPortal(Material.PORTAL).setHardness(-1.0F).setResistance(6000000.0F);
 }

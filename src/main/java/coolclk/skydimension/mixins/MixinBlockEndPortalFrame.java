@@ -1,5 +1,6 @@
 package coolclk.skydimension.mixins;
 
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.block.BlockProperties;
 import coolclk.skydimension.forge.block.PropertyHelper;
 import net.minecraft.block.BlockEndPortalFrame;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = BlockEndPortalFrame.class, priority = 1001)
-public abstract class MixinBlockEndPortalFrame {
+public abstract class MixinBlockEndPortalFrame implements IObject {
     @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/BlockStateContainer;getBaseState()Lnet/minecraft/block/state/IBlockState;"))
     private IBlockState injectInit(BlockStateContainer instance) {
         return instance.getBaseState().withProperty(BlockProperties.IS_SKY, false);

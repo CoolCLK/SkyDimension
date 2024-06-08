@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.world;
 
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -22,7 +23,7 @@ import javax.annotation.Nullable;
  * The world provider of sky dimension.
  * @author CoolCLK
  */
-public class WorldProviderSky extends WorldProvider {
+public class WorldProviderSky extends WorldProvider implements IObject {
     /**
      * Init provider.
      * @author CoolCLK
@@ -197,7 +198,7 @@ public class WorldProviderSky extends WorldProvider {
     @Override
     @SuppressWarnings("ReassignedVariable")
     public BlockPos getSpawnCoordinate() {
-        BlockPos coordinate = new BlockPos(0, 128, 0);
+        BlockPos coordinate = new BlockPos(0.5, 128, 0.5);
         IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
         for (int i = -1; i < 3; i++) {
             this.world.setBlockState(coordinate.add(0, i, 0).west().north(), ground);

@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.block;
 
+import coolclk.skydimension.IObject;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +10,7 @@ import net.minecraft.world.World;
  * Help to operate the properties of blocks in a world.
  * @author CoolCLK
  */
-public class PropertyHelper {
+public class PropertyHelper implements IObject {
     /**
      * Get a block property value, or if it not exists, will add the property to the block with default value.
      * @param world The world that block at

@@ -1,5 +1,7 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
+import coolclk.skydimension.IObject;
+import coolclk.skydimension.forge.world.WorldProviderSky;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.*;
@@ -7,7 +9,16 @@ import net.minecraft.world.gen.structure.*;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class MapGenStrongholdPortalRoom extends MapGenStronghold {
+public class MapGenStrongholdPortalRoom extends MapGenStronghold implements IObject {
+    private static final int baseHeight = 60, heightRange = 30;
+
+    private static int getYPosForStructure(World world, int chunkX, int chunkZ) {
+        if (world.provider instanceof WorldProviderSky) {
+            return ((WorldProviderSky) world.provider).getBaseHeight() + baseHeight + new Random(chunkX + chunkZ * 10387313L).nextInt(heightRange) - (heightRange / 2);
+        }
+        return -1;
+    }
+
     /**
      * Get a start.
      * @author CoolCLK
@@ -38,20 +49,19 @@ public class MapGenStrongholdPortalRoom extends MapGenStronghold {
          * Create a new start.
          * @author CoolCLK
          */
+        @SuppressWarnings("DataFlowIssue")
         public Start(World worldIn, Random random, int chunkX, int chunkZ) {
             super(chunkX, chunkZ);
             StructureStrongholdPieces.prepareStructurePieces();
-            StructureStrongholdPieces.Stairs2 stairs2 = new StructureStrongholdPieces.Stairs2(0, random, (chunkX << 4) + 2, (chunkZ << 4) + 2);
-
+            EnumFacing facing = EnumFacing.HORIZONTALS[random.nextInt(4)];
             StructureStrongholdPieces.PortalRoom portalRoom = new StructureStrongholdPieces.PortalRoom(
                     0,
                     random,
-                    new StructureBoundingBox((chunkX << 4) + 2, 64, (chunkZ << 4) + 2, (chunkX << 4) + 6, 74, (chunkZ << 4) + 6),
-                    EnumFacing.NORTH
+                    StructureBoundingBox.getComponentToAddBoundingBox((chunkX << 4) + 2, getYPosForStructure(worldIn, chunkX, chunkZ), (chunkZ << 4) + 6, -4, -1, 0, 11, 8, 16, facing),
+                    facing
             );
             this.components.add(portalRoom);
-            portalRoom.buildComponent(stairs2, this.components, random);
-
+            portalRoom.buildComponent(null, this.components, random);
             this.updateBoundingBox();
             this.markAvailableHeight(worldIn, random, 0);
         }

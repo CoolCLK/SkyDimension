@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.injection;
 
+import coolclk.skydimension.IObject;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
@@ -11,7 +12,7 @@ import java.util.Map;
  * Load Mixin if tweak class can not be loaded successfully.
  * @author CoolCLK
  */
-public class MixinFMLLoadingPlugin implements IFMLLoadingPlugin {
+public class MixinFMLLoadingPlugin implements IObject, IFMLLoadingPlugin {
     /**
      * Init event.
      * @author CoolCLK

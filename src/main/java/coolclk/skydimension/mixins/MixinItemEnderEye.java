@@ -1,6 +1,7 @@
 package coolclk.skydimension.mixins;
 
 import com.google.common.base.Predicates;
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.block.BlockProperties;
 import coolclk.skydimension.forge.entity.item.EntitySkyEye;
 import coolclk.skydimension.forge.item.ItemSkyEye;
@@ -30,7 +31,7 @@ import static net.minecraft.block.BlockEndPortalFrame.EYE;
 import static net.minecraft.block.BlockEndPortalFrame.FACING;
 
 @Mixin(value = ItemEnderEye.class, priority = 1001)
-public abstract class MixinItemEnderEye {
+public abstract class MixinItemEnderEye implements IObject {
 
     /**
      * Add property {@link coolclk.skydimension.forge.block.BlockProperties#IS_SKY} and make it <code>true</code>.

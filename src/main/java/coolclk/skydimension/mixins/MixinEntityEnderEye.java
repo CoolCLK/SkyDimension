@@ -1,5 +1,6 @@
 package coolclk.skydimension.mixins;
 
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.init.Items;
 import net.minecraft.entity.item.EntityEnderEye;
 import net.minecraft.item.Item;
@@ -8,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = EntityEnderEye.class, priority = 1001)
-public abstract class MixinEntityEnderEye {
+public abstract class MixinEntityEnderEye implements IObject {
     /**
      * Change dropped item to {@link coolclk.skydimension.forge.init.Items#SKY_EYE} instead of {@link net.minecraft.init.Items#ENDER_EYE}.
      * @author CoolCLK

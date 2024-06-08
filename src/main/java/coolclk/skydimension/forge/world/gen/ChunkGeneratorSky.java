@@ -1,5 +1,6 @@
 package coolclk.skydimension.forge.world.gen;
 
+import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.WorldProviderSky;
 import coolclk.skydimension.forge.world.gen.structure.MapGenFloatingShip;
 import coolclk.skydimension.forge.world.gen.structure.MapGenStrongholdPortalRoom;
@@ -32,7 +33,7 @@ import java.util.*;
  * <i><strong>Note: </strong>original author is notch.</i>
  * @author CoolCLK
  */
-public class ChunkGeneratorSky implements IChunkGenerator {
+public class ChunkGeneratorSky implements IObject, IChunkGenerator {
     private final NoiseGeneratorOctaves xNoiseGenerator;
     private final NoiseGeneratorOctaves yNoiseGenerator;
     private final NoiseGeneratorOctaves zNoiseGenerator;
@@ -465,7 +466,7 @@ public class ChunkGeneratorSky implements IChunkGenerator {
             treesChanceFactor /= 2D;
         }
         int treeGenerateOffset = (int) ((treesGenerateTemperature / 8D + this.randomizer.nextDouble() * 4D + 4D) / 3D);
-        int treesGenerateChance = 0;
+        int treesGenerateChance = 3; // Base tree chance
         if (this.randomizer.nextInt(10) == 0) {
             treesGenerateChance++;
         }
