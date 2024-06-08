@@ -1,13 +1,9 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
 import coolclk.skydimension.IObject;
-import coolclk.skydimension.forge.util.StructureBoundingBoxHelper;
 import coolclk.skydimension.forge.world.WorldProviderSky;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.*;
 

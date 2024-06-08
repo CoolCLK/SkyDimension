@@ -1,12 +1,9 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
 import coolclk.skydimension.IObject;
-import coolclk.skydimension.forge.util.StructureBoundingBoxHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
@@ -16,6 +13,10 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+/**
+ * Better {@link net.minecraft.world.gen.structure.StructureComponentTemplate}
+ * @author CoolCLK
+ */
 public abstract class StructureComponentTemplate extends net.minecraft.world.gen.structure.StructureComponentTemplate implements IObject {
     protected World world;
     protected boolean generated;

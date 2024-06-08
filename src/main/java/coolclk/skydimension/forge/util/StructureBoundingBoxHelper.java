@@ -20,6 +20,7 @@ public class StructureBoundingBoxHelper implements IObject {
      * Fast {@link net.minecraft.world.gen.structure.StructureBoundingBox#getComponentToAddBoundingBox(int, int, int, int, int, int, int, int, int, EnumFacing)} <i>(Supports {@link net.minecraft.util.Rotation})</i>.
      * @author CoolCLK
      */
+    @SuppressWarnings("unused")
     public static StructureBoundingBox getAddedBoundingBox(Vec3i position, StructureBoundingBox structureBoundingBox, Rotation rotation) {
         return getAddedBoundingBox(position, structureBoundingBox, RotationFacingHelper.fromRotation(rotation));
     }
@@ -36,6 +37,7 @@ public class StructureBoundingBoxHelper implements IObject {
      * Fast {@link net.minecraft.world.gen.structure.StructureBoundingBox#getComponentToAddBoundingBox(int, int, int, int, int, int, int, int, int, EnumFacing)} <i>(Supports {@link net.minecraft.util.Rotation})</i>.
      * @author CoolCLK
      */
+    @SuppressWarnings("unused")
     public static StructureBoundingBox getComponentToAddBoundingBox(Vec3i position, StructureComponent component, Rotation rotation) {
         return getComponentToAddBoundingBox(position, component, RotationFacingHelper.fromRotation(rotation));
     }
