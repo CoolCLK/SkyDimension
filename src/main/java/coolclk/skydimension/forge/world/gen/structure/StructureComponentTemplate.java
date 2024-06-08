@@ -30,10 +30,6 @@ public abstract class StructureComponentTemplate extends net.minecraft.world.gen
         super.setup(templateIn, position, settings);
     }
 
-    protected BlockPos getTemplatePosition() {
-        return this.templatePosition;
-    }
-
     protected void setComponentType(int type) {
         this.componentType = type;
     }
