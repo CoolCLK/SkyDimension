@@ -1,7 +1,7 @@
 package coolclk.skydimension.forge.world.gen;
 
 import coolclk.skydimension.IObject;
-import coolclk.skydimension.forge.world.WorldProviderSky;
+import coolclk.skydimension.forge.world.gen.structure.MapGenVillage;
 import coolclk.skydimension.forge.world.gen.structure.MapGenFloatingShip;
 import coolclk.skydimension.forge.world.gen.structure.MapGenStrongholdPortalRoom;
 import net.minecraft.block.BlockFlower;
@@ -20,7 +20,6 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.structure.MapGenStructure;
-import net.minecraft.world.gen.structure.MapGenVillage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -245,6 +244,7 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
         return temperatures;
     }
 
+
     /**
      * Generate chunk of dimension.<br>
      * @author CoolCLK
@@ -257,12 +257,12 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
         ChunkPrimer chunkPrimer = new ChunkPrimer();
 
         this.generateUnderground(chunkX, chunkZ, chunkPrimer);
-        this.generateBiomes(chunkX, chunkZ, chunkPrimer, world.getBiomeProvider().getBiomes(null, chunkX * 16, chunkZ * 16, 16, 16));
+        this.generateBiomes(chunkX, chunkZ, chunkPrimer, this.world.getBiomeProvider().getBiomes(null, chunkX * 16, chunkZ * 16, 16, 16));
 
         // Generate obsidian platform
         if (chunkX == 0 && chunkZ == 0) {
             IBlockState ground = Blocks.OBSIDIAN.getDefaultState();
-            for (int i = ((WorldProviderSky) this.world.provider).getBaseHeight() + 127; i < ((WorldProviderSky) this.world.provider).getBaseHeight() + 131; i++) {
+            for (int i = this.getBaseHeight(chunkX, chunkZ) + 127; i < this.getBaseHeight(chunkX, chunkZ) + 131; i++) {
                 chunkPrimer.setBlockState(0, i, 0, ground);
                 chunkPrimer.setBlockState(0, i, 1, ground);
                 chunkPrimer.setBlockState(1, i, 0, ground);
@@ -296,12 +296,12 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
         }
 
         if (this.mapFeaturesEnabled) {
-            if (this.settings.useVillages) {
+            //if (this.settings.useVillages) {
                 this.villageGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
-            }
-            if (this.settings.useStrongholds) {
+            //}
+            //if (this.settings.useStrongholds) {
                 this.strongholdGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
-            }
+            //}
             //if (this.settings.useFloatingBoats) {
                 this.floatingBoatGenerator.generate(this.world, chunkX, chunkZ, chunkPrimer);
             //}
@@ -322,14 +322,14 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
 
         int chunkWorldX = chunkX * 16;
         int chunkWorldZ = chunkZ * 16;
-        BlockPos chunkWorldPosition = new BlockPos(chunkWorldX, ((WorldProviderSky) this.world.provider).getBaseHeight(), chunkWorldZ);
-        Biome biome = world.getBiome(chunkWorldPosition.add(16, ((WorldProviderSky) this.world.provider).getBaseHeight(), 16));
-        randomizer.setSeed(world.getSeed());
-        long xTemperature = (randomizer.nextLong() / 2L) * 2L + 1L;
-        long zTemperature = (randomizer.nextLong() / 2L) * 2L + 1L;
-        randomizer.setSeed((long) chunkX * xTemperature + (long) chunkZ * zTemperature ^ world.getSeed());
+        BlockPos chunkWorldPosition = new BlockPos(chunkWorldX, this.getBaseHeight(chunkX, chunkZ), chunkWorldZ);
+        Biome biome = world.getBiome(chunkWorldPosition.add(16, this.getBaseHeight(chunkX, chunkZ), 16));
+        this.randomizer.setSeed(world.getSeed());
+        long xTemperature = (this.randomizer.nextLong() / 2L) * 2L + 1L;
+        long zTemperature = (this.randomizer.nextLong() / 2L) * 2L + 1L;
+        this.randomizer.setSeed((long) chunkX * xTemperature + (long) chunkZ * zTemperature ^ world.getSeed());
         boolean hasVillage = false;
-        ChunkPos chunkPosition = new ChunkPos(chunkWorldX, chunkWorldZ);
+        ChunkPos chunkPosition = new ChunkPos(chunkX, chunkZ);
 
         if (this.mapFeaturesEnabled) {
             if (this.settings.useVillages) {
@@ -390,7 +390,7 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
      */
     private void decorate(int chunkX, int chunkZ) {
         int chunkWorldX = chunkX * 16, chunkWorldZ = chunkZ * 16;
-        BlockPos chunkWorldPosition = new BlockPos(chunkWorldX, ((WorldProviderSky) this.world.provider).getBaseHeight(), chunkWorldZ);
+        BlockPos chunkWorldPosition = new BlockPos(chunkWorldX, this.getBaseHeight(chunkX, chunkZ), chunkWorldZ);
         Biome biome = this.world.getBiome(chunkWorldPosition.add(16, 0, 16));
 
         for (int _times = 0; _times < 10; _times++) {
@@ -548,6 +548,14 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
                 z = this.randomizer.nextInt(16) + 8;
             (new WorldGenLiquids(Blocks.FLOWING_LAVA)).generate(this.world, this.randomizer, chunkWorldPosition.add(x, y, z));
         }
+    }
+
+    /**
+     * Ready for higher version of Minecraft.
+     * @author CoolCLK
+     */
+    public int getBaseHeight(@SuppressWarnings("unused") int chunkX, @SuppressWarnings("unused") int chunkZ) {
+        return 0;
     }
 
     /**

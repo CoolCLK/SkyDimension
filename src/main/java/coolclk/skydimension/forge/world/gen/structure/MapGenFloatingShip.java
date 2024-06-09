@@ -2,6 +2,7 @@ package coolclk.skydimension.forge.world.gen.structure;
 
 import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.WorldProviderSky;
+import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -60,7 +61,7 @@ public class MapGenFloatingShip extends MapGenStructure implements IObject {
 
     private static int getYPosForStructure(World world, int chunkX, int chunkZ) {
         if (world.provider instanceof WorldProviderSky) {
-            return ((WorldProviderSky) world.provider).getBaseHeight() + baseHeight + new Random(chunkX + chunkZ * 10387313L).nextInt(heightRange) - (heightRange / 2);
+            return ((ChunkGeneratorSky) world.provider.createChunkGenerator()).getBaseHeight(chunkX, chunkZ) + baseHeight + new Random(chunkX + chunkZ * 10387313L).nextInt(heightRange) - (heightRange / 2);
         }
         return -1;
     }
@@ -95,10 +96,7 @@ public class MapGenFloatingShip extends MapGenStructure implements IObject {
                 this.components.clear();
                 this.create(worldIn, random, this.getChunkPosX(), this.getChunkPosZ());
             }
-            StructureBoundingBox boundingBox = this.getBoundingBox();
-            this.boundingBox = new StructureBoundingBox(Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
             super.generateStructure(worldIn, random, this.boundingBox);
-            this.boundingBox = boundingBox;
         }
     }
 }

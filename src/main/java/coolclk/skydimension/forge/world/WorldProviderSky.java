@@ -60,6 +60,15 @@ public class WorldProviderSky extends WorldProvider implements IObject {
     }
 
     /**
+     * No moon here.
+     * @author CoolCLK
+     */
+    @Override
+    public int getMoonPhase(long worldTime) {
+        return 5;
+    }
+
+    /**
      * Send back player back to overworld.
      * @author CoolCLK
      */
@@ -241,14 +250,6 @@ public class WorldProviderSky extends WorldProvider implements IObject {
     @SideOnly(Side.CLIENT)
     public boolean isSkyColored() {
         return true;
-    }
-
-    /**
-     * Ready for higher version of Minecraft.
-     * @author CoolCLK
-     */
-    public int getBaseHeight() {
-        return 0;
     }
 
     /**

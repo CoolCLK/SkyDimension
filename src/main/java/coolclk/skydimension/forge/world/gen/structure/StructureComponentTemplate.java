@@ -3,10 +3,8 @@ package coolclk.skydimension.forge.world.gen.structure;
 import coolclk.skydimension.IObject;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 
@@ -25,11 +23,6 @@ public abstract class StructureComponentTemplate extends net.minecraft.world.gen
         return templateManager.getTemplate(null, location);
     }
 
-    @Override
-    protected void setup(@Nonnull Template templateIn, @Nonnull BlockPos position, @Nonnull PlacementSettings settings) {
-        super.setup(templateIn, position, settings);
-    }
-
     protected void setComponentType(int type) {
         this.componentType = type;
     }
@@ -40,7 +33,7 @@ public abstract class StructureComponentTemplate extends net.minecraft.world.gen
             return false;
         }
         this.generated = true;
-        return !super.addComponentParts(worldIn, randomIn, structureBoundingBoxIn);
+        return super.addComponentParts(worldIn, randomIn, structureBoundingBoxIn);
     }
 
     @Override

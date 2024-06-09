@@ -1,13 +1,13 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:emerald"
+            "item": "skydimension:sky_eye"
         },
         "title": {
-            "translate": "advancements.skydimension.travel.village_over_sky.title"
+            "translate": "advancements.skydimension.travel.stronghold.title"
         },
         "description": {
-            "translate": "advancements.skydimension.travel.village_over_sky.description"
+            "translate": "advancements.skydimension.travel.stronghold.description"
         }
     },
     "parent": "skydimension:travel/root",
@@ -16,7 +16,7 @@
             "trigger": "minecraft:location",
             "conditions": {
                 "dimension": "sky",
-                "feature": "Village"
+                "feature": "Stronghold"
             }
         }
     }
