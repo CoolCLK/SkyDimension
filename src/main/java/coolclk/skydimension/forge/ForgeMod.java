@@ -8,7 +8,7 @@ import coolclk.skydimension.forge.common.DimensionManager;
 import coolclk.skydimension.forge.event.EventHandler;
 import coolclk.skydimension.forge.tileentity.TileEntity;
 import coolclk.skydimension.forge.world.gen.structure.MapGenStructureHandler;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -17,10 +17,10 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
  * Entrance of the mod in Forge.
  * @author CoolCLK
  */
-@Mod(modid = SkyDimension.MOD_ID)
+@Mod(SkyDimension.MOD_ID)
 public class ForgeMod implements IObject {
-    @Mod.EventHandler
-    public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
+    @SubscribeEvent
+    public static void beforeFMLInitialization(FMLCommonSetupEvent.Pre event) {
         SkyDimension.MOD_LOADER = ModLoader.FORGE;
         SkyDimension.MOD_LOGGER = event.getModLog();
         // Make static registering active
@@ -28,10 +28,6 @@ public class ForgeMod implements IObject {
         new TileEntity();
         new TileEntityRendererHandler();
         new MapGenStructureHandler();
-    }
-
-    @Mod.EventHandler
-    public static void onFMLInitialization(FMLInitializationEvent event) {
     }
 
     @Mod.EventHandler

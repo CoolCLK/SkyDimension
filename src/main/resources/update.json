@@ -1,15 +1,10 @@
 {
   "homepage": "https://github.com/CoolCLK/SkyDimension/releases",
-  "1.12.2": {
-    "1.0.5": "Removed Sky Ingot and more, added village and mobs to dimension.",
-    "1.0.4": "Fixed when you effect Slow Falling in the water or lava will float over than them. Fixed advancements render.",
-    "1.0.3": "Fixed some bugs.",
-    "1.0.2": "Fixed some bugs.",
-    "1.0.1": "Adds blocks and items, powerful world. Also add high version effect Slow Falling.",
-    "1.0.0": "First version, newer version will based on it."
+  "1.13.2": {
+    "1.0.6": "First version, based from 1.12.2."
   },
   "promos": {
-    "1.12.2-latest": "1.0.4",
-    "1.12.2-recommended": "1.0.4"
+    "1.13.2-latest": "1.0.6",
+    "1.13.2-recommended": "1.0.6"
   }
 }

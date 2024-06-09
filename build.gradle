@@ -1,91 +1,79 @@
 buildscript {
     repositories {
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = 'https://maven.minecraftforge.net/' }
         maven { url = "https://repo.spongepowered.org/maven" }
         mavenCentral()
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:${forge_gradle_version}"
-        classpath "org.spongepowered:mixingradle:${mixins_gradle_version}"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: forge_gradle_version, changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: mixins_gradle_version, changing: true
     }
 }
-apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: "org.spongepowered.mixin"
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
-group = mod_group + "." + mod_id
+group = mod_group
 archivesBaseName = mod_id
 
-sourceCompatibility = targetCompatibility = "1.8"
-compileJava {
-    sourceCompatibility = targetCompatibility = "1.8"
-}
-
-repositories {
-    maven { url = "https://repo.spongepowered.org/maven" }
-    mavenCentral()
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    version = "${mod_minecraft_version}-${forge_dependency_version}"
-    runDir = "run"
-    coreMod = "coolclk.skydimension.forge.injection.MixinFMLLoadingPlugin"
-
-    mappings = "${mod_minecraft_mappings}"
-    // makeObfSourceJar = false
-
-    clientRunArgs.addAll('--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker', '--mixin', mixins_config)
-    serverRunArgs.addAll('--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker', '--mixin', mixins_config)
+    mappings channel: mod_minecraft_mappings_channel, version: mod_minecraft_mappings_versions
+    accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 dependencies {
-    compile("org.spongepowered:mixin:${mixins_dependency_version}") {
-        exclude module: 'guava'
-        exclude module: 'commons-io'
-        exclude module: 'gson'
-    }
-    annotationProcessor "org.spongepowered:mixin:${mixins_processor_version}"
+    minecraft "net.minecraftforge:forge:${forge_dependency_version}"
 }
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-        expand "mod_id": mod_id, "mod_name": mod_name, "mod_description": mod_description, "mod_version": mod_version, "mod_minecraft_version": mod_minecraft_version, "mod_url": mod_url, "mod_update_url": mod_update_url, "mod_authors": mod_authors, "mod_credits": mod_credits
+        include "META-INF/mods.toml"
+        expand "mod_id": mod_id, "mod_name": mod_name, "mod_description": mod_description, "mod_version": mod_version, "mod_minecraft_version_range": mod_minecraft_version_range, "mod_url": mod_url, "mod_update_url": mod_update_url, "mod_authors": mod_authors, "mod_credits": mod_credits, "forge_loader_version_range": forge_loader_version_range
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
+        exclude "META-INF/mods.toml"
     }
 }
 
 jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    baseName mod_id + "-" + mod_minecraft_version
-
-    from(configurations.compile.collect {
-        it.isDirectory() ? it : zipTree(it)
-    }) {
-        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
-    }
-
-    manifest.attributes([
-            'FMLCorePluginContainsFMLMod': true,
-            'FMLCorePlugin': 'coolclk.skydimension.forge.injection.MixinFMLLoadingPlugin',
-            'ForceLoadAsMod': true,
-            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-            'TweakOrder': '0',
-            'MixinConfigs': mixins_config,
-            'FMLAT': 'skydimension_at.cfg',
-    ])
-}
-
-sourceSets {
-    main {
-        output.resourcesDir = file('build/combined')
-        java.outputDir = file('build/combined')
+    manifest {
+        attributes([
+            "FMLCorePluginContainsFMLMod": true,
+            "FMLCorePlugin": "coolclk.skydimension.forge.injection.MixinFMLLoadingPlugin",
+            "ForceLoadAsMod": true,
+            "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+            "TweakOrder": "0",
+            "FMLAT": "META-INF/accesstransformer.cfg",
+        ])
     }
 }
 
 mixin {
     add sourceSets.main, 'mixins.skydimension.refmap.json'
+    config mixins_config
 }
