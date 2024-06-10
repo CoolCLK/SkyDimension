@@ -1,6 +1,7 @@
 {
   "homepage": "https://github.com/CoolCLK/SkyDimension/releases",
   "1.12.2": {
+    "1.0.6": "New item Sky Eye, advancements, and a structure Floating Ship was added.",
     "1.0.5": "Removed Sky Ingot and more, added village and mobs to dimension.",
     "1.0.4": "Fixed when you effect Slow Falling in the water or lava will float over than them. Fixed advancements render.",
     "1.0.3": "Fixed some bugs.",
@@ -9,7 +10,7 @@
     "1.0.0": "First version, newer version will based on it."
   },
   "promos": {
-    "1.12.2-latest": "1.0.4",
-    "1.12.2-recommended": "1.0.4"
+    "1.12.2-latest": "1.0.6",
+    "1.12.2-recommended": "1.0.6"
   }
 }
