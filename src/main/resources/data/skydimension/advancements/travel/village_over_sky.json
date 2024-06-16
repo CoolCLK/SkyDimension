@@ -1,0 +1,27 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:emerald"
+        },
+        "title": {
+            "translate": "advancements.skydimension.travel.village_over_sky.title"
+        },
+        "description": {
+            "translate": "advancements.skydimension.travel.village_over_sky.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "parent": "skydimension:travel/root",
+    "criteria": {
+        "in_sky_village": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "dimension": "sky",
+                "feature": "Village"
+            }
+        }
+    }
+}

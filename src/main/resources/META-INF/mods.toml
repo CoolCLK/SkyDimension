@@ -1,25 +1,25 @@
 modLoader="javafml"
-loaderVersion="${forge_loader_version_range}"
+loaderVersion="[28,)"
 issueTrackerURL="https://github.com/CoolCLK/SkyDimension/issues/new/"
 [[mods]]
-modId="${mod_id}"
-version="${file.jarVersion}"
-displayName="${mod_name}"
-updateJSONURL="${mod_update_url}"
-displayURL="${mod_url}"
+modId="skydimension"
+version="1.0.6"
+displayName="Sky Dimension"
+updateJSONURL="https://github.com/CoolCLK/SkyDimension/raw/1.14.4/src/main/resources/update.json"
+displayURL="https://github.com/CoolCLK/SkyDimension"
 logoFile=""
-credits="${mod_credits}"
-authors="${mod_authors}"
-description='''${mod_description}'''
-[[dependencies.${mod_id}]]
+credits="Thanks the original authors, they create the sky dimension."
+authors="CoolCLK"
+description='''Re-add Sky Dimension from Beta version.'''
+[[dependencies.skydimension]]
     modId="forge"
     mandatory=true
-    versionRange="${forge_loader_version_range}"
+    versionRange="[28,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.${mod_id}]]
+[[dependencies.skydimension]]
     modId="minecraft"
     mandatory=true
-    versionRange="${mod_minecraft_version_range}"
+    versionRange="[1.14.4]"
     ordering="NONE"
     side="BOTH"

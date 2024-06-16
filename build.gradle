@@ -47,25 +47,45 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_dependency_version}"
+
+    compile("org.spongepowered:mixin:${mixins_dependency_version}") {
+        exclude module: 'guava'
+        exclude module: 'commons-io'
+        exclude module: 'gson'
+    }
+    annotationProcessor "org.spongepowered:mixin:${mixins_processor_version}:processor"
 }
 
 processResources {
-    from(sourceSets.main.resources.srcDirs) {
-        include "META-INF/mods.toml"
-        expand "mod_id": mod_id, "mod_name": mod_name, "mod_description": mod_description, "mod_version": mod_version, "mod_minecraft_version_range": mod_minecraft_version_range, "mod_url": mod_url, "mod_update_url": mod_update_url, "mod_authors": mod_authors, "mod_credits": mod_credits, "forge_loader_version_range": forge_loader_version_range
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "META-INF/mods.toml"
+    inputs.property "mod_id", mod_id
+    inputs.property "mod_name", mod_name
+    inputs.property "mod_description", mod_description
+    inputs.property "mod_version", mod_version
+    inputs.property "mod_minecraft_version_range", mod_minecraft_version_range
+    inputs.property "mod_url", mod_url
+    inputs.property "mod_update_url", mod_update_url
+    inputs.property "mod_authors", mod_authors
+    inputs.property "mod_credits", mod_credits
+    inputs.property "forge_loader_version_range", forge_loader_version_range
+    filteringCharset "UTF-8"
+    
+    filesMatching("META-INF/mods.toml") {
+        expand "mod_id": mod_id,
+                "mod_name": mod_name,
+                "mod_description": mod_description,
+                "mod_version": mod_version,
+                "mod_minecraft_version_range": mod_minecraft_version_range,
+                "mod_url": mod_url,
+                "mod_update_url": mod_update_url,
+                "mod_authors": mod_authors,
+                "mod_credits": mod_credits,
+                "forge_loader_version_range": forge_loader_version_range
     }
 }
 
 jar {
     manifest {
         attributes([
-            "FMLCorePluginContainsFMLMod": true,
-            "FMLCorePlugin": "coolclk.skydimension.forge.injection.MixinFMLLoadingPlugin",
-            "ForceLoadAsMod": true,
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
             "TweakOrder": "0",
             "FMLAT": "META-INF/accesstransformer.cfg",
