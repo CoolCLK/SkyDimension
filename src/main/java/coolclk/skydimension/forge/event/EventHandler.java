@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.event;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.block.BlockProperties;
 import coolclk.skydimension.forge.block.PropertyHelper;
@@ -44,7 +43,7 @@ import java.util.Objects;
  * @author CoolCLK
  */
 @EventBusSubscriber(modid = SkyDimension.MOD_ID)
-public class EventHandler implements IObject {
+public class EventHandler {
     public static void onServerStarting(FMLServerStartingEvent event) {
         registryCommand(event);
     }

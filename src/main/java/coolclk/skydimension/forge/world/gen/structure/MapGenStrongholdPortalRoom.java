@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.WorldProviderSky;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.util.EnumFacing;
@@ -10,7 +9,7 @@ import net.minecraft.world.gen.structure.*;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class MapGenStrongholdPortalRoom extends MapGenStronghold implements IObject {
+public class MapGenStrongholdPortalRoom extends MapGenStronghold {
     private static final int baseHeight = 60, heightRange = 30;
 
     private static int getYPosForStructure(World world, int chunkX, int chunkZ) {

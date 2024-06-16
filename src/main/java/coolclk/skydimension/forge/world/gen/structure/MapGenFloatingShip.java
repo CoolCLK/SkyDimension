@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.WorldProviderSky;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.util.Rotation;
@@ -16,7 +15,7 @@ import java.util.Random;
  * The generator of floating ship structure.
  * @author CoolCLK
  */
-public class MapGenFloatingShip extends MapGenStructure implements IObject {
+public class MapGenFloatingShip extends MapGenStructure {
     private static final int baseHeight = 120, heightRange = 30;
 
     public static String getName() {

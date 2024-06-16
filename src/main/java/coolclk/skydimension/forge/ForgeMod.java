@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.ModLoader;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.client.renderer.tileentity.TileEntityRendererHandler;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
  * @author CoolCLK
  */
 @Mod(modid = SkyDimension.MOD_ID)
-public class ForgeMod implements IObject {
+public class ForgeMod {
     @Mod.EventHandler
     public static void beforeFMLInitialization(FMLPreInitializationEvent event) {
         SkyDimension.MOD_LOADER = ModLoader.FORGE;

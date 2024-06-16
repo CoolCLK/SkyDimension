@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.gen;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.gen.structure.MapGenVillage;
 import coolclk.skydimension.forge.world.gen.structure.MapGenFloatingShip;
 import coolclk.skydimension.forge.world.gen.structure.MapGenStrongholdPortalRoom;
@@ -32,7 +31,7 @@ import java.util.*;
  * <i><strong>Note: </strong>original author is notch.</i>
  * @author CoolCLK
  */
-public class ChunkGeneratorSky implements IObject, IChunkGenerator {
+public class ChunkGeneratorSky implements IChunkGenerator {
     private final NoiseGeneratorOctaves xNoiseGenerator;
     private final NoiseGeneratorOctaves yNoiseGenerator;
     private final NoiseGeneratorOctaves zNoiseGenerator;
@@ -41,7 +40,6 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
     private final boolean mapFeaturesEnabled;
     private final ChunkGeneratorSettings settings;
     private double[] undergroundBuffer;
-    private double[] biomeBuffer;
     private final MapGenCaves caveGenerator;
     private final MapGenVillage villageGenerator;
     private final MapGenStrongholdPortalRoom strongholdGenerator;
@@ -53,7 +51,6 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
      * @author CoolCLK
      */
     public ChunkGeneratorSky(World world) {
-        this.biomeBuffer = new double[256];
         this.world = world;
         this.mapFeaturesEnabled = world.getWorldInfo().isMapFeaturesEnabled();
         this.randomizer = new Random(world.getSeed());
@@ -80,19 +77,19 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
         int xSize = scale + 1;
         byte ySize = 33;
         int zSize = scale + 1;
-        undergroundBuffer = generateANoiseOctave(undergroundBuffer, xOffset * scale, zOffset * scale, xSize, ySize, zSize);
+        this.undergroundBuffer = generateANoiseOctave(this.undergroundBuffer, xOffset * scale, zOffset * scale, xSize, ySize, zSize);
         for (int partX = 0; partX < scale; partX++) {
             for (int partZ = 0; partZ < scale; partZ++) {
                 for (int partY = 0; partY < 32; partY++) {
                     double d = 0.25D;
-                    double d1 = undergroundBuffer[((partX) * zSize + (partZ)) * ySize + (partY)];
-                    double d2 = undergroundBuffer[((partX) * zSize + (partZ + 1)) * ySize + (partY)];
-                    double d3 = undergroundBuffer[((partX + 1) * zSize + (partZ)) * ySize + (partY)];
-                    double d4 = undergroundBuffer[((partX + 1) * zSize + (partZ + 1)) * ySize + (partY)];
-                    double d5 = (undergroundBuffer[((partX) * zSize + (partZ)) * ySize + (partY + 1)] - d1) * d;
-                    double d6 = (undergroundBuffer[((partX) * zSize + (partZ + 1)) * ySize + (partY + 1)] - d2) * d;
-                    double d7 = (undergroundBuffer[((partX + 1) * zSize + (partZ)) * ySize + (partY + 1)] - d3) * d;
-                    double d8 = (undergroundBuffer[((partX + 1) * zSize + (partZ + 1)) * ySize + (partY + 1)] - d4) * d;
+                    double d1 = this.undergroundBuffer[((partX) * zSize + (partZ)) * ySize + (partY)];
+                    double d2 = this.undergroundBuffer[((partX) * zSize + (partZ + 1)) * ySize + (partY)];
+                    double d3 = this.undergroundBuffer[((partX + 1) * zSize + (partZ)) * ySize + (partY)];
+                    double d4 = this.undergroundBuffer[((partX + 1) * zSize + (partZ + 1)) * ySize + (partY)];
+                    double d5 = (this.undergroundBuffer[((partX) * zSize + (partZ)) * ySize + (partY + 1)] - d1) * d;
+                    double d6 = (this.undergroundBuffer[((partX) * zSize + (partZ + 1)) * ySize + (partY + 1)] - d2) * d;
+                    double d7 = (this.undergroundBuffer[((partX + 1) * zSize + (partZ)) * ySize + (partY + 1)] - d3) * d;
+                    double d8 = (this.undergroundBuffer[((partX + 1) * zSize + (partZ + 1)) * ySize + (partY + 1)] - d4) * d;
                     for (int blockY = 0; blockY < 4; blockY++) {
                         double d9 = 0.125D;
                         double d10 = d1;
@@ -153,7 +150,7 @@ public class ChunkGeneratorSky implements IObject, IChunkGenerator {
         double offset = 0.03125D;
         int islandHeight = 100, islandSpacerHeight = 128;
         NoiseGeneratorOctaves noiseGenerator = new NoiseGeneratorOctaves(randomizer, 4);
-        biomeBuffer = noiseGenerator.generateNoiseOctaves(biomeBuffer, x * 16, z * 16, 0, 16, 16, 1, offset * 2D, offset * 2D, offset * 2D);
+        double[] biomeBuffer = noiseGenerator.generateNoiseOctaves(new double[256], x * 16, 0, z * 16, 16, 1, 16, offset * 2D, offset * 2D, offset * 2D);
         for (int gx = 0; gx < 16; gx++) {
             for (int gz = 0; gz < 16; gz++) {
                 Biome biome = abiome[gx + gz * 16];

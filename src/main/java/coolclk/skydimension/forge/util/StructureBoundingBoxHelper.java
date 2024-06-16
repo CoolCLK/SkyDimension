@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.util;
 
-import coolclk.skydimension.IObject;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.Vec3i;
@@ -8,7 +7,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 
 @SuppressWarnings("unused")
-public class StructureBoundingBoxHelper implements IObject {
+public class StructureBoundingBoxHelper {
     /**
      * Fast {@link net.minecraft.world.gen.structure.StructureBoundingBox#getComponentToAddBoundingBox(int, int, int, int, int, int, int, int, int, EnumFacing)}.
      * @author CoolCLK

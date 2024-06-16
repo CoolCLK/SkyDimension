@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.gen.structure;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.world.storage.loot.LootTableList;
 import net.minecraft.entity.item.EntityItemFrame;
@@ -22,7 +21,7 @@ import net.minecraft.world.gen.structure.template.TemplateManager;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class StructureFloatingShipPieces implements IObject {
+public class StructureFloatingShipPieces {
     public static void registerPieces() {
         MapGenStructureIO.registerStructureComponent(FloatingShip.class, "FSFS");
     }
@@ -56,7 +55,7 @@ public class StructureFloatingShipPieces implements IObject {
                 try {
                     this.rotation = Rotation.valueOf(tagCompound.getString("Rotation"));
                 } catch (IllegalArgumentException e) {
-                    LOGGER.warn("Unknown rotation enum value {}.", tagCompound.getString("Rotation"));
+                    SkyDimension.MOD_LOGGER.warn("Unknown rotation enum value {}.", tagCompound.getString("Rotation"));
                     e.printStackTrace();
                 }
             }

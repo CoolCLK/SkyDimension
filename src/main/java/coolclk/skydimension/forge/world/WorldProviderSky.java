@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorSky;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -23,7 +22,7 @@ import javax.annotation.Nullable;
  * The world provider of sky dimension.
  * @author CoolCLK
  */
-public class WorldProviderSky extends WorldProvider implements IObject {
+public class WorldProviderSky extends WorldProvider {
     /**
      * Init provider.
      * @author CoolCLK

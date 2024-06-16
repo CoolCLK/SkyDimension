@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.teleporter;
 
-import coolclk.skydimension.IObject;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,7 +9,7 @@ import net.minecraftforge.common.util.ITeleporter;
  * Simple teleporter with only function which teleport player.
  * @author CoolCLK
  */
-public class Teleporter implements IObject, ITeleporter {
+public class Teleporter implements ITeleporter {
     protected double x, y, z;
 
     /**

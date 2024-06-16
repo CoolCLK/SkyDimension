@@ -1,10 +1,9 @@
 package coolclk.skydimension.forge.util;
 
-import coolclk.skydimension.IObject;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 
-public class RotationFacingHelper implements IObject {
+public class RotationFacingHelper {
     /**
      * Convent {@link net.minecraft.util.EnumFacing} from {@link net.minecraft.util.Rotation}.
      * @author CoolCLK

@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.block;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.tileentity.TileEntitySkyPortal;
 import coolclk.skydimension.forge.world.DimensionType;
 import coolclk.skydimension.forge.world.teleporter.SpawnTeleporter;
@@ -20,7 +19,7 @@ import javax.annotation.Nonnull;
  * The portal of dimension sky.
  * @author CoolCLK
  */
-public class BlockSkyPortal extends BlockEndPortal implements IObject {
+public class BlockSkyPortal extends BlockEndPortal {
     public BlockSkyPortal(Material material) {
         super(material);
     }
