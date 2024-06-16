@@ -5,6 +5,7 @@ import coolclk.skydimension.forge.state.properties.BlockStateProperties;
 import coolclk.skydimension.forge.block.PropertyHelper;
 import coolclk.skydimension.forge.block.Blocks;
 import coolclk.skydimension.forge.item.Items;
+import coolclk.skydimension.forge.tileentity.TileEntityType;
 import coolclk.skydimension.forge.world.ModDimension;
 import coolclk.skydimension.forge.world.biome.provider.BiomeProviderType;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorType;
@@ -87,6 +88,11 @@ public class EventHandler {
         public static void onRegisterFeature(RegistryEvent.Register<net.minecraft.world.gen.feature.Feature<?>> event) {
             event.getRegistry().register(Feature.STRONGHOLD.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "stronghold")));
             event.getRegistry().register(Feature.FLOATING_SHIP.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "floating_ship")));
+        }
+
+        @SubscribeEvent
+        public static void onRegisterTileEntityType(RegistryEvent.Register<net.minecraft.tileentity.TileEntityType<?>> event) {
+            event.getRegistry().register(TileEntityType.SKY_PORTAL.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "sky_portal")));
         }
 
         @SubscribeEvent

@@ -7,4 +7,11 @@ import net.minecraft.tileentity.EndPortalTileEntity;
  * @author CoolCLK
  */
 public class SkyPortalTileEntity extends EndPortalTileEntity {
+    public SkyPortalTileEntity(net.minecraft.tileentity.TileEntityType<?> type) {
+        super(type);
+    }
+
+    public SkyPortalTileEntity() {
+        this(TileEntityType.SKY_PORTAL);
+    }
 }

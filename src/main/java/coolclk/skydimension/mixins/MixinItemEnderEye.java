@@ -37,8 +37,8 @@ public abstract class MixinItemEnderEye {
      */
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/IProperty;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0))
     @SuppressWarnings({"UnreachableCode", "unchecked"})
-    private <T extends Comparable<T>, V extends T, S> S injectPlaceBlock(BlockState instance, IProperty<T> tiProperty, V v) {
-        instance = instance.with(tiProperty, v);
+    private <T extends Comparable<T>, V extends T, S> S injectPlaceBlock(BlockState instance, IProperty<T> iProperty, V v) {
+        instance = instance.with(iProperty, v);
         return (S) (((Object) this) instanceof SkyEyeItem ? instance.with(BlockStateProperties.END_FRAME_SKY, true) : instance);
     }
 
