@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.entity.item;
 
-import coolclk.skydimension.IObject;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EyeOfEnderEntity;
 import net.minecraft.world.World;
@@ -9,7 +8,7 @@ import net.minecraft.world.World;
  * Init the tile entity. Others are handling by Mixin.
  * @author CoolCLK
  */
-public class EyeOfSkyEntity extends EyeOfEnderEntity implements IObject {
+public class EyeOfSkyEntity extends EyeOfEnderEntity {
     /**
      * Create a new throwing sky eye.
      * @author CoolCLK

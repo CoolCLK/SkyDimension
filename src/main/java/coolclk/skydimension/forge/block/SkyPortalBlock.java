@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.block;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.tileentity.SkyPortalTileEntity;
 import coolclk.skydimension.forge.world.DimensionType;
 import net.minecraft.block.Block;
@@ -20,7 +19,7 @@ import javax.annotation.Nonnull;
  * The portal of dimension sky.
  * @author CoolCLK
  */
-public class SkyPortalBlock extends EndPortalBlock implements IObject {
+public class SkyPortalBlock extends EndPortalBlock {
     protected SkyPortalBlock(Block.Properties properties) {
         super(properties);
     }

@@ -1,6 +1,5 @@
 package coolclk.skydimension.forge.world.gen;
 
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.world.gen.feature.structure.Feature;
 import coolclk.skydimension.forge.world.gen.feature.structure.FloatingShipStructure;
 import net.minecraft.block.BlockState;
@@ -29,7 +28,7 @@ import java.util.*;
  * <i><strong>Note: </strong>original author is notch.</i>
  * @author CoolCLK
  */
-public class SkyChunkGenerator extends ChunkGenerator<SkyGenerationSettings> implements IObject {
+public class SkyChunkGenerator extends ChunkGenerator<SkyGenerationSettings> {
     private final OctavesNoiseGenerator xNoiseGenerator;
     private final OctavesNoiseGenerator yNoiseGenerator;
     private final OctavesNoiseGenerator zNoiseGenerator;

@@ -1,7 +1,6 @@
 package coolclk.skydimension.forge.tileentity;
 
 import com.mojang.datafixers.DataFixUtils;
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.block.Blocks;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +15,7 @@ import net.minecraft.util.registry.Registry;
  * <i><strong>Note: </strong>Here registering domain is <code>minecraft</code> and it is not changeable or you use Mixin.</i>
  * @author CoolCLK
  */
-public class TileEntityType implements IObject {
+public class TileEntityType {
     public static final net.minecraft.tileentity.TileEntityType<SkyPortalTileEntity> SKY_PORTAL;
 
     static {

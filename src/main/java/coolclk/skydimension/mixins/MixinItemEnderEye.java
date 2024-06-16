@@ -1,7 +1,6 @@
 package coolclk.skydimension.mixins;
 
 import com.google.common.base.Predicates;
-import coolclk.skydimension.IObject;
 import coolclk.skydimension.forge.block.Blocks;
 import coolclk.skydimension.forge.state.properties.BlockStateProperties;
 import coolclk.skydimension.forge.entity.item.EyeOfSkyEntity;
@@ -30,17 +29,17 @@ import static net.minecraft.block.EndPortalFrameBlock.EYE;
 import static net.minecraft.block.EndPortalFrameBlock.FACING;
 
 @Mixin(value = EnderEyeItem.class, priority = 1001)
-public abstract class MixinItemEnderEye implements IObject {
+public abstract class MixinItemEnderEye {
 
     /**
      * Add property {@link BlockStateProperties#END_FRAME_SKY} and make it <code>true</code>.
      * @author CoolCLK
      */
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/IProperty;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0))
-    @SuppressWarnings("UnreachableCode")
-    private <T extends Comparable<T>, V extends T> BlockState injectPlaceBlock(BlockState instance, IProperty<T> tiProperty, V v) {
+    @SuppressWarnings({"UnreachableCode", "unchecked"})
+    private <T extends Comparable<T>, V extends T, S> S injectPlaceBlock(BlockState instance, IProperty<T> tiProperty, V v) {
         instance = instance.with(tiProperty, v);
-        return ((Object) this) instanceof SkyEyeItem ? instance.with(BlockStateProperties.END_FRAME_SKY, true) : instance;
+        return (S) (((Object) this) instanceof SkyEyeItem ? instance.with(BlockStateProperties.END_FRAME_SKY, true) : instance);
     }
 
     /**
