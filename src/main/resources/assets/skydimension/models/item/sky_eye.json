@@ -1,6 +1,6 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "skydimension:items/sky_eye"
+        "layer0": "skydimension:item/sky_eye"
     }
 }
