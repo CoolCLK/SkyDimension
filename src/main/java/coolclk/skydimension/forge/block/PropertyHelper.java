@@ -1,8 +1,8 @@
 package coolclk.skydimension.forge.block;
 
 import coolclk.skydimension.IObject;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.state.IProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -20,12 +20,12 @@ public class PropertyHelper implements IObject {
      * @author CoolCLK
      */
     public static <T extends Comparable<T>> T getBlockPropertyValue(World world, BlockPos pos, IProperty<T> property, T defaultValue) {
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         T value = getStatePropertyValue(state, property, null);
         if (value != null) {
             return value;
         } else {
-            state = state.withProperty(property, defaultValue);
+            state = state.with(property, defaultValue);
         }
         world.setBlockState(pos, state);
         return defaultValue;
@@ -37,9 +37,9 @@ public class PropertyHelper implements IObject {
      * @param defaultValue Return and set the value to block if the block did not exist the property
      * @author CoolCLK
      */
-    public static <T extends Comparable<T>> T getStatePropertyValue(IBlockState state, IProperty<T> property, T defaultValue) {
-        if (state.getPropertyKeys().contains(property)) {
-            return state.getValue(property);
+    public static <T extends Comparable<T>> T getStatePropertyValue(BlockState state, IProperty<T> property, T defaultValue) {
+        if (state.getProperties().contains(property)) {
+            return state.get(property);
         }
         return defaultValue;
     }

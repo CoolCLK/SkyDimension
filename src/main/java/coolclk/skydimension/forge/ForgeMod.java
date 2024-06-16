@@ -4,14 +4,11 @@ import coolclk.skydimension.IObject;
 import coolclk.skydimension.ModLoader;
 import coolclk.skydimension.SkyDimension;
 import coolclk.skydimension.forge.client.renderer.tileentity.TileEntityRendererHandler;
-import coolclk.skydimension.forge.common.DimensionManager;
-import coolclk.skydimension.forge.event.EventHandler;
-import coolclk.skydimension.forge.tileentity.TileEntity;
-import coolclk.skydimension.forge.world.gen.structure.MapGenStructureHandler;
+import coolclk.skydimension.forge.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Entrance of the mod in Forge.
@@ -20,18 +17,11 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 @Mod(SkyDimension.MOD_ID)
 public class ForgeMod implements IObject {
     @SubscribeEvent
-    public static void beforeFMLInitialization(FMLCommonSetupEvent.Pre event) {
+    public static void beforeFMLInitialization(FMLCommonSetupEvent event) {
         SkyDimension.MOD_LOADER = ModLoader.FORGE;
-        SkyDimension.MOD_LOGGER = event.getModLog();
+        SkyDimension.MOD_LOGGER = LogManager.getLogger();
         // Make static registering active
-        new DimensionManager();
-        new TileEntity();
+        new TileEntityType();
         new TileEntityRendererHandler();
-        new MapGenStructureHandler();
-    }
-
-    @Mod.EventHandler
-    public static void onServerStarting(FMLServerStartingEvent event) {
-        EventHandler.onServerStarting(event);
     }
 }

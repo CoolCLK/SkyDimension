@@ -1,17 +1,21 @@
 package coolclk.skydimension.forge.world;
 
 import coolclk.skydimension.IObject;
+import coolclk.skydimension.SkyDimension;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 
-import static net.minecraft.world.DimensionType.register;
 
 /**
  * Dimension types.
  * @author CoolCLK
  */
 public class DimensionType implements IObject {
-    public static final net.minecraft.world.DimensionType SKY;
+    @SuppressWarnings("deprecation")
+    public static final net.minecraft.world.dimension.DimensionType SKY = register(new ResourceLocation(SkyDimension.MOD_ID, "sky"), new net.minecraft.world.dimension.DimensionType(1, "_sky", "DIM2", coolclk.skydimension.forge.world.dimension.SkyDimension::new, false, null, null));
 
-    static {
-        SKY = register("sky", "_sky", 2, WorldProviderSky.class, false);
+    @SuppressWarnings("deprecation")
+    private static net.minecraft.world.dimension.DimensionType register(ResourceLocation location, net.minecraft.world.dimension.DimensionType dimensionType) {
+        return Registry.register(Registry.DIMENSION_TYPE, location, dimensionType);
     }
 }

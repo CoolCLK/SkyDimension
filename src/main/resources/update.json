@@ -1,10 +1,10 @@
 {
   "homepage": "https://github.com/CoolCLK/SkyDimension/releases",
-  "1.13.2": {
+  "1.14.4": {
     "1.0.6": "First version, based from 1.12.2."
   },
   "promos": {
-    "1.13.2-latest": "1.0.6",
-    "1.13.2-recommended": "1.0.6"
+    "1.14.4-latest": "1.0.6",
+    "1.14.4-recommended": "1.0.6"
   }
 }
