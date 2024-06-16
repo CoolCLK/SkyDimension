@@ -55,7 +55,7 @@ public class SkyChunkGenerator extends ChunkGenerator<SkyGenerationSettings> {
     }
 
     /**
-     * Generate underground part of dimension.<br>
+     * Generate underground part of dimension.
      * @author CoolCLK
      */
     @Override

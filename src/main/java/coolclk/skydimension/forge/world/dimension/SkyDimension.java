@@ -1,5 +1,7 @@
 package coolclk.skydimension.forge.world.dimension;
 
+import coolclk.skydimension.forge.world.biome.provider.BiomeProviderType;
+import coolclk.skydimension.forge.world.biome.provider.SkyBiomeProviderSettings;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorType;
 import coolclk.skydimension.forge.world.gen.SkyGenerationSettings;
 import net.minecraft.block.BlockState;
@@ -12,7 +14,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
@@ -56,8 +57,11 @@ public class SkyDimension extends Dimension {
     @Override
     @Nonnull
     public ChunkGenerator<?> createChunkGenerator() {
-        SkyGenerationSettings settings = ChunkGeneratorType.SKY.createSettings();
-        return ChunkGeneratorType.SKY.create(this.world, BiomeProviderType.VANILLA_LAYERED.create(BiomeProviderType.VANILLA_LAYERED.createSettings()), settings);
+        SkyGenerationSettings generationSettings = ChunkGeneratorType.SKY.createSettings();
+        SkyBiomeProviderSettings biomeProviderSettings = BiomeProviderType.SKY.createSettings();
+        biomeProviderSettings.setGeneratorSettings(generationSettings);
+        biomeProviderSettings.setWorldInfo(this.world.getWorldInfo());
+        return ChunkGeneratorType.SKY.create(this.world, BiomeProviderType.SKY.create(biomeProviderSettings), generationSettings);
     }
 
     /**

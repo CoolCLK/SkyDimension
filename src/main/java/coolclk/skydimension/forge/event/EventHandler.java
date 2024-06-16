@@ -6,7 +6,9 @@ import coolclk.skydimension.forge.block.PropertyHelper;
 import coolclk.skydimension.forge.block.Blocks;
 import coolclk.skydimension.forge.item.Items;
 import coolclk.skydimension.forge.world.ModDimension;
+import coolclk.skydimension.forge.world.biome.provider.BiomeProviderType;
 import coolclk.skydimension.forge.world.gen.ChunkGeneratorType;
+import coolclk.skydimension.forge.world.gen.feature.structure.Feature;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.EndPortalFrameBlock;
@@ -74,6 +76,17 @@ public class EventHandler {
         @SubscribeEvent
         public static void onRegisterChunkGeneratorType(RegistryEvent.Register<net.minecraft.world.gen.ChunkGeneratorType<?, ?>> event) {
             event.getRegistry().register(ChunkGeneratorType.SKY.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "sky")));
+        }
+
+        @SubscribeEvent
+        public static void onRegisterBiomeProviderType(RegistryEvent.Register<net.minecraft.world.biome.provider.BiomeProviderType<?, ?>> event) {
+            event.getRegistry().register(BiomeProviderType.SKY.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "sky")));
+        }
+
+        @SubscribeEvent
+        public static void onRegisterFeature(RegistryEvent.Register<net.minecraft.world.gen.feature.Feature<?>> event) {
+            event.getRegistry().register(Feature.STRONGHOLD.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "stronghold")));
+            event.getRegistry().register(Feature.FLOATING_SHIP.setRegistryName(new ResourceLocation(SkyDimension.MOD_ID, "floating_ship")));
         }
 
         @SubscribeEvent

@@ -1,8 +1,8 @@
 package coolclk.skydimension.forge.world.gen;
 
-import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.OverworldGenSettings;
 
-public class SkyGenerationSettings extends GenerationSettings {
+public class SkyGenerationSettings extends OverworldGenSettings {
     protected int floatingShipCityDistance = 20;
     protected final int floatingShipSeparation = 11;
 
