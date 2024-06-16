@@ -1,7 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "minecraft:end_portal_frame_empty" },
-
         "eye=false,facing=south,sky=true": { "model": "minecraft:end_portal_frame_empty" },
         "eye=false,facing=west,sky=true": { "model": "minecraft:end_portal_frame_empty" },
         "eye=false,facing=north,sky=true": { "model": "minecraft:end_portal_frame_empty" },
